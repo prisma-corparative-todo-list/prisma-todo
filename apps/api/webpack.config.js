@@ -1,5 +1,5 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
-const { join } = require('path');
+const { join, resolve } = require('path');
 
 module.exports = {
   output: {
@@ -14,6 +14,11 @@ module.exports = {
       assets: ['./src/assets'],
       optimization: false,
       outputHashing: 'none',
+      compilerOption: {
+        deleteOutDi: true,
+        assets: ['src/app/mailtemplates/**/*'], // "**/*.ejs" all files ending with .ejs
+        watchAsset: true, // copy assets in watch mode
+      },
     }),
   ],
 };
