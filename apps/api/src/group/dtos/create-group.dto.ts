@@ -1,7 +1,14 @@
-
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateGroupDto {
+    @IsString()
     name:string;
-    description:string;
+
+    @IsOptional()
     filename?:string
+
+    @IsString()
+    @IsOptional()
+    ownerId?:string
+
 }

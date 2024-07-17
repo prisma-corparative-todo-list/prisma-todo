@@ -10,7 +10,6 @@ export class AccessTokenStrategy extends PassportStrategy(
   Strategy,
   'AccessTokenStrategy',
 ) {
-  private logger = new Logger(AccessTokenStrategy.name);
 
   constructor(
     private readonly configService: ConfigService,

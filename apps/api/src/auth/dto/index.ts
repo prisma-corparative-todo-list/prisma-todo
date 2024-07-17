@@ -1,22 +1,18 @@
-
-
-
-
 export class SignupDto {
-    email:string;
-    userName:string;
-    firstName:string;
-    lastName:string;
-    password:string
+  email: string;
+  userName: string;
+  password: string;
 }
 
 export class SigninDto {
-    login:string;
-    password:string
+  login: string;
+  password: string;
 }
 
-
-export class Tokens {
-    refreshToken:string;
-    accessToken:string;
+export class TokensAndUserIdResponse {
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  userId: string;
 }

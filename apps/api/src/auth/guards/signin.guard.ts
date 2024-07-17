@@ -1,7 +1,6 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { CanActivate, ExecutionContext, Injectable, Logger, UnauthorizedException } from '@nestjs/common'
 import { UserService } from 'user';
-import { SigninDto, SignupDto } from '../dto';
+import { SigninDto } from '../dto';
 import { PasswordService } from '../helpers/password.service';
 
 @Injectable()
@@ -13,6 +12,8 @@ export class SigninGuard implements CanActivate {
     private readonly passwordService:PasswordService
   ){}
 
+  private logger = new Logger(SigninGuard.name)
+
   async canActivate(
     context: ExecutionContext,
   ):Promise<boolean>  {
@@ -23,15 +24,11 @@ export class SigninGuard implements CanActivate {
 
   
     const user = await this.userService.findOne({
-      OR:[{email:login},{userName:login}]
+      OR:[{ email: login },{ userName: login }]
     })
 
     if(!user){
       throw new UnauthorizedException("User doesn't exist!")
-    }
-
-    if(!user.isActivated){
-      throw new UnauthorizedException("Please,check your email inbox for confirm your email!")
     }
 
     const isPasswordCorrect = await this.passwordService.comparePassword(password,user.hashPass)
@@ -39,6 +36,8 @@ export class SigninGuard implements CanActivate {
     if(!isPasswordCorrect){
       throw new UnauthorizedException('Invalid password!');
     }
+
+    this.logger.log(user)
 
     return isPasswordCorrect
     

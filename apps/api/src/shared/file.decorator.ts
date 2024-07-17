@@ -3,7 +3,6 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 export const File = createParamDecorator(
   async (data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
-    return request.filename
+   return ctx.switchToHttp().getRequest().filename
   },
 );

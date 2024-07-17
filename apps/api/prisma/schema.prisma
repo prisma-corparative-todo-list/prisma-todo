@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PARTICIPANT
+}
+
+enum RequisitionStatus {
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id             String         @id @default(uuid()) @db.Uuid
+  userName       String         @unique @map("user_name")
+  email          String         @unique
+  hashPass       String         @map("hash_pass")
+  salt           String
+  activationLink String         @unique @map("activation_link")
+  isActivated    Boolean        @default(false) @map("is_activated")
+  createdAt      DateTime       @default(now())
+  RefreshToken   RefreshToken[]
+  participant    Participant[]
+  tasks          Task[]
+  lists          List[]
+  Group          Group[]
+  Message        Message[]
+  Requisition    Requisition[]
+}
+
+model RefreshToken {
+  id     String @id @default(uuid()) @db.Uuid
+  token  String
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Group {
+  id           String        @id @default(uuid()) @db.Uuid
+  name         String
+  description  String?
+  logo         String?
+  ownerId      String        @map("owner_id") @db.Uuid
+  owner        User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  participants Participant[]
+  tasks        Task[]
+  createdAt    DateTime      @default(now()) @map("created_at")
+  Messages     Message[]
+  Requisition  Requisition[]
+}
+
+model Participant {
+  id      String @id @default(uuid()) @db.Uuid
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String @map("group_id") @db.Uuid
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String @map("user_id") @db.Uuid
+  role    Role
+}
+
+model Task {
+  id          String    @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  groupId     String?   @map("group_id") @db.Uuid
+  group       Group?    @relation(references: [id], fields: [groupId], onDelete: Cascade)
+  userId      String    @map("user_id") @db.Uuid
+  user        User      @relation(references: [id], fields: [userId], onDelete: Cascade)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  deadLine    DateTime? @map("dead_line")
+  listId      String?   @map("list_id") @db.Uuid
+  list        List?     @relation(references: [id], fields: [listId], onDelete: Cascade)
+  steps       Step[]
+  isImportant Boolean?  @default(false) @map("is_important")
+  isCompleted Boolean   @default(false) @map("is_completed")
+}
+
+model Step {
+  id          String  @id @default(uuid()) @db.Uuid
+  content     String
+  isCompleted Boolean @map("is_completed")
+  taskId      String  @map("task_id") @db.Uuid
+  task        Task    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model List {
+  id     String  @id @default(uuid()) @db.Uuid
+  title  String? @default("")
+  userId String  @map("user_id") @db.Uuid
+  user   User    @relation(references: [id], fields: [userId], onDelete: Cascade)
+  tasks  Task[]
+}
+
+model Message {
+  id      String @id @default(uuid()) @db.Uuid
+  text    String
+  group   Group  @relation(references: [id], fields: [groupId], onDelete: Cascade)
+  groupId String @map("group_id") @db.Uuid
+  userId  String @map("user_id") @db.Uuid
+  user    User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Requisition {
+  id      String            @id @default(uuid()) @db.Uuid
+  status  RequisitionStatus
+  userId  String            @db.Uuid
+  User    User              @relation(fields: [userId], references: [id])
+  groupId String            @db.Uuid
+  group   Group             @relation(fields: [groupId], references: [id])
+}

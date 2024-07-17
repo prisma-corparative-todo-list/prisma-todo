@@ -14,12 +14,13 @@ export class MailService {
     public async send(email:string,link:string) : Promise<void> {
 
         return await this.mailerService.sendMail({
-            to:email,
-            subject:"Prisma. Corparative TODO",
+            to: email,
+            subject: "Prisma. Corparative TODO",
             context:{
                 link,
+                baseUrl: "http://localhost:3000"
             },
-            template:"confirmReg",
+            template: "confirmReg",
         })
     }
 

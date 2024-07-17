@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color:#ebe7e7;
+}
+
+@layer base {
+    @font-face {
+      font-family: 'Gothic';
+
+      src: url(../public/NanumGothicCoding-Regular.ttf) format('ttf');
+    }
+
+    @font-face {
+      font-family: 'Kanit';
+      font-style: normal;
+      font-weight: 100;
+      font-display: swap;
+      src: url(../public/Kanit-ExtraLight.ttf) format('ttf');
+    }
+  }
+
+

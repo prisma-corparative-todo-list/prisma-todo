@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GroupController } from './group.controller';
 import { GroupService } from './group.service';
-import { PrismaModule } from 'prisma';
+import { PrismaModule } from '../prisma/prisma.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { UploadFileMiddleware } from 'shared/upload-file.middleware';
 
@@ -10,6 +10,7 @@ import { UploadFileMiddleware } from 'shared/upload-file.middleware';
     useClass: UploadFileMiddleware
   })],
   controllers: [GroupController],
-  providers: [GroupService]
+  providers: [GroupService],
+  exports: [GroupService]
 })
 export class GroupModule {}
