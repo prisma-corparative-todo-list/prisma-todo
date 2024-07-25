@@ -7,7 +7,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
-import { Message } from 'prisma/prisma-client';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { IResponseMessageAndUser } from '../../../../interfaces';
 
 @Controller('message')
 export class MessageController {
@@ -18,12 +19,9 @@ export class MessageController {
   @Get(':groupId')
   public async findMany(
     @Param('groupId') groupId: string,
-    @Query('page',ParseIntPipe) page?: number,
-    @Query('limit',ParseIntPipe) limit?: number
-  ): Promise<Message[]> {
-
-    this.logger.log(`findMany: ${groupId}, ${page}, ${limit}`);
-
-    return await this.messageService.findMany({ groupId }, { page, limit });
+    @Query('cursor', ParseIntPipe) cursor?: number,
+    @Query('limit', ParseIntPipe) limit?: number
+  ): Promise<IResponseMessageAndUser> {
+    return await this.messageService.findMany({ groupId }, { cursor, limit });
   }
 }

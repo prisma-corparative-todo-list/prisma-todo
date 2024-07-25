@@ -28,7 +28,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   server: Server = new Server();
 
   handleConnection(client: Socket) {
-    console.log('connect');
+    console.log('connect' + `: ${client.id}`);
   }
   handleDisconnect(client: Socket) {
     console.log('disconnect');
@@ -64,7 +64,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() payload: JoinSessionDto,
     @WsCurrentUser() user: User
   ) {
-    this.logger.log(payload.socketId);
     if (payload.socketId) {
       const participent = await this.participantService.joinToGroup(
         payload.groupId,

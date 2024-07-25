@@ -105,12 +105,13 @@ model List {
 }
 
 model Message {
-  id      String @id @default(uuid()) @db.Uuid
-  text    String
-  group   Group  @relation(references: [id], fields: [groupId], onDelete: Cascade)
-  groupId String @map("group_id") @db.Uuid
-  userId  String @map("user_id") @db.Uuid
-  user    User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+  id        String     @id @default(uuid()) @db.Uuid
+  text      String
+  group     Group      @relation(references: [id], fields: [groupId], onDelete: Cascade)
+  groupId   String     @map("group_id") @db.Uuid
+  userId    String     @map("user_id") @db.Uuid
+  user      User       @relation(references: [id], fields: [userId], onDelete: Cascade)
+  createAt  DateTime   @default(now())
 }
 
 model Requisition {
