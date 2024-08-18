@@ -1,6 +1,7 @@
-import { IMessageAndUser } from 'interfaces';
+import { IResponseMessageAndUser } from 'interfaces';
 import { instance } from '../api.instance';
 import { SERVICE_URL } from '../../model/constants';
+
 
 export const MessageService = {
   axios: instance,
@@ -8,23 +9,24 @@ export const MessageService = {
   async findMany({
     groupId,
     limit = 10,
-    page = 1,
+    pageParam
   }: {
     groupId?: string;
     limit?: number;
-    page?: number;
-  }): Promise<IMessageAndUser[]> {
+    pageParam: number | null;
+  }): Promise<IResponseMessageAndUser> {
+
     const params = new URLSearchParams();
 
     if (limit) {
       params.append('limit', limit.toString());
     }
 
-    if (page) {
-      params.append('page', page.toString());
+    if(pageParam != null){
+      params.append("cursor", pageParam.toString());
     }
 
-    return (
+    return (  
       await this.axios.get(
         `${SERVICE_URL.MESSAGE}/${groupId}${
           params.toString() !== '' && '?' + params

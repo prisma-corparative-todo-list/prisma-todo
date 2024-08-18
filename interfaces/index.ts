@@ -50,3 +50,9 @@ export interface ICreateStep {
 export interface IMessageAndUser extends Message {
   user: User
 }
+
+export interface IResponseMessageAndUser {
+  data: IMessageAndUser[]
+  nextCursor: number | null
+}
+

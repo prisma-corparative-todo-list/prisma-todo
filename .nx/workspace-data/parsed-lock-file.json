@@ -5013,6 +5013,15 @@
         "hash": "sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg=="
       }
     },
+    "npm:@types/react-scroll": {
+      "type": "npm",
+      "name": "npm:@types/react-scroll",
+      "data": {
+        "version": "1.8.10",
+        "packageName": "@types/react-scroll",
+        "hash": "sha512-RD4Z7grbdNGOKwKnUBKar6zNxqaW3n8m9QSrfvljW+gmkj1GArb8AFBomVr6xMOgHPD3v1uV3BrIf01py57daQ=="
+      }
+    },
     "npm:@types/react-scroll-to-bottom": {
       "type": "npm",
       "name": "npm:@types/react-scroll-to-bottom",
@@ -11880,6 +11889,15 @@
         "hash": "sha512-rrVRZRELyQzrIUAVMHxP97kv+G786pHmOKzuFII8zDYahFBS7qnHh2AlYSl1GAHhaMPCz6/oHjVMcfFYgFYHgA=="
       }
     },
+    "npm:moment": {
+      "type": "npm",
+      "name": "npm:moment",
+      "data": {
+        "version": "2.30.1",
+        "packageName": "moment",
+        "hash": "sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how=="
+      }
+    },
     "npm:mrmime": {
       "type": "npm",
       "name": "npm:mrmime",
@@ -13453,6 +13471,15 @@
         "version": "4.4.5",
         "packageName": "react-transition-group",
         "hash": "sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g=="
+      }
+    },
+    "npm:react-use-websocket": {
+      "type": "npm",
+      "name": "npm:react-use-websocket",
+      "data": {
+        "version": "4.8.1",
+        "packageName": "react-use-websocket",
+        "hash": "sha512-FTXuG5O+LFozmu1BRfrzl7UIQngECvGJmL7BHsK4TYXuVt+mCizVA8lT0hGSIF0Z0TedF7bOo1nRzOUdginhDw=="
       }
     },
     "npm:read-cache": {
@@ -19284,6 +19311,11 @@
     },
     {
       "source": "npm:@mui/x-date-pickers",
+      "target": "npm:moment",
+      "type": "static"
+    },
+    {
+      "source": "npm:@mui/x-date-pickers",
       "target": "npm:react",
       "type": "static"
     },
@@ -22144,6 +22176,11 @@
     },
     {
       "source": "npm:@types/react-dom",
+      "target": "npm:@types/react",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/react-scroll",
       "target": "npm:@types/react",
       "type": "static"
     },
@@ -32410,6 +32447,16 @@
     {
       "source": "npm:react-transition-group",
       "target": "npm:prop-types",
+      "type": "static"
+    },
+    {
+      "source": "npm:react-use-websocket",
+      "target": "npm:react",
+      "type": "static"
+    },
+    {
+      "source": "npm:react-use-websocket",
+      "target": "npm:react-dom",
       "type": "static"
     },
     {

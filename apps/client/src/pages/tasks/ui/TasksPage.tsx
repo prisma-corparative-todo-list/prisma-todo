@@ -5,6 +5,7 @@ import {
   useGetTasks,
   getWeedayMonthAndDay,
   useCreateTask,
+  useTask,
 } from '../../../shared';
 import { useEffect, useState } from 'react';
 
@@ -15,28 +16,16 @@ export const TasksPage = () => {
 
   const [isTaskSidebarVisible, setIsTaskSidebarVisible] = useState(false);
 
-  const { createTask, createTaskIsSuccess } = useCreateTask();
-
-  const {
-    toggleImportantStatus,
-    toggleImportantStatusIsError,
-    toggleImportantStatusIsLoading,
-    toggleImportantStatusIsSuccess,
-  } = useToggleImportantStatus();
-
-  const {
-    toggleCompleteTask,
-    toggleCompleteTaskIsSuccess,
-    toggleCompleteTaskIsError,
-  } = useToggleCompleteTask();
-
   const {
     tasks,
-    tasksIsSuccess,
-    tasksIsError,
-    tasksIsPending,
-    refetch: refetchTasks,
-  } = useGetTasks();
+    refetchTasks,
+    toggleImportantStatus,
+    toggleImportantStatusIsSuccess,
+    toggleCompleteTask,
+    toggleCompleteTaskIsSuccess,
+    createTask,
+    createTaskIsSuccess,
+  } = useTask();
 
   const handleChangeDate = (e: any) => {
     setDate(

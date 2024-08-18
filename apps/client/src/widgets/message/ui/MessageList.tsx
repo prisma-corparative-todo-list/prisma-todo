@@ -1,30 +1,67 @@
 import { MessageItem } from '../../../entities/message';
-import { FC, ReactNode, useEffect, useRef } from 'react';
-import { IMessageAndUser } from 'interfaces';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import { useEffect, useRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useGroup } from '../../../shared';
+import CircularProgress from '@mui/material/CircularProgress';
 
-interface IProps {
-  messages: IMessageAndUser[];
-  children: ReactNode;
-}
+export const MessageList = () => {
+  const { ref, inView } = useInView();
 
-export const MessageList: FC<IProps> = ({ messages, children }) => {
+  const liRef = useRef<HTMLLIElement>(null);
 
-  const messageEndRef = useRef(null)
+  const ulRef = useRef<HTMLUListElement>(null);
+
+  const { messages, fetchNextPage, hasNextPage } = useGroup();
+
+  const [prevScrollHeight, setPrevScrollHeight] = useState(0);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  },[])
+    if (inView && ulRef.current && hasNextPage) {
+      setPrevScrollHeight(ulRef.current.scrollHeight);
+      fetchNextPage().then(() => {
+        if (ulRef.current) {
+          ulRef.current.scrollTop = ulRef.current.scrollHeight - prevScrollHeight;
+        }
+      });
+    }
+  }, [inView]);
+
+  useEffect(() => {
+  
+    const timeout = setTimeout(() => {
+      if (ulRef.current) {
+        liRef.current?.scrollIntoView({ behavior: 'auto' });
+      }
+    }, 350);
+    return () => clearTimeout(timeout);
+
+  }, []);
+
+  useEffect(() => {
+    if (ulRef.current) {
+      if (
+        ulRef.current.scrollHeight -
+          ulRef.current.scrollTop -
+          ulRef.current.clientHeight <=
+        125
+      ) {
+        liRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [messages]);
 
   return (
-    <>
-      {children}
-      <ul className="list-none h-[87%] overflow-auto rounded-lg pl-5">
-        {messages?.reverse().map((message, idx) => (
+    <ul
+      ref={ulRef}
+      className="list-none scroll-marquee h-[87%] overflow-auto rounded-lg pl-5 border-2 border-red-300"
+    >
+  
+      <li ref={ref} />
+      {
+        messages.map((message, idx) => (
           <MessageItem message={message} key={idx} />
         ))}
-        <li />
-      </ul>
-    </>
+      <li ref={liRef} />
+    </ul>
   );
 };

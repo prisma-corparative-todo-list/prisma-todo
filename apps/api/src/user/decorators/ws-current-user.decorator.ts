@@ -9,6 +9,8 @@ export const WsCurrentUser = createParamDecorator(
   async (data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToWs().getClient();
 
+    const cookies = request.handshake.headers.cookie || request.handshake.headers.cookies;
+
     function getCookieValue(
       cookieString: string,
       cookieName: string
@@ -20,9 +22,10 @@ export const WsCurrentUser = createParamDecorator(
     }
 
     const accessToken = getCookieValue(
-      request.handshake.headers.cookies,
+      cookies,
       'accessToken'
     );
+
 
     const prisma = new PrismaService();
 

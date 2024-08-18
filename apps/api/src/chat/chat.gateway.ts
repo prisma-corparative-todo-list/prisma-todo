@@ -28,34 +28,30 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   server: Server = new Server();
 
   handleConnection(client: Socket) {
-    console.log('connect' + `: ${client.id}`);
+    console.log(`connect ${client.id}`);
   }
   handleDisconnect(client: Socket) {
-    console.log('disconnect');
+    console.log(`disconnect ${client.id}`);
   }
 
   @SubscribeMessage('message')
   async onMessage(
-    client: Socket,
     @MessageBody()
     payload: CreateMessageDto,
     @WsCurrentUser() user: User
   ) {
-    const createdMessage = await this.messageService.createOne({
+    const message = await this.messageService.createOne({
       ...payload,
       userId: user.id,
     });
 
-    const message = await this.messageService.findOne({
-      groupId: createdMessage.groupId,
-      id: createdMessage.id
+    const messageAndUser = await this.messageService.findOne({
+      id: message.id,
     });
 
-    this.server.to(payload.groupId).emit('message', message);
+    this.server.to(payload.groupId).emit('message', messageAndUser);
 
-    this.logger.log(message);
-
-    return message
+    return messageAndUser;
   }
 
   @SubscribeMessage('join_session')
@@ -64,13 +60,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() payload: JoinSessionDto,
     @WsCurrentUser() user: User
   ) {
+    this.logger.log(payload, 'join to session');
     if (payload.socketId) {
-      const participent = await this.participantService.joinToGroup(
-        payload.groupId,
-        user.id
-      );
+      await this.participantService.joinToGroup(payload.groupId, user.id);
 
-      this.server.in(payload.socketId).socketsJoin(payload.groupId)
+      this.server.in(payload.socketId).socketsJoin(payload.groupId);
     }
   }
 }

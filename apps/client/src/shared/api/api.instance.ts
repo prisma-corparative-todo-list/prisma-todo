@@ -24,7 +24,6 @@ instance.interceptors.response.use(
 			originalRequest._isRetry = true
 			retryCount += 1
 			try {
-				// await AuthService.refresh()
 				return instance.request(originalRequest)
 			} catch (error: any) {
 				if (errorCatch(error) === 'jwt expired') {

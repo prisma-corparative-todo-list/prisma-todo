@@ -5,11 +5,9 @@ import { MessageService } from '../services/message.service';
 export const useGetExistingMessages = ({
   groupId,
   limit = 10,
-  page = 1,
 }: {
   groupId?: string;
   limit?: number;
-  page?: number;
 }) => {
   const {
     data: existingMessages,
@@ -17,26 +15,23 @@ export const useGetExistingMessages = ({
     isError: existingMessagesIsError,
     isPending: existingMessagesIsPending,
     refetch: refetchExistingMessages,
-    fetchNextPage
+    hasNextPage,
+    fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: [QUERY_KEYS.MESSAGE, groupId, { limit, page }],
-    queryFn: async () => {
-      const response = await MessageService.findMany({ groupId, limit, page });
+    queryKey: [QUERY_KEYS.MESSAGE, groupId, { limit }],
+    queryFn: async ({ pageParam }) => {
+      const response = await MessageService.findMany({
+        groupId,
+        limit,
+        pageParam,
+      });
       return response;
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.length === 0) {
-        return undefined
-      }
-      return lastPageParam + 1
+      return lastPage.nextCursor;
     },
-    getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
-      if (firstPageParam <= 1) {
-        return undefined
-      }
-      return firstPageParam - 1
-    },
+    
   });
 
   return {
@@ -45,6 +40,7 @@ export const useGetExistingMessages = ({
     existingMessagesIsError,
     existingMessagesIsPending,
     refetchExistingMessages,
-    fetchNextPage
+    fetchNextPage,
+    hasNextPage
   };
 };

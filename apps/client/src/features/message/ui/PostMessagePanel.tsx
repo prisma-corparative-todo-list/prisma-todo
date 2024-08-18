@@ -1,20 +1,16 @@
-import { FC, useState } from 'react';
-import { Socket } from 'socket.io-client';
+import { socket, socketService } from '../../../shared';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-interface IProps {
-  socketId?: string;
-  socket: Socket;
-}
 
-export const PostMessagePanel: FC<IProps> = ({ socket }) => {
+export const PostMessagePanel: FC = () => {
   const { groupId } = useParams();
 
   const [text, setText] = useState<string>('');
 
   const handleSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== 'Enter' || text.length < 1) return;
-    socket.emit('message', { groupId, text });
+    if (e.key !== 'Enter' || text.length < 1 || groupId === undefined) return;
+    socket.emit('message', { text: text, groupId });
     setText('');
   };
 

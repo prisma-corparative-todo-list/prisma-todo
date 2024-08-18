@@ -26,7 +26,7 @@ export class MessageService {
       take: limit,
       orderBy: {
         createAt: 'desc',
-      },
+      }
     });
 
     const nextCursor = messages.length

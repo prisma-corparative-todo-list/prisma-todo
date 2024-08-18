@@ -16,6 +16,7 @@ export const useGetLists = () => {
       const response = await ListService.findMany();
       return response;
     },
+    
   });
 
   return {

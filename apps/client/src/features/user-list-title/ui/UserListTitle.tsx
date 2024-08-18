@@ -44,6 +44,7 @@ export const UserListTitle: FC<IProps> = ({ list }) => {
   }, [updateListIsSuccess, list?.title]);
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {isInputVisible ? (
         <input
