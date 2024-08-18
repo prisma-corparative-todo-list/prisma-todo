@@ -2,6 +2,7 @@ import {
   getHoursAndMinutes,
   getWeedayMonthAndDay,
   getWeedayMonthAndDayAndTime,
+  useUserStore,
 } from '../../../shared';
 import { IMessageAndUser } from 'interfaces';
 
@@ -12,18 +13,25 @@ interface IProps {
 }
 
 export const MessageItem: FC<IProps> = ({ message }) => {
+  const { userId } = useUserStore();
+
   return (
-    <li className="bg-[white] mb-5 p-2 rounded-lg w-[50%] flex justify-between">
+    <li
+      className={`bg-[white] mb-5 p-2 rounded-lg w-[50%] ${
+        userId === message.user.id
+          ? 'ml-auto mr-5 flex flex-col-reverse'
+          : 'flex justify-between '
+      }`}
+    >
       <div>
-        <p className="underline">{message.user.userName}</p>
+        {message.userId !== userId && <p>{message.user.userName}</p>}
         <p>{message.text}</p>
       </div>
       <div>
-        <p>
+        <p className={`${userId === message.userId ? 'text-right' : ''}`}>
           {new Date(message.createAt).getDate() === new Date().getDate()
             ? `today at ${getHoursAndMinutes(message.createAt)}`
-            : getWeedayMonthAndDayAndTime(message.createAt)
-          }
+            : getWeedayMonthAndDayAndTime(message.createAt)}
         </p>
       </div>
     </li>

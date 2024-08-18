@@ -53,7 +53,7 @@ export const MessageList = () => {
   return (
     <ul
       ref={ulRef}
-      className="list-none scroll-marquee h-[87%] overflow-auto rounded-lg pl-5 border-2 border-red-300"
+      className="list-none scroll-marquee h-[87%] overflow-auto rounded-lg pl-5"
     >
   
       <li ref={ref} />
