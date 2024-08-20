@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ISinginForm, ISingupFormData } from '../../model/types/auth.types';
 import { PAGE_URLS, QUERY_KEYS } from '../../model/constants';
 import { AuthService } from '../services/auth.service';
-import { socketService } from '../services/socket.service';
 
 export const useSignup = () => {
   const navigate = useNavigate();
@@ -16,7 +15,6 @@ export const useSignup = () => {
   } = useMutation({
     mutationKey: [`${QUERY_KEYS.SIGNUP}`],
     mutationFn: async (data: ISingupFormData) => {
-      socketService.connect()
       const response = await AuthService.signup(data);
       return response;
     },
@@ -48,7 +46,6 @@ export const useSignin = () => {
     },
     onSuccess: (data) => {
       if (data.isActivated) {
-        socketService.connect()
         navigate(`${PAGE_URLS.HOME}`);
       } else {
         navigate(`/${PAGE_URLS.EMAIL_CONFIRMATION_WAITING}`);
@@ -67,7 +64,6 @@ export const useRefreshTokens = () => {
   } = useQuery({
     queryKey: [`${QUERY_KEYS.REFRESH}`],
     queryFn: async () => {
-      socketService.connect()
       return await AuthService.refresh();
     },
   });

@@ -24,7 +24,7 @@ export const InputField: FC<IProps> = ({
         type={type}
         {...register(name)}
         placeholder={placeholder}
-        className={`border-b-2 border-black w-full p-2 outline-none ${className} bg-transparent`}
+        className={`border-b-2 border-black p-2 outline-none ${className} bg-transparent`}
       />
       {errorMessage && (
         <p className="w-full mb-2 underline">{String(errorMessage)}</p>

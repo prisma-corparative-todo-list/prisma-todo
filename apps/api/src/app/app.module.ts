@@ -9,6 +9,8 @@ import { StepModule } from '../step/step.module';
 import { GroupModule } from '../group/group.module';
 import { ChatModule } from '../chat/chat.module';
 import { PrismaModule } from '../prisma/prisma.module';
+import { ParticipantModule } from '../participant/participant.module';
+import { InvitationModule } from 'invitation/invitation.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { PrismaModule } from '../prisma/prisma.module';
     GroupModule,
     ChatModule,
     PrismaModule,
+    ParticipantModule,
+    InvitationModule
   ],
 })
 export class AppModule {}

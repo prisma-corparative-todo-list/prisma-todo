@@ -25,6 +25,7 @@ export const enum SERVICE_URL {
   GROUP = 'group',
   MESSAGE = 'message',
   PARTICIPANT = 'participant',
+  INVITATION = 'invitation',
 }
 
 export const enum QUERY_KEYS {
@@ -41,4 +42,5 @@ export const enum QUERY_KEYS {
   GROUPS_TASKS = 'groups-tasks',
   MESSAGE = 'message',
   PARTICIPANT = 'participant',
+  INVITATION = 'invitation',
 }

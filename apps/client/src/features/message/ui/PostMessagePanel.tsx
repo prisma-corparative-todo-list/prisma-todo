@@ -2,7 +2,6 @@ import { socket, socketService } from '../../../shared';
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-
 export const PostMessagePanel: FC = () => {
   const { groupId } = useParams();
 
@@ -20,7 +19,7 @@ export const PostMessagePanel: FC = () => {
 
   return (
     <input
-      className="p-2 outline-none border-b-2 border-[#bcbcbc] absolute bottom-[15px] w-[70%] bg-white py-5 px-5 rounded-xl"
+      className="outline-none border-b-2 border-[#bcbcbc] w-[70%] bg-white py-5 px-5 rounded-xl mx-auto"
       type="text"
       placeholder="send message"
       onKeyDown={handleSendMessage}

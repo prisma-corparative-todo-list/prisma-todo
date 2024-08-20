@@ -1,9 +1,11 @@
 import {
+  Body,
   Controller,
   Get,
   Logger,
   Param,
   ParseIntPipe,
+  Post,
   Query,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
@@ -23,5 +25,13 @@ export class MessageController {
     @Query('limit', ParseIntPipe) limit?: number
   ): Promise<IResponseMessageAndUser> {
     return await this.messageService.findMany({ groupId }, { cursor, limit });
+  }
+
+  @Post(':groupId')
+  public async createOne(
+    @Param('groupId') groupId: string,
+    @Body() body: string
+  ) {
+    return ""
   }
 }

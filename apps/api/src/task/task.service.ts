@@ -10,7 +10,7 @@ export class TaskService {
 
   public async create(data: Prisma.TaskCreateInput): Promise<Task> {
     return await this.prisma.task.create({
-      data: { ...data, createdAt: new Date(Date.now()) },
+      data: { ...data, createdAt: new Date(Date.now()), },
     });
   }
 

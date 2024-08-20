@@ -18,6 +18,9 @@ import { File } from 'shared/file.decorator';
 import { AccessTokenGuard } from 'auth/guards/access-token.guard';
 import { CreateGroupDto } from './dtos/create-group.dto';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { IGroupInfo } from '../../../../interfaces';
+
 @UseGuards(AccessTokenGuard)
 @Controller('group')
 export class GroupController {
@@ -66,7 +69,7 @@ export class GroupController {
   }
 
   @Get(":groupId")
-  public async findOne(@Param("groupId") groupId: string): Promise<Group> {
+  public async findOne(@Param("groupId") groupId: string): Promise<IGroupInfo> {
     return await this.groupService.findOne({ id: groupId });
   }
 }

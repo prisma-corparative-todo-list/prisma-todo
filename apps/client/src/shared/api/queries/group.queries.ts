@@ -44,6 +44,7 @@ export const useGetGroups = () => {
 
 export const useGetGroup = (id?: string) => {
   const {
+    data: group,
     isError: groupIsError,
     isSuccess: groupIsSuccess,
     isPending: groupIsPending,
@@ -55,5 +56,5 @@ export const useGetGroup = (id?: string) => {
     },
     enabled: id === undefined ? false : true,
   });
-  return { groupIsError, groupIsSuccess, groupIsPending };
+  return { groupIsError, groupIsSuccess, groupIsPending, group };
 };

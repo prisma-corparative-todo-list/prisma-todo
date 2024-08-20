@@ -32,13 +32,15 @@ model User {
   activationLink String         @unique @map("activation_link")
   isActivated    Boolean        @default(false) @map("is_activated")
   createdAt      DateTime       @default(now())
-  RefreshToken   RefreshToken[]
+  refreshToken   RefreshToken[]
   participant    Participant[]
   tasks          Task[]
   lists          List[]
-  Group          Group[]
-  Message        Message[]
-  Requisition    Requisition[]
+  group          Group[]
+  message        Message[]
+  userTask       UserTask[]
+  userStep       UserStep[]
+  invitation     Invitation[]
 }
 
 model RefreshToken {
@@ -58,8 +60,8 @@ model Group {
   participants Participant[]
   tasks        Task[]
   createdAt    DateTime      @default(now()) @map("created_at")
-  Messages     Message[]
-  Requisition  Requisition[]
+  messages     Message[]
+  invitation   Invitation[]
 }
 
 model Participant {
@@ -72,28 +74,30 @@ model Participant {
 }
 
 model Task {
-  id          String    @id @default(uuid()) @db.Uuid
+  id          String     @id @default(uuid()) @db.Uuid
   title       String
   description String?
-  groupId     String?   @map("group_id") @db.Uuid
-  group       Group?    @relation(references: [id], fields: [groupId], onDelete: Cascade)
-  userId      String    @map("user_id") @db.Uuid
-  user        User      @relation(references: [id], fields: [userId], onDelete: Cascade)
-  createdAt   DateTime  @default(now()) @map("created_at")
-  deadLine    DateTime? @map("dead_line")
-  listId      String?   @map("list_id") @db.Uuid
-  list        List?     @relation(references: [id], fields: [listId], onDelete: Cascade)
+  groupId     String?    @map("group_id") @db.Uuid
+  group       Group?     @relation(references: [id], fields: [groupId], onDelete: Cascade)
+  userId      String     @map("user_id") @db.Uuid
+  user        User       @relation(references: [id], fields: [userId], onDelete: Cascade)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  deadLine    DateTime?  @map("dead_line")
+  listId      String?    @map("list_id") @db.Uuid
+  list        List?      @relation(references: [id], fields: [listId], onDelete: Cascade)
   steps       Step[]
-  isImportant Boolean?  @default(false) @map("is_important")
-  isCompleted Boolean   @default(false) @map("is_completed")
+  isImportant Boolean?   @default(false) @map("is_important")
+  isCompleted Boolean    @default(false) @map("is_completed")
+  userTask    UserTask[]
 }
 
 model Step {
-  id          String  @id @default(uuid()) @db.Uuid
+  id          String     @id @default(uuid()) @db.Uuid
   content     String
-  isCompleted Boolean @map("is_completed")
-  taskId      String  @map("task_id") @db.Uuid
-  task        Task    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  isCompleted Boolean    @map("is_completed")
+  taskId      String     @map("task_id") @db.Uuid
+  task        Task       @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  UserStep    UserStep[]
 }
 
 model List {
@@ -105,20 +109,36 @@ model List {
 }
 
 model Message {
-  id        String     @id @default(uuid()) @db.Uuid
-  text      String
-  group     Group      @relation(references: [id], fields: [groupId], onDelete: Cascade)
-  groupId   String     @map("group_id") @db.Uuid
-  userId    String     @map("user_id") @db.Uuid
-  user      User       @relation(references: [id], fields: [userId], onDelete: Cascade)
-  createAt  DateTime   @default(now())
+  id       String   @id @default(uuid()) @db.Uuid
+  text     String
+  group    Group    @relation(references: [id], fields: [groupId], onDelete: Cascade)
+  groupId  String   @map("group_id") @db.Uuid
+  userId   String   @map("user_id") @db.Uuid
+  user     User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  createAt DateTime @default(now())
 }
 
-model Requisition {
-  id      String            @id @default(uuid()) @db.Uuid
-  status  RequisitionStatus
-  userId  String            @db.Uuid
-  User    User              @relation(fields: [userId], references: [id])
-  groupId String            @db.Uuid
-  group   Group             @relation(fields: [groupId], references: [id])
+
+model UserTask {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+  taskId String @map("task_id") @db.Uuid
+  task   Task   @relation(fields: [taskId], references: [id])
+}
+
+model UserStep {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+  stepId String @map("step_id") @db.Uuid
+  Step   Step   @relation(fields: [stepId], references: [id])
+}
+
+model Invitation {
+  id      String @id @default(uuid()) @db.Uuid
+  userId  String @map("user_id") @db.Uuid
+  user    User   @relation(fields: [userId], references: [id])
+  groupId String @map("group_id") @db.Uuid
+  group   Group  @relation(fields: [groupId], references: [id])
 }

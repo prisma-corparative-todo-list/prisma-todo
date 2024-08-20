@@ -60,7 +60,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() payload: JoinSessionDto,
     @WsCurrentUser() user: User
   ) {
-    this.logger.log(payload, 'join to session');
+    this.logger.log(user, 'join to session');
     if (payload.socketId) {
       await this.participantService.joinToGroup(payload.groupId, user.id);
 

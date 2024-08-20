@@ -17,7 +17,7 @@ export const MessageItem: FC<IProps> = ({ message }) => {
 
   return (
     <li
-      className={`bg-[white] mb-5 p-2 rounded-lg w-[50%] ${
+      className={`bg-[white] mb-5 p-2 rounded-lg max-w-[40%] ${
         userId === message.user.id
           ? 'ml-auto mr-5 flex flex-col-reverse'
           : 'flex justify-between '

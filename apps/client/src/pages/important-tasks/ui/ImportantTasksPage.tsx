@@ -5,8 +5,10 @@ import {
   useToggleImportantStatus,
   useToggleCompleteTask,
   useCreateTask,
+  PageLayout,
 } from '../../../shared';
 import { useEffect, useState } from 'react';
+import { TasksHeader } from '../../../features/tasks-header';
 
 export const ImportantTasksPage = () => {
   const [taskId, setTaskId] = useState('');
@@ -70,8 +72,6 @@ export const ImportantTasksPage = () => {
     setIsTaskSidebarVisible(true);
   };
 
-  const formattedDate = getWeedayMonthAndDay(new Date());
-
   const dateWithoutTime = new Date(new Date().toDateString());
 
   useEffect(() => {
@@ -82,9 +82,8 @@ export const ImportantTasksPage = () => {
 
   return (
     <div className="flex">
-      <div className="p-5 h-screen basis-full">
-        <h1 className="text-3xl mb-2">Important Tasks</h1>
-        <h3 className="pb-3">{formattedDate}</h3>
+      <PageLayout>
+      <TasksHeader title='Important tasks'/>
         <TasksList
           onToggleImportantStatus={handleToggleImportant}
           onToggleComplete={handleToggleComplete}
@@ -99,7 +98,7 @@ export const ImportantTasksPage = () => {
           onAddTask={handleCreateTask}
           refreshTasks={refetchTasks}
         />
-      </div>
+      </PageLayout>
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
         toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}

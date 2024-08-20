@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { TasksList, AddTaskPanel, TaskSidebar } from '../../../widgets/task';
 import {
   getWeedayMonthAndDay,
+  PageLayout,
   useCreateTask,
   useGetTasks,
   useToggleCompleteTask,
   useToggleImportantStatus,
 } from '../../../shared';
+import { TasksHeader } from '../../../features/tasks-header';
 
 export const PlannedTasksPage = () => {
   const [taskId, setTaskId] = useState('');
@@ -79,9 +81,8 @@ export const PlannedTasksPage = () => {
 
   return (
     <div className="flex">
-      <div className="p-5 h-screen basis-full">
-        <h1 className="text-3xl mb-2">Planned Tasks</h1>
-        <h3 className="pb-3">{formattedDate}</h3>
+      <PageLayout>
+      <TasksHeader title='Planned tasks'/>
         <TasksList
           onToggleImportantStatus={handleToggleImportant}
           onToggleComplete={handleToggleComplete}
@@ -104,7 +105,7 @@ export const PlannedTasksPage = () => {
           taskId={taskId}
           refetch={refetchTasks}
         />
-      </div>
+      </PageLayout>
     </div>
   );
 };

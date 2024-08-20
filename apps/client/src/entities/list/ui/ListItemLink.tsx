@@ -5,15 +5,22 @@ import { Link } from 'react-router-dom';
 interface IProps {
   list?: List;
   idx: number;
-  className?: string
+  className?: string;
   label?: string;
 }
 
 export const ListItemLink: FC<IProps> = ({ list, idx, className, label }) => {
   return (
-    <li key={list?.id || idx} id={list?.id || String(idx)} className="mb-3">
+    <li
+      key={list?.id || idx}
+      id={list?.id || String(idx)}
+      className={`my-2 hover:bg-[#e2e3d1] w-full rounded-md ${
+        // eslint-disable-next-line no-restricted-globals
+        location.pathname === `/list/${list?.id}` && 'bg-[#e2e3d1]'
+      }`}
+    >
       <Link
-        className={`block ${className} w-ful p-5`}
+        className={`block ${className} p-5 rounded-md`}
         to={`${PAGE_URLS.LIST}/${list?.id}`}
       >
         {label || list?.title ? list?.title : `no name list ${idx + 1}`}

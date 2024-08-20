@@ -1,9 +1,6 @@
-import {
-  Injectable,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Participant, Prisma } from 'prisma/prisma-client';
+import { Participant, Prisma, User } from 'prisma/prisma-client';
 
 @Injectable()
 export class ParticipantService {
@@ -14,8 +11,6 @@ export class ParticipantService {
   public async findOne(
     payload: Prisma.ParticipantWhereInput
   ): Promise<Participant> {
-    this.logger.log(payload);
-
     return await this.prisma.participant.findFirst({ where: payload });
   }
 
@@ -25,20 +20,26 @@ export class ParticipantService {
     return await this.prisma.participant.create({ data });
   }
 
+  public async count(payload: Prisma.ParticipantWhereInput): Promise<number> {
+    return await this.prisma.participant.count({where: payload});
+  }
+
   public async joinToGroup(
     groupId: string,
     userId: string
   ): Promise<Participant | null> {
-    const candidate = this.findOne({
+    const candidate = await this.findOne({
       groupId,
       userId,
     });
+
+    this.logger.log(candidate);
 
     if (candidate) {
       return null;
     }
 
-    const participant = this.createOne({
+    const participant = await this.createOne({
       group: { connect: { id: groupId } },
       user: { connect: { id: userId } },
       role: 'PARTICIPANT',
@@ -49,7 +50,9 @@ export class ParticipantService {
 
   public async findMany(
     payload: Prisma.ParticipantWhereInput
-  ): Promise<Participant[]> {
-    return await this.prisma.participant.findMany({ where: payload });
+  ): Promise<User[]> {
+    const participants = await this.prisma.participant.findMany({ where: payload, select: { user: true, } });
+
+    return participants.map(({user}) => user)
   }
 }

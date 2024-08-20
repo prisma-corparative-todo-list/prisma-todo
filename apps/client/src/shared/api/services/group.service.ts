@@ -1,4 +1,4 @@
-import { ICreateGroup } from 'interfaces';
+import { ICreateGroup, IGroupInfo } from 'interfaces';
 import { instance } from '../api.instance';
 import { Group } from 'prisma/prisma-client';
 import { SERVICE_URL } from '../../model/constants';
@@ -14,7 +14,7 @@ export const GroupService = {
     return (await this.axios.get(`${SERVICE_URL.GROUP}`)).data;
   },
 
-  async findOne(id?: string): Promise<Group> {
+  async findOne(id?: string): Promise<IGroupInfo> {
     return (await this.axios.get(`${SERVICE_URL.GROUP}/${id}`)).data;
   },
 };

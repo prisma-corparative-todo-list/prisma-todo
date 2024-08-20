@@ -1,13 +1,11 @@
 import { TasksList, AddTaskPanel, TaskSidebar } from '../../../widgets/task';
 import {
-  useToggleImportantStatus,
-  useToggleCompleteTask,
-  useGetTasks,
   getWeedayMonthAndDay,
-  useCreateTask,
+  PageLayout,
   useTask,
 } from '../../../shared';
 import { useEffect, useState } from 'react';
+import { TasksHeader } from '../../../features/tasks-header';
 
 export const TasksPage = () => {
   const [taskId, setTaskId] = useState('');
@@ -59,8 +57,6 @@ export const TasksPage = () => {
     createTask(payload);
   };
 
-  const formattedDate = getWeedayMonthAndDay(new Date());
-
   const dateWithoutTime = new Date(new Date().toDateString());
 
   useEffect(() => {
@@ -71,9 +67,8 @@ export const TasksPage = () => {
 
   return (
     <div className="flex">
-      <div className="p-5 h-screen basis-full">
-        <h1 className="text-3xl mb-2">All Tasks</h1>
-        <h3 className="pb-3">{formattedDate}</h3>
+      <PageLayout>
+      <TasksHeader title='All Tasks'/>
         <TasksList
           onToggleImportantStatus={handleToggleImportant}
           onToggleComplete={handleToggleComplete}
@@ -88,7 +83,7 @@ export const TasksPage = () => {
           refreshTasks={refetchTasks}
           createTaskIsSuccess={createTaskIsSuccess}
         />
-      </div>
+      </PageLayout>
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
         toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}

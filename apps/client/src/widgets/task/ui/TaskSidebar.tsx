@@ -40,11 +40,7 @@ export const TaskSidebar: FC<IProps> = ({
       refetchTasks();
       onClose();
     }
-  }, [deleteTaskIsSuccess]);
-
-  useEffect(() => {
-    console.log("mounted")
-  })
+  }, [deleteTaskIsSuccess, onClose, refetchTasks]);
 
   return (
     <Drawer

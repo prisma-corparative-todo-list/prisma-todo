@@ -6,6 +6,7 @@ import {
   useToggleCompleteTask,
   useToggleImportantStatus,
 } from '../../../shared/api/queries/task.queries';
+import { TasksHeader } from '../../../features/tasks-header';
 
 export const MyDayPage = () => {
   const formattedDate = getWeedayMonthAndDay(new Date());
@@ -82,8 +83,7 @@ export const MyDayPage = () => {
   return (
     <div className="flex">
       <div className="p-5 h-screen basis-full">
-        <h1 className="text-3xl mb-2">My day</h1>
-        <h3 className="pb-3">{formattedDate}</h3>
+      <TasksHeader title='Planned tasks'/>
         <TasksList
           onToggleImportantStatus={handleToggleImportant}
           onToggleComplete={handleToggleComplete}
