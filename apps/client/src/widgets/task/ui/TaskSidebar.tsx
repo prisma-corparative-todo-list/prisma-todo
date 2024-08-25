@@ -1,6 +1,6 @@
 import { Drawer } from '@mui/material';
 import { FC, useEffect } from 'react';
-import { TaskDetails } from '../../../features/task/';
+import { DeleteTaskButton, TaskDetails } from '../../../features/task/';
 import { useDeleteTask } from '../../../shared';
 import { StepsList } from '../../../features/step';
 
@@ -21,28 +21,12 @@ export const TaskSidebar: FC<IProps> = ({
   completeTaskIsSuccess,
   refetch: refetchTasks,
 }) => {
-  const { deleteTask, deleteTaskIsSuccess } = useDeleteTask();
-
-  const handleDeleteTask = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    deleteTask(taskId);
-  };
-
-  useEffect(() => {
-    if (deleteTaskIsSuccess) {
-      refetchTasks();
-      onClose();
-    }
-  }, [deleteTaskIsSuccess, onClose, refetchTasks]);
-
-
-
   return (
     <Drawer
       open={isOpen}
       anchor="right"
       onClose={onClose}
-      sx={{ minHeight: '100vh', position: 'relative'}}
+      sx={{ minHeight: '100vh', position: 'relative' }}
     >
       <TaskDetails
         onToggleComplete={onToggleComplete}
@@ -51,6 +35,13 @@ export const TaskSidebar: FC<IProps> = ({
         refetchTasks={refetchTasks}
       />
       <StepsList taskId={taskId} refetchTasks={refetchTasks} />
+      <DeleteTaskButton
+        className="absolute bottom-10 right-10"
+        fontSize="large"
+        refetchTasks={refetchTasks}
+        onClose={onClose}
+        taskId={taskId}
+      />
     </Drawer>
   );
 };

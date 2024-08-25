@@ -43,7 +43,7 @@ export const StepsList: FC<IProps> = ({ refetchTasks, taskId }) => {
         onKeyUp={handlePostStep}
         value={stepValue}
         onChange={handleChangeStep}
-        placeholder="add steps"
+        placeholder="add step"
       />
       <ul
         className={`${

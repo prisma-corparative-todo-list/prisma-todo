@@ -144,20 +144,52 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": "README.md",
+        "hash": "4353142399798978899"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "10391131165700003340"
+      },
+      {
+        "file": "package.json",
+        "hash": "17639220864141138978"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "18315524891129148814"
       },
       {
         "file": ".gitignore",
         "hash": "16877376182141465221"
       },
       {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
         "file": "jest.config.ts",
         "hash": "3494843969422251966"
       },
       {
-        "file": "migrations.json",
-        "hash": "10391131165700003340"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": "nx.json",
+        "hash": "10375793336502971330"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16936441711144470533"
       },
       {
         "file": "package-lock.json",
@@ -168,44 +200,12 @@
         "hash": "4934098906304722861"
       },
       {
-        "file": "package.json",
-        "hash": "17639220864141138978"
-      },
-      {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
-      },
-      {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
-      },
-      {
-        "file": ".eslintrc.json",
-        "hash": "18315524891129148814"
-      },
-      {
         "file": "interfaces/index.ts",
         "hash": "5638362182994203209"
       },
       {
-        "file": "nx.json",
-        "hash": "10375793336502971330"
-      },
-      {
-        "file": "README.md",
-        "hash": "4353142399798978899"
-      },
-      {
-        "file": ".prettierrc",
-        "hash": "16267754514737964994"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "16936441711144470533"
-      },
-      {
-        "file": ".prettierignore",
-        "hash": "16448050467312557263"
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
       }
     ],
     "projectFileMap": {
@@ -1118,7 +1118,7 @@
         },
         {
           "file": "apps/client/src/features/task/index.ts",
-          "hash": "13442889539608578281"
+          "hash": "15150938600676423757"
         },
         {
           "file": "apps/client/src/features/task/ui/CompletedTasksList.tsx",
@@ -1743,7 +1743,7 @@
         },
         {
           "file": "apps/client/src/widgets/task/ui/TaskSidebar.tsx",
-          "hash": "2705732652490018579",
+          "hash": "14206587331773752612",
           "deps": [
             "npm:@mui/material",
             "npm:react"
@@ -1798,9 +1798,17 @@
         },
         {
           "file": "apps/client/src/features/step/ui/StepsList.tsx",
-          "hash": "16873080900893618497",
+          "hash": "16436085928330704570",
           "deps": [
             "npm:prisma",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/task/ui/DeleteTaskButton.tsx",
+          "hash": "12783468011069902619",
+          "deps": [
+            "npm:@mui/icons-material",
             "npm:react"
           ]
         }
