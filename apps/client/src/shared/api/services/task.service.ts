@@ -54,11 +54,9 @@ export const TaskService = {
     ).data;
   },
 
-  async updateOne(data: Prisma.TaskUpdateInput): Promise<Task> {
+  async updateOne(data: Prisma.TaskUpdateInput, id?: string): Promise<Task> {
 
-    console.log(data)
-
-    return (await this.axios.patch(`/${SERVICE_URL.TASK}/${data.id}`, data))
+    return (await this.axios.patch(`/${SERVICE_URL.TASK}/${id}`, data))
       .data;
   },
 

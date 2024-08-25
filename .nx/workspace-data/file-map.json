@@ -144,40 +144,52 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "migrations.json",
-        "hash": "10391131165700003340"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
       },
       {
-        "file": "interfaces/index.ts",
-        "hash": "5638362182994203209"
-      },
-      {
-        "file": "package.json",
-        "hash": "17639220864141138978"
-      },
-      {
-        "file": "nx.json",
-        "hash": "10375793336502971330"
+        "file": ".gitignore",
+        "hash": "16877376182141465221"
       },
       {
         "file": "jest.config.ts",
         "hash": "3494843969422251966"
       },
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
+        "file": "migrations.json",
+        "hash": "10391131165700003340"
       },
       {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
+        "file": "package-lock.json",
+        "hash": "3907073417804430290"
       },
       {
         "file": ".vscode/extensions.json",
         "hash": "4934098906304722861"
       },
       {
-        "file": ".gitignore",
-        "hash": "16877376182141465221"
+        "file": "package.json",
+        "hash": "17639220864141138978"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "18315524891129148814"
+      },
+      {
+        "file": "interfaces/index.ts",
+        "hash": "5638362182994203209"
+      },
+      {
+        "file": "nx.json",
+        "hash": "10375793336502971330"
       },
       {
         "file": "README.md",
@@ -186,18 +198,6 @@
       {
         "file": ".prettierrc",
         "hash": "16267754514737964994"
-      },
-      {
-        "file": ".eslintrc.json",
-        "hash": "18315524891129148814"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "3907073417804430290"
-      },
-      {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
       },
       {
         "file": "tsconfig.base.json",
@@ -1131,7 +1131,7 @@
         },
         {
           "file": "apps/client/src/features/task/ui/TaskDetails.tsx",
-          "hash": "2629533137130456152",
+          "hash": "13943625257553599951",
           "deps": [
             "npm:react",
             "npm:@mui/material"
@@ -1350,7 +1350,7 @@
         },
         {
           "file": "apps/client/src/shared/api/queries/task.queries.ts",
-          "hash": "16459367542150797038",
+          "hash": "3721633146143391466",
           "deps": [
             "npm:@tanstack/react-query",
             "npm:prisma"
@@ -1412,7 +1412,7 @@
         },
         {
           "file": "apps/client/src/shared/api/services/task.service.ts",
-          "hash": "16454406335501521459",
+          "hash": "17304376327230225938",
           "deps": [
             "npm:prisma",
             "npm:axios"
@@ -1743,7 +1743,7 @@
         },
         {
           "file": "apps/client/src/widgets/task/ui/TaskSidebar.tsx",
-          "hash": "14651145579273448250",
+          "hash": "2705732652490018579",
           "deps": [
             "npm:@mui/material",
             "npm:react"

@@ -35,12 +35,14 @@ export const TaskSidebar: FC<IProps> = ({
     }
   }, [deleteTaskIsSuccess, onClose, refetchTasks]);
 
+
+
   return (
     <Drawer
       open={isOpen}
       anchor="right"
       onClose={onClose}
-      sx={{ minHeight: '100vh', position: 'relative' }}
+      sx={{ minHeight: '100vh', position: 'relative'}}
     >
       <TaskDetails
         onToggleComplete={onToggleComplete}

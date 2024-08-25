@@ -96,7 +96,6 @@ export const useGetTask = (id?: string) => {
       const response = await TaskService.findOne(id);
       return response;
     },
-    
   });
   return {
     task,
@@ -135,8 +134,7 @@ export const useUpdateTask = (id?: string) => {
     isSuccess: updateTaskIsSuccess,
   } = useMutation({
     mutationFn: async (dto: Prisma.TaskUpdateInput) => {
-      console.log(dto)
-      const response = await TaskService.updateOne(dto);
+      const response = await TaskService.updateOne(dto, id);
       return response;
     },
   });

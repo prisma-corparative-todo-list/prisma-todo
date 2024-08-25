@@ -21,6 +21,7 @@ export const TaskDetails: FC<IProps> = ({
   taskId,
   onToggleComplete,
   toggleCompleteTaskIsSuccess,
+  refetchTasks,
 }) => {
   const [title, setTitle] = useState('');
 
@@ -30,8 +31,7 @@ export const TaskDetails: FC<IProps> = ({
 
   const { updateTask, updateTaskIsSuccess } = useUpdateTask(taskId);
 
-  const handleToggleComplete = () =>
-    onToggleComplete(taskId);
+  const handleToggleComplete = () => onToggleComplete(taskId);
 
   const handleUpdateTitle = (e: React.FocusEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -52,6 +52,7 @@ export const TaskDetails: FC<IProps> = ({
     }
     if (toggleCompleteTaskIsSuccess || updateTaskIsSuccess) {
       refetchTask();
+      refetchTasks();
     }
   }, [
     refetchTask,
@@ -59,6 +60,7 @@ export const TaskDetails: FC<IProps> = ({
     taskIsSuccess,
     task,
     updateTaskIsSuccess,
+    refetchTasks,
   ]);
 
   return (
