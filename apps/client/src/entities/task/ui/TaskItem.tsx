@@ -16,23 +16,31 @@ interface IProps {
 }
 
 export const TaskItem: FC<IProps> = ({
-  task,
+  task: {
+    deadLine,
+    id: taskId,
+    isImportant,
+    isCompleted,
+    title,
+    list,
+    description,
+  },
   onOpenTaskSidebar,
   onToggleCompleteTask,
   onToggleImportantStatus,
 }) => {
   const handleToggleImportant = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
-    onToggleImportantStatus(task.id);
+    onToggleImportantStatus(taskId);
   };
 
   const handleToggleComplete = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
-    onToggleCompleteTask(task.id);
+    onToggleCompleteTask(taskId);
   };
 
   const ToggleImportantButton = () => {
-    return task.isImportant ? (
+    return isImportant ? (
       <button id="importantButton" onClick={handleToggleImportant}>
         <StarIcon fontSize="large" />
       </button>
@@ -43,39 +51,38 @@ export const TaskItem: FC<IProps> = ({
     );
   };
 
-  const { steps } = useGetSteps(task.id);
+  const { steps } = useGetSteps(taskId);
 
   return (
     <li
-      id={task.id}
+      id={taskId}
       className="border-2 border-black px-5 py-2 rounded-lg flex justify-between mb-2 cursor-pointer"
       onClick={onOpenTaskSidebar}
     >
       <div className="flex gap-5">
-        <Checkbox checked={task.isCompleted} onClick={handleToggleComplete} />
+        <Checkbox checked={isCompleted} onClick={handleToggleComplete} />
         <div>
-          <p className="text-left">{task.title}</p>
+          <p className="text-left">{title}</p>
           <div className="flex">
-            {task.list ? (
-              <span className="mr-2">{task.list.title}</span>
+            {list ? (
+              <span className="mr-2">{list.title}</span>
             ) : (
               <span
                 className={`${
-                  task.deadLine
-                    ? new Date(task.deadLine).getDate() < new Date().getDate()
+                  deadLine
+                    ? new Date(deadLine).getDate() < new Date().getDate()
                       ? 'text-red-600 mr-2'
                       : 'text-black-500 mr-2'
                     : ''
                 }`}
               >
-                {task.deadLine &&
-                new Date(task.deadLine).getDate() === new Date().getDate()
+                {deadLine &&
+                new Date(deadLine).getDate() === new Date().getDate()
                   ? 'My day'
-                  : task.deadLine &&
-                    getWeedayMonthAndDay(new Date(task.deadLine))}
+                  : deadLine && getWeedayMonthAndDay(new Date(deadLine))}
               </span>
             )}
-            {task.description && task.description.length >= 1 && (
+            {description && description.length >= 1 && (
               <span className="mr-2">
                 <DescriptionIcon fontSize="small" />
               </span>
@@ -92,7 +99,7 @@ export const TaskItem: FC<IProps> = ({
           </div>
         </div>
       </div>
-      {!task.isCompleted && <ToggleImportantButton />}
+      {!isCompleted && <ToggleImportantButton />}
     </li>
   );
 };
