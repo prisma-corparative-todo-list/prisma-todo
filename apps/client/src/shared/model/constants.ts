@@ -43,4 +43,6 @@ export const enum QUERY_KEYS {
   MESSAGE = 'message',
   PARTICIPANT = 'participant',
   INVITATION = 'invitation',
+  ACCEPT = 'accept',
+  REJECT = 'reject',
 }

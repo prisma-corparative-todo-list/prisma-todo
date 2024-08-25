@@ -1,9 +1,5 @@
 import { TasksList, AddTaskPanel, TaskSidebar } from '../../../widgets/task';
-import {
-  getWeedayMonthAndDay,
-  PageLayout,
-  useTask,
-} from '../../../shared';
+import { getWeedayMonthAndDay, PageLayout, useTask } from '../../../shared';
 import { useEffect, useState } from 'react';
 import { TasksHeader } from '../../../features/tasks-header';
 
@@ -63,12 +59,12 @@ export const TasksPage = () => {
     if (toggleCompleteTaskIsSuccess || toggleImportantStatusIsSuccess) {
       refetchTasks();
     }
-  }, [toggleCompleteTaskIsSuccess, toggleImportantStatusIsSuccess]);
+  }, [refetchTasks, toggleCompleteTaskIsSuccess, toggleImportantStatusIsSuccess]);
 
   return (
     <div className="flex">
       <PageLayout>
-      <TasksHeader title='All Tasks'/>
+        <TasksHeader title="All Tasks" />
         <TasksList
           onToggleImportantStatus={handleToggleImportant}
           onToggleComplete={handleToggleComplete}
@@ -86,7 +82,7 @@ export const TasksPage = () => {
       </PageLayout>
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
-        toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}
+        completeTaskIsSuccess={toggleCompleteTaskIsSuccess}
         onClose={handleCloseSidebar}
         isOpen={isTaskSidebarVisible}
         taskId={taskId}

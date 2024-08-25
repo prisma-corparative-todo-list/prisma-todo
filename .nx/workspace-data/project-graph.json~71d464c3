@@ -15751,11 +15751,6 @@
       },
       {
         "source": "client",
-        "target": "npm:react-scroll-to-bottom",
-        "type": "static"
-      },
-      {
-        "source": "client",
         "target": "npm:@nx/react",
         "type": "static"
       },

@@ -13,14 +13,14 @@ import dayjs from 'dayjs';
 interface IProps {
   onChangeDate: (e: any) => void;
   date: Date | null
-  text: string;
+
   className: string;
 }
 
 export const DatePicker: FC<IProps> = ({
   onChangeDate,
   date,
-  text,
+
   className,
 }) => {
   const [isSelectVisible, setIsSelectVisible] = useState(false);

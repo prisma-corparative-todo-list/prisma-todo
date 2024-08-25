@@ -70,7 +70,7 @@ export const MessageList = () => {
     <div className="h-[72%]">
       <ul
         ref={ulRef}
-        className="list-none h-full overflow-auto rounded-lg pl-5 relative"
+        className="list-none h-full overflow-auto pl-5 relative"
         onScroll={handleScroll}
       >
         <li ref={ref} />

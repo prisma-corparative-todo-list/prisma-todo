@@ -20,7 +20,9 @@ import { UserService } from 'user';
 import { TokenService } from './helpers/token.service';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { CurrentUser } from 'user/decorators/current-user.decorator';
-import { ITokensAndUserId } from '../../../../interfaces';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ITokensAndUser } from '../../../../interfaces';
+
 
 @Controller('auth')
 export class AuthController {
@@ -84,11 +86,11 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   public async refresh(
-    @CurrentUser() { email, id: userId }: User,
+    @CurrentUser() user: User,
     @Res({ passthrough: true }) res
-  ): Promise<ITokensAndUserId> {
+  ): Promise<ITokensAndUser> {
 
-    const tokens = await this.tokenService.generateTokens(email, userId);
+    const tokens = await this.tokenService.generateTokens(user.email, user.id);
 
     res.cookie('accessToken', tokens.accessToken, {
       maxAge: 24 * 60 * 60 * 1000,
@@ -103,7 +105,7 @@ export class AuthController {
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken,
       },
-      userId,
+      user,
     };
   }
 

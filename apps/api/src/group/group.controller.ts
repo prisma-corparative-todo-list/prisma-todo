@@ -20,11 +20,15 @@ import { CreateGroupDto } from './dtos/create-group.dto';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { IGroupInfo } from '../../../../interfaces';
+import { ParticipantService } from '../participant/participant.service';
 
 @UseGuards(AccessTokenGuard)
 @Controller('group')
 export class GroupController {
-  constructor(private readonly groupService: GroupService) {}
+  constructor(
+    private readonly groupService: GroupService,
+    private readonly participantService: ParticipantService
+  ) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('photo'))
@@ -33,17 +37,25 @@ export class GroupController {
     @File() filename: string,
     @CurrentUser() { id }: User
   ): Promise<Group> {
-    return await this.groupService.create({
+    const group = await this.groupService.create({
       ...dto,
       logo: filename,
-      owner: { connect: { id, } },
+      owner: { connect: { id } },
     });
+
+    await this.participantService.createOne({
+      user: { connect: { id } },
+      group: { connect: { id: group.id } },
+      role: 'ADMIN',
+    });
+
+    return group;
   }
 
   @Get()
   public async findMany(@CurrentUser() { id: userId }: User): Promise<Group[]> {
     return await this.groupService.findMany({
-      participants: { every: { userId } },
+      participants: { some: { userId } },
     });
   }
 
@@ -68,8 +80,8 @@ export class GroupController {
     await this.groupService.deleteOne({ id: groupId });
   }
 
-  @Get(":groupId")
-  public async findOne(@Param("groupId") groupId: string): Promise<IGroupInfo> {
+  @Get(':groupId')
+  public async findOne(@Param('groupId') groupId: string): Promise<IGroupInfo> {
     return await this.groupService.findOne({ id: groupId });
   }
 }

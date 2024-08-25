@@ -55,11 +55,14 @@ export const TaskService = {
   },
 
   async updateOne(data: Prisma.TaskUpdateInput): Promise<Task> {
+
+    console.log(data)
+
     return (await this.axios.patch(`/${SERVICE_URL.TASK}/${data.id}`, data))
       .data;
   },
 
-  async deleteOne(id: string): Promise<void> {
+  async deleteOne(id?: string): Promise<void> {
     await this.axios.delete(`/${SERVICE_URL.TASK}/${id}`);
   },
 

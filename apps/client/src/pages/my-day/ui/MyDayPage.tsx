@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getWeedayMonthAndDay, useGetTasks } from '../../../shared';
+import { getWeedayMonthAndDay, useGetTasks, useTask } from '../../../shared';
 import { AddTaskPanel, TasksList, TaskSidebar } from '../../../widgets/task';
 import {
   useCreateTask,
@@ -11,9 +11,7 @@ import { TasksHeader } from '../../../features/tasks-header';
 export const MyDayPage = () => {
   const formattedDate = getWeedayMonthAndDay(new Date());
 
-  const [date, setDate] = useState<Date>(
-    new Date(new Date(Date.now()).toDateString())
-  );
+  const [date, setDate] = useState(() => new Date(new Date().toDateString()));
 
   const {
     tasks,
@@ -78,12 +76,16 @@ export const MyDayPage = () => {
     if (toggleCompleteTaskIsSuccess || toggleImportantStatusIsSuccess) {
       refetchTasks();
     }
-  }, [toggleCompleteTaskIsSuccess, toggleImportantStatusIsSuccess]);
+  }, [
+    refetchTasks,
+    toggleCompleteTaskIsSuccess,
+    toggleImportantStatusIsSuccess,
+  ]);
 
   return (
     <div className="flex">
       <div className="p-5 h-screen basis-full">
-      <TasksHeader title='Planned tasks'/>
+        <TasksHeader title="My Day" />
         <TasksList
           onToggleImportantStatus={handleToggleImportant}
           onToggleComplete={handleToggleComplete}
@@ -101,7 +103,7 @@ export const MyDayPage = () => {
       </div>
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
-        toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}
+        completeTaskIsSuccess={toggleCompleteTaskIsSuccess}
         onClose={handleCloseSidebar}
         isOpen={isTaskSidebarVisible}
         taskId={taskId}

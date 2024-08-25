@@ -55,7 +55,13 @@ export const StepItem: FC<IProps> = ({ step, refetchTasks, refetchSteps }) => {
       refetchTasks();
       refetchSteps();
     }
-  }, [toggleCompleteStepIsSuccess, deleteStepIsSuccess, updateStepIsSuccess]);
+  }, [
+    toggleCompleteStepIsSuccess,
+    deleteStepIsSuccess,
+    updateStepIsSuccess,
+    refetchTasks,
+    refetchSteps,
+  ]);
 
   useEffect(() => {
     if (step.content) {
@@ -64,32 +70,27 @@ export const StepItem: FC<IProps> = ({ step, refetchTasks, refetchSteps }) => {
   }, [step]);
 
   return (
-    <>
-      <li key={step.id} className="border-2 mb-3 p-2 rounded-md flex">
-        <Checkbox
-          onClick={handleToggleCompleteStep}
-          checked={step.isCompleted}
-        />
-        {!isInputVisible ? (
-          <button
-            onClick={handleToggleVisibleInput}
-            className="block w-full text-left"
-          >
-            <p>{step.content}</p>
-          </button>
-        ) : (
-          <input
-            type="text"
-            className="border-b-2 outline-none"
-            onChange={handleChangeStep}
-            onBlur={handleUpdateStep}
-            defaultValue={stepValue}
-          />
-        )}
-        <button onClick={handleDeleteStep}>
-          <ClearIcon />
+    <li key={step.id} className="border-2 mb-3 p-2 rounded-md flex">
+      <Checkbox onClick={handleToggleCompleteStep} checked={step.isCompleted} />
+      {!isInputVisible ? (
+        <button
+          onClick={handleToggleVisibleInput}
+          className="block w-[150px] text-left"
+        >
+          <p>{step.content}</p>
         </button>
-      </li>
-    </>
+      ) : (
+        <input
+          type="text"
+          className="border-b-2 outline-none"
+          onChange={handleChangeStep}
+          onBlur={handleUpdateStep}
+          defaultValue={stepValue}
+        />
+      )}
+      <button onClick={handleDeleteStep}>
+        <ClearIcon />
+      </button>
+    </li>
   );
 };

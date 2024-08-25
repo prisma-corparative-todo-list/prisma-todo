@@ -9,24 +9,20 @@ export const ProtectedRoutes: FC = () => {
   const { refreshIsSuccess, refreshIsPending, tokensCreds } =
     useRefreshTokens();
 
-  const { isAuth, setAuth } = useAuthStore();
+  const { setAuth } = useAuthStore();
 
-  const { setUserId, userId } = useUserStore();
+  const { setUser } = useUserStore();
 
   useEffect(() => {
     if (!refreshIsPending && !refreshIsSuccess) {
       navigate(`/`);
     }
-    
-    if (refreshIsSuccess && tokensCreds?.userId) {
+
+    if (refreshIsSuccess && tokensCreds?.user.id) {
       setAuth(true);
-      setUserId(tokensCreds?.userId);
+      setUser(tokensCreds.user);
     }
   }, [refreshIsSuccess, refreshIsPending]);
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };

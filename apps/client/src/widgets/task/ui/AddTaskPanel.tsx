@@ -56,7 +56,7 @@ export const AddTaskPanel: FC<IProps> = ({
     if (isTaskInputVisible) {
       setTask('');
     }
-  }, [createTaskIsSuccess, isTaskInputVisible]);
+  }, [createTaskIsSuccess, isTaskInputVisible, refreshTasks]);
 
   return (
     <div className="bg-[#faf9f0] p-5 rounded-lg flex justify-between relative">
@@ -74,11 +74,10 @@ export const AddTaskPanel: FC<IProps> = ({
           <div className="flex gap-5">
             {task.length >= 1 && (
               <>
-                <SelectLists currentListId={listId} />
+                <SelectLists />
                 <DatePicker
                   onChangeDate={onChangeDate}
                   date={date}
-                  text={task}
                   className="absolute right-1 top-[-245px]"
                 />
               </>

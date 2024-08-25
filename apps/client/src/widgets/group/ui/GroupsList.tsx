@@ -8,7 +8,7 @@ interface IProps {
 
 export const GroupsList: FC<IProps> = ({ groups }) => {
   return (
-    <ul className="mx-auto w-[50%]">
+    <ul className="mx-auto mt-[75px] w-[50%] h-[500px] px-5 overflow-y-auto">
       {groups?.map((group) => (
         <GroupItem key={group.id} group={group} />
       ))}

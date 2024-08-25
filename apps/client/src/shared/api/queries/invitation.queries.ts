@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import { InvitationService } from '../services/invitation.service';
 import { QUERY_KEYS } from '../../model/constants';
 import { ICreateInvitation } from 'interfaces';
@@ -9,10 +9,17 @@ export const useGetInvitations = () => {
     isSuccess: invitationsIsSuccess,
     isError: invitationsIsError,
     isLoading: invitationsIsLoading,
-  } = useQuery({
+    fetchNextPage: fetchNextInvitationsPage,
+    refetch: refetchInvitations,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: [QUERY_KEYS.INVITATION],
-    queryFn: async () => {
-      return await InvitationService.findMany();
+    queryFn: async ({ pageParam = 0 }) => {
+      return await InvitationService.findMany({ cursor: pageParam, limit: 5 });
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      return lastPage.nextCursor;
     },
   });
   return {
@@ -20,6 +27,9 @@ export const useGetInvitations = () => {
     invitationsIsSuccess,
     invitationsIsError,
     invitationsIsLoading,
+    fetchNextInvitationsPage,
+    hasNextPage,
+    refetchInvitations,
   };
 };
 
@@ -39,6 +49,40 @@ export const usePostInvitation = () => {
     postInvitation,
     postInvitationIsSuccess,
     postInvitationIsError,
-    postInvitationResult
+    postInvitationResult,
+  };
+};
+
+export const useAcceptInvitation = () => {
+  const { mutate: acceptInvitation, isSuccess: acceptInvitationIsSuccess } =
+    useMutation({
+      mutationKey: [QUERY_KEYS.INVITATION],
+      mutationFn: async ({
+        groupId,
+        invitationId,
+      }: {
+        groupId: string;
+        invitationId: string;
+      }) => {
+        return await InvitationService.accept({ groupId, invitationId });
+      },
+    });
+  return {
+    acceptInvitation,
+    acceptInvitationIsSuccess,
+  };
+};
+
+export const useRejectInvitation = () => {
+  const { mutate: rejectInvitation, isSuccess: rejectInvitationIsSuccess } =
+    useMutation({
+      mutationKey: [QUERY_KEYS.INVITATION],
+      mutationFn: async (invitationId: string) => {
+        return await InvitationService.reject(invitationId);
+      },
+    });
+  return {
+    rejectInvitation,
+    rejectInvitationIsSuccess,
   };
 };

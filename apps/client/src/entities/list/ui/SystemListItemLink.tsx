@@ -14,7 +14,7 @@ export const SystemListItemLink: FC<IProps> = ({ children, pageUrl }) => {
           location.pathname === `${pageUrl}` && 'bg-[#e2e3d1]'
         }`}
       >
-        <Link className="flex items-center gap-5 p-5" to={`${pageUrl}`}>
+        <Link className="flex items-center gap-5 p-3" to={`${pageUrl}`}>
           {children}
         </Link>
       </li>

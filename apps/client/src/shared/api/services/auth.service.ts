@@ -2,7 +2,7 @@ import { User } from 'prisma/prisma-client';
 import { ISinginForm, ISingupFormData } from '../../model/types/auth.types';
 import { instance } from '../api.instance';
 import { QUERY_KEYS, SERVICE_URL } from '../../model/constants';
-import { ITokensAndUserId } from 'interfaces';
+import { ITokensAndUser } from 'interfaces';
 
 export const AuthService = {
   async signup(data: ISingupFormData): Promise<User> {
@@ -17,7 +17,7 @@ export const AuthService = {
       data
     );
   },
-  async refresh(): Promise<ITokensAndUserId> {
+  async refresh(): Promise<ITokensAndUser> {
     return (await instance.get(`${SERVICE_URL.AUTH}/${QUERY_KEYS.REFRESH}`))
       .data;
   },

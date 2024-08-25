@@ -12,11 +12,10 @@ export function getWeedayMonthAndDay(date: Date): string {
   return formattedDate;
 }
 
-export function getWeedayMonthAndDayAndTime(date: Date): string {
+export function getMonthAndDayAndTime(date: Date): string {
   if (!date) return '';
 
   const options: Intl.DateTimeFormatOptions = {
-    weekday: 'long',
     day: 'numeric',
     month: 'long',
     hour: 'numeric',

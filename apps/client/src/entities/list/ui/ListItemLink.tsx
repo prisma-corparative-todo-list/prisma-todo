@@ -20,7 +20,7 @@ export const ListItemLink: FC<IProps> = ({ list, idx, className, label }) => {
       }`}
     >
       <Link
-        className={`block ${className} p-5 rounded-md`}
+        className={`block ${className} p-3 rounded-md`}
         to={`${PAGE_URLS.LIST}/${list?.id}`}
       >
         {label || list?.title ? list?.title : `no name list ${idx + 1}`}

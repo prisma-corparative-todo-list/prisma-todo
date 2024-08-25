@@ -16,8 +16,6 @@ export class AuthService {
         private readonly mailService?: MailService
       ) {}
       
-      private readonly logger = new Logger(AuthService.name)
-
     public async signup(data:SignupDto) : Promise<User> {
 
         const salt = await bcrypt.genSalt(5);

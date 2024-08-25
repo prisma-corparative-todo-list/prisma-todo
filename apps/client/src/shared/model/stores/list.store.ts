@@ -7,6 +7,8 @@ interface IListStore {
   defineUpdateListIsSuccess: (status: boolean) => void;
   isListsVisible: boolean;
   hideLists: () => void;
+  listId: string 
+  changeListId: (id: string ) => void
 }
 
 export const useListStore = create<IListStore>((set) => ({
@@ -16,4 +18,6 @@ export const useListStore = create<IListStore>((set) => ({
   defineUpdateListIsSuccess: (status: boolean) => set({ updateListIsSuccess: status }),
   isListsVisible: false,
   hideLists: () => set({isListsVisible: false}),
+  listId: "",
+  changeListId: (id: string ) => set({listId: id})
 }));

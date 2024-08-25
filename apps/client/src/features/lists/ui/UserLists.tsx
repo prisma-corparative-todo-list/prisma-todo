@@ -3,7 +3,7 @@ import { ListItemLink } from '../../../entities/list';
 import { useGetLists, useListStore, usePostList } from '../../../shared';
 import AddIcon from '@mui/icons-material/Add';
 
-export const UsersLists = () => {
+export const UserLists = () => {
   const { lists, listsIsSuccess, refetch } = useGetLists();
 
   const { postList, postListIsSuccess } = usePostList();
@@ -27,7 +27,7 @@ export const UsersLists = () => {
   }, [postListIsSuccess, deleteListIsSuccess, updateListIsSuccess]);
 
   return (
-    <div className="h-[38%] relative py-5 ">
+    <div className="h-[28%] relative py-2 ">
       <ul className="h-[90%] overflow-auto border-[black] border-y-2 mb-5 pb-5">
         {listsIsSuccess &&
           lists

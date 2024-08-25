@@ -25,14 +25,17 @@ export class GroupService {
 
     return {
       ...group,
-      participants
+      participants,
     };
   }
 
   public async findMany(
     payload: Prisma.GroupWhereInput = {}
   ): Promise<Group[]> {
-    return await this.prisma.group.findMany({ where: payload });
+    return await this.prisma.group.findMany({
+      where: payload,
+      include: { participants: true },
+    });
   }
 
   public async leave(userId: string, groupId: string): Promise<void> {

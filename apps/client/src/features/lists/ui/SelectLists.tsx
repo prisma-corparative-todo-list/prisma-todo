@@ -5,55 +5,36 @@ import {
   useGetList,
 } from '../../../shared/api/queries/list.queries';
 import { ListItemButton } from '../../../entities/list';
+import { useListStore } from '../../../shared';
 
-interface IProps {
-  currentListId?: string;
-}
-
-export const SelectLists: FC<IProps> = ({ currentListId }) => {
-  const [listId, setListId] = useState('');
+export const SelectLists = () => {
+  const { listId } = useListStore();
 
   const [isListVisible, setIsListVisible] = useState(false);
 
-  const { lists, listsIsError, listsIsPending, listsIsSuccess } = useGetLists();
+  const { lists, listsIsSuccess } = useGetLists();
 
-  const { list, listIsSuccess, listIsError } = useGetList(listId);
+  const { list } = useGetList(listId);
 
   const toggleList = () => {
     setIsListVisible((prev) => !prev);
   };
 
-  const handleAddList = (listId: string | null) => {
-    setIsListVisible(false);
-  };
-
-  useEffect(() => {
-    if (currentListId) {
-      setListId(currentListId);
-    }
-  }, [currentListId]);
-
   return (
     <>
       {isListVisible && (
-        <div className="absolute right-1 top-[-310px] bg-white w-[300px] h-[300px] rounded-2xl overflow-auto">
-          <ul className="overflow-auto mb-5">
-            <li
-              onClick={() => handleAddList(null)}
-              className="w-full hover:bg-slate-100 p-5 rounded-t-2xl"
-            >
-              <button className="">Tasks</button>
-            </li>
+        <div className="absolute right-1 top-[-310px] bg-white w-[300px] h-[250px] rounded-2xl overflow-auto">
+          <ul className="overflow-auto mb-5 flex flex-col justify-between">
+            <ListItemButton onToggleVisibility={toggleList} />
             {listsIsSuccess &&
               lists
                 ?.reverse()
                 .map((list, idx) => (
                   <ListItemButton
+                    onToggleVisibility={toggleList}
                     idx={idx}
                     key={list?.id || idx}
                     list={list}
-                    className="hover:bg-slate-100"
-        
                   />
                 ))}
           </ul>

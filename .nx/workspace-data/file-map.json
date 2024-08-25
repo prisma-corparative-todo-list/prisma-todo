@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.11",
     "ejs": "^3.1.10",
+    "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "nodemailer": "^6.9.14",
     "passport": "^0.7.0",
@@ -143,68 +144,68 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
-      },
-      {
-        "file": ".eslintrc.json",
-        "hash": "18315524891129148814"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "16936441711144470533"
-      },
-      {
         "file": "migrations.json",
         "hash": "10391131165700003340"
       },
       {
         "file": "interfaces/index.ts",
-        "hash": "4623552603105479157"
+        "hash": "5638362182994203209"
       },
       {
-        "file": "README.md",
-        "hash": "4353142399798978899"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "9753524631087297077"
+        "file": "package.json",
+        "hash": "17639220864141138978"
       },
       {
         "file": "nx.json",
         "hash": "10375793336502971330"
       },
       {
-        "file": ".vscode/extensions.json",
-        "hash": "4934098906304722861"
-      },
-      {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
-      },
-      {
-        "file": ".prettierignore",
-        "hash": "16448050467312557263"
-      },
-      {
         "file": "jest.config.ts",
         "hash": "3494843969422251966"
-      },
-      {
-        "file": "package.json",
-        "hash": "13814857826796889990"
       },
       {
         "file": ".eslintignore",
         "hash": "7663861978715868291"
       },
       {
-        "file": ".prettierrc",
-        "hash": "16267754514737964994"
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
       },
       {
         "file": ".gitignore",
         "hash": "16877376182141465221"
+      },
+      {
+        "file": "README.md",
+        "hash": "4353142399798978899"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "18315524891129148814"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "3907073417804430290"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16936441711144470533"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
       }
     ],
     "projectFileMap": {
@@ -242,12 +243,20 @@
           "hash": "3651481348983248016"
         },
         {
+          "file": "apps/api/prisma/migrations/20240819143428_/migration.sql",
+          "hash": "13642986105237124338"
+        },
+        {
+          "file": "apps/api/prisma/migrations/20240820095152_/migration.sql",
+          "hash": "10166202493918889437"
+        },
+        {
           "file": "apps/api/prisma/migrations/migration_lock.toml",
           "hash": "11493296588214560035"
         },
         {
           "file": "apps/api/prisma/schema.prisma",
-          "hash": "15815796705676644089"
+          "hash": "9397736471497229947"
         },
         {
           "file": "apps/api/project.json",
@@ -255,7 +264,7 @@
         },
         {
           "file": "apps/api/src/app/app.module.ts",
-          "hash": "11473067242975743208",
+          "hash": "895926071958845312",
           "deps": [
             "npm:@nestjs/common",
             "npm:@nestjs/config"
@@ -267,7 +276,7 @@
         },
         {
           "file": "apps/api/src/auth/auth.controller.ts",
-          "hash": "783374249182245369",
+          "hash": "16674538059073060144",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"
@@ -284,7 +293,7 @@
         },
         {
           "file": "apps/api/src/auth/auth.service.ts",
-          "hash": "15995126824467198997",
+          "hash": "15792967046827181644",
           "deps": [
             "npm:@nestjs/common",
             "npm:bcrypt",
@@ -293,7 +302,10 @@
         },
         {
           "file": "apps/api/src/auth/dto/index.ts",
-          "hash": "5083560406057361234"
+          "hash": "16458497554130951107",
+          "deps": [
+            "npm:prisma"
+          ]
         },
         {
           "file": "apps/api/src/auth/guards/access-token.guard.ts",
@@ -373,7 +385,7 @@
         },
         {
           "file": "apps/api/src/chat/chat.gateway.ts",
-          "hash": "9959712281212020206",
+          "hash": "16375460321246291211",
           "deps": [
             "npm:@nestjs/websockets",
             "npm:socket.io",
@@ -405,7 +417,7 @@
         },
         {
           "file": "apps/api/src/group/group.controller.ts",
-          "hash": "5946464593092654180",
+          "hash": "6947078254564539855",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma",
@@ -414,7 +426,7 @@
         },
         {
           "file": "apps/api/src/group/group.module.ts",
-          "hash": "156382150074611885",
+          "hash": "17052553688851292800",
           "deps": [
             "npm:@nestjs/common",
             "npm:@nestjs/platform-express"
@@ -422,7 +434,41 @@
         },
         {
           "file": "apps/api/src/group/group.service.ts",
-          "hash": "4792133962803359554",
+          "hash": "18126657682355176900",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:prisma"
+          ]
+        },
+        {
+          "file": "apps/api/src/invitation/dto/create-invitation.dto.ts",
+          "hash": "13741354030459548609"
+        },
+        {
+          "file": "apps/api/src/invitation/invitation.controller.ts",
+          "hash": "16229743407204614459",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:prisma"
+          ]
+        },
+        {
+          "file": "apps/api/src/invitation/invitation.guard.ts",
+          "hash": "9729303111187614385",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/invitation/invitation.module.ts",
+          "hash": "3717720083830411449",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/invitation/invitation.service.ts",
+          "hash": "12272832656051276195",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"
@@ -500,7 +546,7 @@
         },
         {
           "file": "apps/api/src/message/message.controller.ts",
-          "hash": "3435570657909057649",
+          "hash": "9975556881923254246",
           "deps": [
             "npm:@nestjs/common"
           ]
@@ -522,7 +568,7 @@
         },
         {
           "file": "apps/api/src/participant/participant.controller.ts",
-          "hash": "16154777082391151538",
+          "hash": "3622179780481688729",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"
@@ -530,14 +576,14 @@
         },
         {
           "file": "apps/api/src/participant/participant.module.ts",
-          "hash": "3658031178849234769",
+          "hash": "540694083473209470",
           "deps": [
             "npm:@nestjs/common"
           ]
         },
         {
           "file": "apps/api/src/participant/participant.service.ts",
-          "hash": "5594660594571219766",
+          "hash": "9532284656310023322",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"
@@ -622,11 +668,15 @@
         },
         {
           "file": "apps/api/src/task/dto/create-task.dto.ts",
-          "hash": "805936883187874973"
+          "hash": "17655885697626351963"
+        },
+        {
+          "file": "apps/api/src/task/dto/update-task.dto.ts",
+          "hash": "16710700334757646085"
         },
         {
           "file": "apps/api/src/task/task.controller.ts",
-          "hash": "11140775507338293985",
+          "hash": "576101921477682442",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"
@@ -641,7 +691,33 @@
         },
         {
           "file": "apps/api/src/task/task.service.ts",
-          "hash": "544506640158281892",
+          "hash": "10457815116809082565",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:prisma"
+          ]
+        },
+        {
+          "file": "apps/api/src/user-task/dto/create-user-task.dto.ts",
+          "hash": "9202271826267332112"
+        },
+        {
+          "file": "apps/api/src/user-task/user-task.controller.ts",
+          "hash": "8287772134966009385",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/user-task/user-task.module.ts",
+          "hash": "15082132461267892214",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api/src/user-task/user-task.service.ts",
+          "hash": "7500454103660446233",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"
@@ -806,12 +882,23 @@
           ]
         },
         {
+          "file": "apps/client/src/entities/invitation/index.ts",
+          "hash": "3390995495928569170"
+        },
+        {
+          "file": "apps/client/src/entities/invitation/ui/InvitationItem.tsx",
+          "hash": "4829608269903979525",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
           "file": "apps/client/src/entities/list/index.ts",
           "hash": "9248633764752808125"
         },
         {
           "file": "apps/client/src/entities/list/ui/ListItemButton.tsx",
-          "hash": "16515572149491799710",
+          "hash": "8813701549082074195",
           "deps": [
             "npm:prisma",
             "npm:react"
@@ -819,7 +906,7 @@
         },
         {
           "file": "apps/client/src/entities/list/ui/ListItemLink.tsx",
-          "hash": "14951140686961277255",
+          "hash": "977910277877446972",
           "deps": [
             "npm:prisma",
             "npm:react",
@@ -828,7 +915,7 @@
         },
         {
           "file": "apps/client/src/entities/list/ui/SystemListItemLink.tsx",
-          "hash": "15014251256022075247",
+          "hash": "4081529756293206246",
           "deps": [
             "npm:react",
             "npm:react-router-dom"
@@ -840,7 +927,7 @@
         },
         {
           "file": "apps/client/src/entities/message/ui/MessageItem.tsx",
-          "hash": "15308354420202136844",
+          "hash": "13007629372960077995",
           "deps": [
             "npm:react"
           ]
@@ -851,7 +938,7 @@
         },
         {
           "file": "apps/client/src/entities/step/ui/StepItem.tsx",
-          "hash": "2609912002047677327",
+          "hash": "10451251351581172355",
           "deps": [
             "npm:@mui/material",
             "npm:prisma",
@@ -865,7 +952,7 @@
         },
         {
           "file": "apps/client/src/entities/task/ui/TaskItem.tsx",
-          "hash": "14984075276680859091",
+          "hash": "6157787311002874719",
           "deps": [
             "npm:react",
             "npm:prisma",
@@ -879,7 +966,7 @@
         },
         {
           "file": "apps/client/src/features/date-picker/ui/DatePicker.tsx",
-          "hash": "16816582677242329459",
+          "hash": "4255101681173574895",
           "deps": [
             "npm:@mui/icons-material",
             "npm:react",
@@ -889,29 +976,41 @@
         },
         {
           "file": "apps/client/src/features/group/index.ts",
-          "hash": "10411078524082367893"
-        },
-        {
-          "file": "apps/client/src/features/group/ui/GroupDetails.tsx",
-          "hash": "15561484660869868066",
-          "deps": [
-            "npm:react-router-dom"
-          ]
+          "hash": "4216329072944364161"
         },
         {
           "file": "apps/client/src/features/group/ui/GroupManagementButtons.tsx",
-          "hash": "2931628800058763759",
+          "hash": "8094718784385397911",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/group/ui/SidebarGroupHeader.tsx",
+          "hash": "5198362655553449571",
+          "deps": [
+            "npm:react-router-dom",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/invitation/index.ts",
+          "hash": "1715262363308686794"
+        },
+        {
+          "file": "apps/client/src/features/invitation/ui/InvitationsList.tsx",
+          "hash": "16239235426992134517",
           "deps": [
             "npm:react"
           ]
         },
         {
           "file": "apps/client/src/features/lists/index.ts",
-          "hash": "10409223797249374265"
+          "hash": "4056853016065857541"
         },
         {
           "file": "apps/client/src/features/lists/ui/SelectLists.tsx",
-          "hash": "14477621388922770964",
+          "hash": "5060522446989699014",
           "deps": [
             "npm:prisma",
             "npm:react"
@@ -919,15 +1018,15 @@
         },
         {
           "file": "apps/client/src/features/lists/ui/SystemLists.tsx",
-          "hash": "3672747843057029318",
+          "hash": "363234997678167927",
           "deps": [
             "npm:react-router-dom",
             "npm:@mui/icons-material"
           ]
         },
         {
-          "file": "apps/client/src/features/lists/ui/UsersLists.tsx",
-          "hash": "9588325531566560487",
+          "file": "apps/client/src/features/lists/ui/UserLists.tsx",
+          "hash": "2963346945456532626",
           "deps": [
             "npm:react",
             "npm:@mui/icons-material"
@@ -939,10 +1038,22 @@
         },
         {
           "file": "apps/client/src/features/message/ui/PostMessagePanel.tsx",
-          "hash": "5425962900604898737",
+          "hash": "3415013624281071557",
           "deps": [
             "npm:react",
             "npm:react-router"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/profile-menu/index.ts",
+          "hash": "8180022231776907495"
+        },
+        {
+          "file": "apps/client/src/features/profile-menu/ui/ProfileMenu.tsx",
+          "hash": "475430795595102645",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
           ]
         },
         {
@@ -1002,6 +1113,10 @@
           ]
         },
         {
+          "file": "apps/client/src/features/step/index.ts",
+          "hash": "9746078467244847497"
+        },
+        {
           "file": "apps/client/src/features/task/index.ts",
           "hash": "13442889539608578281"
         },
@@ -1016,10 +1131,21 @@
         },
         {
           "file": "apps/client/src/features/task/ui/TaskDetails.tsx",
-          "hash": "17086960449293118020",
+          "hash": "2629533137130456152",
           "deps": [
             "npm:react",
             "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/tasks-header/index.ts",
+          "hash": "5129439101274193841"
+        },
+        {
+          "file": "apps/client/src/features/tasks-header/ui/tasks-header.tsx",
+          "hash": "8014049889377201173",
+          "deps": [
+            "npm:react"
           ]
         },
         {
@@ -1056,7 +1182,7 @@
         },
         {
           "file": "apps/client/src/pages/group/ui/GroupPage.tsx",
-          "hash": "16396065944378808223",
+          "hash": "266910116497117400",
           "deps": [
             "npm:react",
             "npm:react-router-dom"
@@ -1064,7 +1190,7 @@
         },
         {
           "file": "apps/client/src/pages/group/ui/GroupsPage.tsx",
-          "hash": "4641477212085037222",
+          "hash": "1535895928464322218",
           "deps": [
             "npm:react"
           ]
@@ -1086,7 +1212,7 @@
         },
         {
           "file": "apps/client/src/pages/important-tasks/ui/ImportantTasksPage.tsx",
-          "hash": "10809617213783641893",
+          "hash": "8036351579694442470",
           "deps": [
             "npm:react"
           ]
@@ -1097,7 +1223,7 @@
         },
         {
           "file": "apps/client/src/pages/my-day/ui/MyDayPage.tsx",
-          "hash": "17359387681844051620",
+          "hash": "11006469408946058303",
           "deps": [
             "npm:react"
           ]
@@ -1108,7 +1234,7 @@
         },
         {
           "file": "apps/client/src/pages/planned-tasks/ui/PlannedTasksPage.tsx",
-          "hash": "17409573401019791345",
+          "hash": "6780400780545276479",
           "deps": [
             "npm:react"
           ]
@@ -1135,7 +1261,7 @@
         },
         {
           "file": "apps/client/src/pages/tasks/ui/TasksPage.tsx",
-          "hash": "4277019344732223481",
+          "hash": "15569373435965826362",
           "deps": [
             "npm:react"
           ]
@@ -1146,7 +1272,7 @@
         },
         {
           "file": "apps/client/src/pages/user-list/ui/UserListPage.tsx",
-          "hash": "1832212737945564054",
+          "hash": "4062515318516872773",
           "deps": [
             "npm:react",
             "npm:react-router-dom",
@@ -1166,7 +1292,7 @@
         },
         {
           "file": "apps/client/src/shared/api/queries/auth.queries.ts",
-          "hash": "10747627530750387973",
+          "hash": "3602641533184641044",
           "deps": [
             "npm:@tanstack/react-query",
             "npm:react-router-dom"
@@ -1174,7 +1300,14 @@
         },
         {
           "file": "apps/client/src/shared/api/queries/group.queries.ts",
-          "hash": "11627180571601286691",
+          "hash": "1146534469324596423",
+          "deps": [
+            "npm:@tanstack/react-query"
+          ]
+        },
+        {
+          "file": "apps/client/src/shared/api/queries/invitation.queries.ts",
+          "hash": "14522333757093932405",
           "deps": [
             "npm:@tanstack/react-query"
           ]
@@ -1217,29 +1350,29 @@
         },
         {
           "file": "apps/client/src/shared/api/queries/task.queries.ts",
-          "hash": "11884064288920470306",
+          "hash": "16459367542150797038",
           "deps": [
             "npm:@tanstack/react-query",
             "npm:prisma"
           ]
         },
         {
-          "file": "apps/client/src/shared/api/queries/user.queries.ts",
-          "hash": "13821425283106355510",
-          "deps": [
-            "npm:@tanstack/react-query"
-          ]
-        },
-        {
           "file": "apps/client/src/shared/api/services/auth.service.ts",
-          "hash": "8971990018737232532",
+          "hash": "2428673057122507705",
           "deps": [
             "npm:prisma"
           ]
         },
         {
           "file": "apps/client/src/shared/api/services/group.service.ts",
-          "hash": "17524474510273159310",
+          "hash": "17060716105917228784",
+          "deps": [
+            "npm:prisma"
+          ]
+        },
+        {
+          "file": "apps/client/src/shared/api/services/invitation.service.ts",
+          "hash": "10910077429145764699",
           "deps": [
             "npm:prisma"
           ]
@@ -1279,7 +1412,7 @@
         },
         {
           "file": "apps/client/src/shared/api/services/task.service.ts",
-          "hash": "5809473773711334427",
+          "hash": "16454406335501521459",
           "deps": [
             "npm:prisma",
             "npm:axios"
@@ -1294,15 +1427,15 @@
         },
         {
           "file": "apps/client/src/shared/index.ts",
-          "hash": "1153272042439061405"
+          "hash": "13627547610354400359"
         },
         {
           "file": "apps/client/src/shared/model/constants.ts",
-          "hash": "17365308903611076253"
+          "hash": "513540571046924516"
         },
         {
           "file": "apps/client/src/shared/model/functions/formatTime.ts",
-          "hash": "7950216849117091581"
+          "hash": "2256929654840053506"
         },
         {
           "file": "apps/client/src/shared/model/hooks/useGroup.ts",
@@ -1333,7 +1466,7 @@
         },
         {
           "file": "apps/client/src/shared/model/stores/list.store.ts",
-          "hash": "768373023735683112",
+          "hash": "6093503879239588862",
           "deps": [
             "npm:zustand"
           ]
@@ -1347,8 +1480,9 @@
         },
         {
           "file": "apps/client/src/shared/model/stores/user.store.ts",
-          "hash": "6186066347666400553",
+          "hash": "12285245130299873597",
           "deps": [
+            "npm:prisma",
             "npm:zustand"
           ]
         },
@@ -1358,6 +1492,10 @@
           "deps": [
             "npm:prisma"
           ]
+        },
+        {
+          "file": "apps/client/src/shared/model/types/event.types.ts",
+          "hash": "6139692948319243931"
         },
         {
           "file": "apps/client/src/shared/model/types/message.types.ts",
@@ -1386,7 +1524,7 @@
         },
         {
           "file": "apps/client/src/shared/ui/InputField.tsx",
-          "hash": "11918208223239632677",
+          "hash": "16544900398755050437",
           "deps": [
             "npm:react",
             "npm:react-hook-form"
@@ -1401,6 +1539,21 @@
           ]
         },
         {
+          "file": "apps/client/src/shared/ui/ModalLayout.tsx",
+          "hash": "5024728291850445895",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/shared/ui/PageLayout.tsx",
+          "hash": "8937879738599499316",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
           "file": "apps/client/src/shared/ui/ProtectedGroupRoutes.tsx",
           "hash": "2940103382291264083",
           "deps": [
@@ -1409,7 +1562,7 @@
         },
         {
           "file": "apps/client/src/shared/ui/ProtectedRoutes.tsx",
-          "hash": "12395636284378842910",
+          "hash": "7752817947265598396",
           "deps": [
             "npm:react-router-dom",
             "npm:react"
@@ -1458,7 +1611,7 @@
         },
         {
           "file": "apps/client/src/widgets/Sidebar/ui/GeneralSidebar.tsx",
-          "hash": "15652893561406739226",
+          "hash": "18359480857132717672",
           "deps": [
             "npm:react-router-dom",
             "npm:@mui/icons-material"
@@ -1466,7 +1619,7 @@
         },
         {
           "file": "apps/client/src/widgets/group/index.ts",
-          "hash": "5896555422255084278"
+          "hash": "2309238394979276745"
         },
         {
           "file": "apps/client/src/widgets/group/model/group.interface.ts",
@@ -1483,8 +1636,22 @@
           ]
         },
         {
+          "file": "apps/client/src/widgets/group/model/invitation.interface.ts",
+          "hash": "7352953395284127006",
+          "deps": [
+            "npm:yup"
+          ]
+        },
+        {
+          "file": "apps/client/src/widgets/group/model/invitation.schema.ts",
+          "hash": "16157644469052224053",
+          "deps": [
+            "npm:yup"
+          ]
+        },
+        {
           "file": "apps/client/src/widgets/group/ui/CreateGroupModal.tsx",
-          "hash": "11580205216183297762",
+          "hash": "10060636691291804561",
           "deps": [
             "npm:react",
             "npm:@mui/material",
@@ -1493,8 +1660,27 @@
           ]
         },
         {
+          "file": "apps/client/src/widgets/group/ui/GroupHeader.tsx",
+          "hash": "3462449115187845828",
+          "deps": [
+            "npm:prisma",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/widgets/group/ui/GroupInviteModal.tsx",
+          "hash": "17752074908461601092",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:react-hook-form",
+            "npm:@hookform/resolvers",
+            "npm:react-router-dom"
+          ]
+        },
+        {
           "file": "apps/client/src/widgets/group/ui/GroupSidebar.tsx",
-          "hash": "5453622056634984639",
+          "hash": "17930853518080046539",
           "deps": [
             "npm:@mui/material",
             "npm:react"
@@ -1502,7 +1688,7 @@
         },
         {
           "file": "apps/client/src/widgets/group/ui/GroupsList.tsx",
-          "hash": "18160684614044824669",
+          "hash": "12761910616372973787",
           "deps": [
             "npm:prisma",
             "npm:react"
@@ -1517,16 +1703,29 @@
           ]
         },
         {
+          "file": "apps/client/src/widgets/invitation/index.ts",
+          "hash": "9613830184614091479"
+        },
+        {
+          "file": "apps/client/src/widgets/invitation/ui/InvitationsModal.tsx",
+          "hash": "18168288372560346193",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material"
+          ]
+        },
+        {
           "file": "apps/client/src/widgets/message/index.ts",
           "hash": "10298124307298313883"
         },
         {
           "file": "apps/client/src/widgets/message/ui/MessageList.tsx",
-          "hash": "9192557430693395667",
+          "hash": "10211101565667439703",
           "deps": [
             "npm:react",
             "npm:react-intersection-observer",
-            "npm:@mui/material"
+            "npm:@mui/material",
+            "npm:@mui/icons-material"
           ]
         },
         {
@@ -1535,7 +1734,7 @@
         },
         {
           "file": "apps/client/src/widgets/task/ui/AddTaskPanel.tsx",
-          "hash": "16064814206801118768",
+          "hash": "13023322187466410186",
           "deps": [
             "npm:@mui/icons-material",
             "npm:prisma",
@@ -1544,12 +1743,10 @@
         },
         {
           "file": "apps/client/src/widgets/task/ui/TaskSidebar.tsx",
-          "hash": "238187218864349175",
+          "hash": "14651145579273448250",
           "deps": [
             "npm:@mui/material",
-            "npm:react",
-            "npm:@mui/icons-material",
-            "npm:react-router-dom"
+            "npm:react"
           ]
         },
         {
@@ -1558,6 +1755,17 @@
           "deps": [
             "npm:react",
             "npm:prisma"
+          ]
+        },
+        {
+          "file": "apps/client/src/widgets/user/index.ts",
+          "hash": "3423610133424690100"
+        },
+        {
+          "file": "apps/client/src/widgets/user/ui/UserProfileButton.tsx",
+          "hash": "6764297824038205005",
+          "deps": [
+            "npm:react"
           ]
         },
         {
@@ -1586,6 +1794,14 @@
             "npm:vite",
             "npm:@vitejs/plugin-react",
             "npm:@nx/vite"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/step/ui/StepsList.tsx",
+          "hash": "16873080900893618497",
+          "deps": [
+            "npm:prisma",
+            "npm:react"
           ]
         }
       ]

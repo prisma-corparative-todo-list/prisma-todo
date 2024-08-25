@@ -5,7 +5,6 @@ import {
   Get,
   Logger,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -16,13 +15,16 @@ import { CurrentUser } from 'user/decorators/current-user.decorator';
 import { TaskService } from './task.service';
 import { AccessTokenGuard } from 'auth/guards/access-token.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ExtendedTask } from '../../../../interfaces';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @UseGuards(AccessTokenGuard)
 @Controller('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
-  private logger = new Logger(TaskController.name);
+  private log = new Logger(TaskController.name);
 
   @Get()
   public async findMany(
@@ -30,7 +32,7 @@ export class TaskController {
     @Query('deadline') deadline: Date,
     @Query('isImportant') isImportant?: string,
     @Query('isPlanned') isPlanned?: string
-  ): Promise<Task[] | null> {
+  ): Promise<ExtendedTask[] | null> {
     return await this.taskService.findMany({
       userId,
       deadLine: deadline,
@@ -42,9 +44,8 @@ export class TaskController {
   @Get('list/:listId')
   public async findListTasks(
     @Param('listId') listId: string
-  ): Promise<Task[] | null> {
-    this.logger.log(listId);
-
+  ): Promise<ExtendedTask[] | null> {
+  
     return await this.taskService.findMany({ listId });
   }
 
@@ -71,13 +72,13 @@ export class TaskController {
   @Patch(':taskId')
   public async updateOne(
     @Param('taskId') taskId: string,
-    @Body() dto: CreateTaskDto
+    @Body() dto: UpdateTaskDto
   ): Promise<Task> {
-    this.logger.log(dto);
     return await this.taskService.updateOne(
       { id: taskId },
       {
         title: dto.title,
+        description: dto.description,
         id: taskId,
         ...(dto.listId ? { list: { connect: { id: dto.listId } } } : {}),
       }

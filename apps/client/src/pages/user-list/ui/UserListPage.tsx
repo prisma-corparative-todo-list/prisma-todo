@@ -14,6 +14,7 @@ import {
 } from '../../../shared';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { UserListTitle } from '../../../features/user-list-title';
+import { PAGE_URLS } from '../../../shared';
 
 export const UserListPage = () => {
   const formattedDate = getWeedayMonthAndDay(new Date());
@@ -24,12 +25,9 @@ export const UserListPage = () => {
 
   const { deleteList, deleteListIsSuccess } = useDeleteList();
 
-  const {
-    tasks,
-    refetch: refetchTasks,
-  } = useGetUserListTasks(params?.listId);
+  const { tasks, refetch: refetchTasks } = useGetUserListTasks(params?.listId);
 
-  const { list, listIsSuccess, refetchList, listIsPending } = useGetList(
+  const { list, listIsSuccess, refetchList } = useGetList(
     params?.listId
   );
 
@@ -41,7 +39,7 @@ export const UserListPage = () => {
   const { toggleImportantStatus, toggleImportantStatusIsSuccess } =
     useToggleImportantStatus();
 
-  const { defineDeleteListIsSuccess, updateListIsSuccess } = useListStore();
+  const { defineDeleteListIsSuccess, updateListIsSuccess, listId, changeListId } = useListStore();
 
   const [isTaskSidebarVisible, setIsTaskSidebarVisible] = useState(false);
 
@@ -77,7 +75,7 @@ export const UserListPage = () => {
     listId?: string;
     deadLine: Date | null;
   }) => {
-    createTask(payload);
+    createTask({...payload});
   };
 
   const handleDeleteList = () => {
@@ -87,11 +85,17 @@ export const UserListPage = () => {
   };
 
   useEffect(() => {
+      if(params.listId){
+        changeListId(params.listId)
+      }
+  },[params.listId])
+
+  useEffect(() => {
     if (toggleCompleteTaskIsSuccess || toggleImportantStatusIsSuccess) {
       refetchTasks();
     }
     if (deleteListIsSuccess) {
-      navigate('/my-day');
+      navigate(PAGE_URLS.MY_DAY);
       refetchTasks();
       defineDeleteListIsSuccess(true);
     } else {
@@ -106,6 +110,10 @@ export const UserListPage = () => {
     listIsSuccess,
     deleteListIsSuccess,
     updateListIsSuccess,
+    refetchTasks,
+    navigate,
+    defineDeleteListIsSuccess,
+    refetchList,
   ]);
 
   return (
@@ -130,7 +138,7 @@ export const UserListPage = () => {
           date={date}
         />
         <AddTaskPanel
-          listId={params?.listId}
+          listId={listId}
           onAddTask={handleCreateTask}
           createTaskIsSuccess={createTaskIsSuccess}
           refreshTasks={refetchTasks}

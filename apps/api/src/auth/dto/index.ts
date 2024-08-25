@@ -1,3 +1,5 @@
+import { User } from "prisma/prisma-client";
+
 export class SignupDto {
   email: string;
   userName: string;
@@ -14,5 +16,5 @@ export class TokensAndUserIdResponse {
     accessToken: string;
     refreshToken: string;
   };
-  userId: string;
+  user: User;
 }

@@ -6,6 +6,7 @@ import {
 } from '../../../widgets/group';
 import { useGetGroups } from '../../../shared';
 import { GroupManagementButtons } from '../../../features/group';
+import { InvitationsModal } from '../../../widgets/invitation';   
 
 export const GroupsPage = () => {
   const {
@@ -22,11 +23,17 @@ export const GroupsPage = () => {
   const [isJoinGroupModalVisible, setIsJoinGroupModalVisible] =
     useState<boolean>(false);
 
+  const [isInvitationsModalVisible, setIsInvitationsModalVisible] =
+    useState<boolean>(false);
+
   const handleToggleCreateGroupModalVisibility = () =>
     setIsCreateGroupModalVisible((prev) => !prev);
 
   const handleToggleJoinGroupModalVisibility = () =>
     setIsJoinGroupModalVisible((prev) => !prev);
+
+  const handleToggleInvitationsModalVisibility = () =>
+    setIsInvitationsModalVisible((prev) => !prev);
 
   return (
     <>
@@ -34,6 +41,9 @@ export const GroupsPage = () => {
         <h3 className="text-3xl mb-[15px]">Your Groups </h3>
         <GroupsList groups={groups} />
         <GroupManagementButtons
+          onToggleInvitationsModalVisibility={
+            handleToggleInvitationsModalVisibility
+          }
           onToggleCreateGroupModalVisibility={
             handleToggleCreateGroupModalVisibility
           }
@@ -51,6 +61,12 @@ export const GroupsPage = () => {
       <JoinGroupModal
         isOpen={isJoinGroupModalVisible}
         onClose={handleToggleJoinGroupModalVisibility}
+      />
+
+      <InvitationsModal
+        isOpen={isInvitationsModalVisible}
+        refetchGroups={refetchGroups}
+        onClose={handleToggleInvitationsModalVisibility}
       />
     </>
   );

@@ -7,4 +7,5 @@ export class CreateTaskDto {
     isImportant?: boolean
     deadLine?: Date
     listId: string
+    description?: string
 }

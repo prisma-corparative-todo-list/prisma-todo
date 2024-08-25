@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import { Task } from 'prisma/prisma-client';
-import { getWeedayMonthAndDay } from '../../../shared/';
+import { getWeedayMonthAndDay, IEventClick } from '../../../shared/';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useGetSteps } from '../../../shared';
+import { ExtendedTask } from 'interfaces';
 
 interface IProps {
-  task: Task;
+  task: ExtendedTask;
   onOpenTaskSidebar: (e: any) => void;
   onToggleCompleteTask: (e: any) => void;
   onToggleImportantStatus: (e: any) => void;
@@ -20,17 +21,18 @@ export const TaskItem: FC<IProps> = ({
   onToggleCompleteTask,
   onToggleImportantStatus,
 }) => {
-  const handleToggleImportant = (e: any) => {
+  const handleToggleImportant = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
     onToggleImportantStatus(task.id);
   };
 
-  const handleToggleComplete = (e: any) => {
+  const handleToggleComplete = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
     onToggleCompleteTask(task.id);
   };
 
-  const ToggleImportantButtons = () => {
+
+  const ToggleImportantButton = () => {
     return task.isImportant ? (
       <button id="importantButton" onClick={handleToggleImportant}>
         <StarIcon fontSize="large" />
@@ -54,7 +56,7 @@ export const TaskItem: FC<IProps> = ({
         <Checkbox checked={task.isCompleted} onClick={handleToggleComplete} />
         <div>
           <p className="text-left">{task.title}</p>
-          <div className="flex gap-3">
+          <div className="flex justtify-between gap-3">
             <span
               className={
                 task.deadLine
@@ -75,6 +77,9 @@ export const TaskItem: FC<IProps> = ({
                 <DescriptionIcon fontSize="small" />
               </span>
             )}
+            {
+              task.list && <span>{task.list.title}</span>
+            }
             {steps?.length
               ? steps?.length >= 1 && (
                   <div>
@@ -89,7 +94,7 @@ export const TaskItem: FC<IProps> = ({
           </div>
         </div>
       </div>
-      {!task.isCompleted && <ToggleImportantButtons />}
+      {!task.isCompleted && <ToggleImportantButton />}
     </li>
   );
 };

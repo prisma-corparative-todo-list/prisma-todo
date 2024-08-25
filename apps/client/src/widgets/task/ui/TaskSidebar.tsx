@@ -1,16 +1,15 @@
 import { Drawer } from '@mui/material';
 import { FC, useEffect } from 'react';
 import { TaskDetails } from '../../../features/task/';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useDeleteTask } from '../../../shared';
-import { useParams } from 'react-router-dom';
+import { StepsList } from '../../../features/step';
 
 interface IProps {
   isOpen: boolean;
   taskId: string;
   onClose: () => void;
   onToggleComplete: (taskId: string) => void;
-  toggleCompleteTaskIsSuccess: boolean;
+  completeTaskIsSuccess: boolean;
   refetch: () => void;
 }
 
@@ -19,16 +18,10 @@ export const TaskSidebar: FC<IProps> = ({
   onClose,
   onToggleComplete,
   taskId,
-  toggleCompleteTaskIsSuccess,
+  completeTaskIsSuccess,
   refetch: refetchTasks,
 }) => {
-  const {
-    deleteTask,
-    deleteTaskIsSuccess,
-    deleteTaskIsError,
-    deleteTaskIsLoading,
-  } = useDeleteTask();
-
+  const { deleteTask, deleteTaskIsSuccess } = useDeleteTask();
 
   const handleDeleteTask = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -50,15 +43,12 @@ export const TaskSidebar: FC<IProps> = ({
       sx={{ minHeight: '100vh', position: 'relative' }}
     >
       <TaskDetails
-        toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}
         onToggleComplete={onToggleComplete}
         taskId={taskId}
+        toggleCompleteTaskIsSuccess={completeTaskIsSuccess}
         refetchTasks={refetchTasks}
-        onClose={onClose}
       />
-      <button onClick={handleDeleteTask} className="absolute bottom-10 right-10">
-        <DeleteIcon fontSize='large' />
-      </button>
+      <StepsList taskId={taskId} refetchTasks={refetchTasks} />
     </Drawer>
   );
 };

@@ -8,7 +8,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import { SystemListItemLink } from '../../../entities/list/';
 
 export const SystemLists = () => (
-  <ul className="border-b-2 pb-5">
+  <ul className="border-y-2 border-black py-2">
     <SystemListItemLink pageUrl={`${PAGE_URLS.MY_DAY}`}>
       <LightModeIcon fontSize="large" />
       <span className="text-2xl">My Day</span>

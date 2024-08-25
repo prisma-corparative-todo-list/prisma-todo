@@ -37,10 +37,15 @@ export const GroupInviteModal: FC<IProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (postInvitationIsSuccess || postInvitationIsError) {
-    console.log(postInvitationResult)
+      console.log(postInvitationResult);
       reset();
     }
-  }, [postInvitationIsError, postInvitationIsSuccess, reset]);
+  }, [
+    postInvitationIsError,
+    postInvitationIsSuccess,
+    postInvitationResult,
+    reset,
+  ]);
 
   return (
     <Modal open={isOpen} onClose={onClose}>
