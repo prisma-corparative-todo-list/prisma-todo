@@ -31,7 +31,6 @@ export const TaskItem: FC<IProps> = ({
     onToggleCompleteTask(task.id);
   };
 
-
   const ToggleImportantButton = () => {
     return task.isImportant ? (
       <button id="importantButton" onClick={handleToggleImportant}>
@@ -56,41 +55,40 @@ export const TaskItem: FC<IProps> = ({
         <Checkbox checked={task.isCompleted} onClick={handleToggleComplete} />
         <div>
           <p className="text-left">{task.title}</p>
-          <div className="flex justtify-between gap-3">
-            <span
-              className={
-                task.deadLine
-                  ? new Date(task?.deadLine).getDate() < new Date().getDate()
-                    ? 'text-red-600'
-                    : 'text-black-500'
-                  : ''
-              }
-            >
-              {task.deadLine &&
-              new Date(task.deadLine).getDate() === new Date().getDate()
-                ? 'My day'
-                : task.deadLine &&
-                  getWeedayMonthAndDay(new Date(task.deadLine))}
-            </span>
+          <div className="flex">
+            {task.list ? (
+              <span className="mr-2">{task.list.title}</span>
+            ) : (
+              <span
+                className={`${
+                  task.deadLine
+                    ? new Date(task.deadLine).getDate() < new Date().getDate()
+                      ? 'text-red-600 mr-2'
+                      : 'text-black-500 mr-2'
+                    : ''
+                }`}
+              >
+                {task.deadLine &&
+                new Date(task.deadLine).getDate() === new Date().getDate()
+                  ? 'My day'
+                  : task.deadLine &&
+                    getWeedayMonthAndDay(new Date(task.deadLine))}
+              </span>
+            )}
             {task.description && task.description.length >= 1 && (
-              <span>
+              <span className="mr-2">
                 <DescriptionIcon fontSize="small" />
               </span>
             )}
-            {
-              task.list && <span>{task.list.title}</span>
-            }
-            {steps?.length
-              ? steps?.length >= 1 && (
-                  <div>
-                    <span>
-                      {steps?.filter((el) => el.isCompleted === true).length}
-                    </span>
-                    {'/'}
-                    <span>{steps?.length}</span>
-                  </div>
-                )
-              : ''}
+            {steps?.length ? (
+              <div>
+                <span>{steps.filter((el) => el.isCompleted).length}</span>
+                {'/'}
+                <span>{steps.length}</span>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>
