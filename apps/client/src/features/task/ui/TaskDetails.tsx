@@ -15,6 +15,11 @@ interface IProps {
   onToggleComplete: (taskId: string) => void;
   toggleCompleteTaskIsSuccess: boolean;
   refetchTasks: () => void;
+  title: string;
+  description: string;
+  taskIsSuccess: boolean;
+  refetchTask: () => void;
+  isCompleted: boolean;
 }
 
 export const TaskDetails: FC<IProps> = ({
@@ -22,12 +27,15 @@ export const TaskDetails: FC<IProps> = ({
   onToggleComplete,
   toggleCompleteTaskIsSuccess,
   refetchTasks,
+  refetchTask,
+  taskIsSuccess,
+  title,
+  description,
+  isCompleted,
 }) => {
-  const [title, setTitle] = useState('');
+  const [titleValue, setTitleValue] = useState('');
 
-  const [description, setDescription] = useState('');
-
-  const { task, taskIsSuccess, refetch: refetchTask } = useGetTask(taskId);
+  const [descriptionValue, setDescriptionValue] = useState('');
 
   const { updateTask, updateTaskIsSuccess } = useUpdateTask(taskId);
 
@@ -35,20 +43,27 @@ export const TaskDetails: FC<IProps> = ({
 
   const handleUpdateTitle = (e: React.FocusEvent<HTMLInputElement>) => {
     e.preventDefault();
-    updateTask({ title });
+    updateTask({ title: titleValue });
   };
 
   const handleUpdateDescription = (
     e: React.FocusEvent<HTMLTextAreaElement>
   ) => {
     e.preventDefault();
-    updateTask({ description });
+    updateTask({ description: descriptionValue });
   };
 
   useEffect(() => {
-    if (taskIsSuccess && task) {
-      setTitle(task.title);
-      setDescription(task.description ?? '');
+    if (taskIsSuccess) {
+      setTitleValue(title);
+      setDescriptionValue(description ?? '');
+    }
+  }, [title, description, taskIsSuccess]);
+
+  useEffect(() => {
+    if (taskIsSuccess && title) {
+      setTitleValue(title);
+      setDescriptionValue(description ?? '');
     }
     if (toggleCompleteTaskIsSuccess || updateTaskIsSuccess) {
       refetchTask();
@@ -58,33 +73,34 @@ export const TaskDetails: FC<IProps> = ({
     refetchTask,
     toggleCompleteTaskIsSuccess,
     taskIsSuccess,
-    task,
+    title,
     updateTaskIsSuccess,
     refetchTasks,
+    description,
   ]);
 
   return (
-    <div className="mb-5 border-2 p-2 mx-2 mt-2 rounded-lg">
+    <div className="mb-2 border-2 p-2 mx-2 mt-2 rounded-lg">
       {
         <>
           <div className="mb-2">
             <Checkbox
               onClick={handleToggleComplete}
-              checked={task?.isCompleted ?? false}
+              checked={isCompleted ?? false}
             />
             <input
               type="text"
               className="outline-none border-b-2 border-black pb-2"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
+              onChange={(e) => setTitleValue(e.target.value)}
+              value={titleValue}
               onBlur={handleUpdateTitle}
             />
           </div>
           <textarea
             className="w-full outline-none border-b-2"
-            rows={description.length >= 50 ? 5 : 3}
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
+            rows={descriptionValue.length >= 50 ? 5 : 3}
+            onChange={(e) => setDescriptionValue(e.target.value)}
+            value={descriptionValue}
             onBlur={handleUpdateDescription}
           />
         </>

@@ -1,8 +1,9 @@
 import { Drawer } from '@mui/material';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { DeleteTaskButton, TaskDetails } from '../../../features/task/';
-import { useDeleteTask } from '../../../shared';
 import { StepsList } from '../../../features/step';
+import { ToggleTodayTask } from '../../../features/toggle-today-task';
+import { useGetTask, useGroupStore } from '../../../shared';
 
 interface IProps {
   isOpen: boolean;
@@ -21,6 +22,10 @@ export const TaskSidebar: FC<IProps> = ({
   completeTaskIsSuccess,
   refetch: refetchTasks,
 }) => {
+  const { task, taskIsSuccess, refetch: refetchTask } = useGetTask(taskId);
+
+
+
   return (
     <Drawer
       open={isOpen}
@@ -33,8 +38,20 @@ export const TaskSidebar: FC<IProps> = ({
         taskId={taskId}
         toggleCompleteTaskIsSuccess={completeTaskIsSuccess}
         refetchTasks={refetchTasks}
+        title={task?.title || ''}
+        description={task?.description || ''}
+        taskIsSuccess={taskIsSuccess}
+        refetchTask={refetchTask}
+        isCompleted={task?.isCompleted || false}
+      />
+      <ToggleTodayTask
+        refetchTask={refetchTask}
+        taskId={taskId}
+        refetchTasks={refetchTasks}
+        isToday={task?.isToday}
       />
       <StepsList taskId={taskId} refetchTasks={refetchTasks} />
+   
       <DeleteTaskButton
         className="absolute bottom-10 right-10"
         fontSize="large"

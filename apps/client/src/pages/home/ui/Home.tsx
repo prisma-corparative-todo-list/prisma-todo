@@ -1,9 +1,12 @@
-import { FC } from "react"
+import { HomeGreetingTitle } from "../../../features/home-greeting-title";
 
-export const HomePage: FC = () => {
-    return (
-        <div>
-            Home
-        </div>
-    )
-}
+
+export const HomePage = () => {
+ 
+
+  return (
+    <div className="p-5">
+      <HomeGreetingTitle/>
+    </div>
+  );
+};

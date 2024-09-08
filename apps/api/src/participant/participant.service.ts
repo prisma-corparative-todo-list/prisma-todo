@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Participant, Prisma, User } from 'prisma/prisma-client';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { IUserWithUserRole } from '../../../../interfaces';
 
 @Injectable()
 export class ParticipantService {
@@ -21,38 +23,20 @@ export class ParticipantService {
   }
 
   public async count(payload: Prisma.ParticipantWhereInput): Promise<number> {
-    return await this.prisma.participant.count({where: payload});
-  }
-
-  public async joinToGroup(
-    groupId: string,
-    userId: string
-  ): Promise<Participant | null> {
-    const candidate = await this.findOne({
-      groupId,
-      userId,
-    });
-
-    this.logger.log(candidate);
-
-    if (candidate) {
-      return null;
-    }
-
-    const participant = await this.createOne({
-      group: { connect: { id: groupId } },
-      user: { connect: { id: userId } },
-      role: 'PARTICIPANT',
-    });
-
-    return participant;
+    return await this.prisma.participant.count({ where: payload });
   }
 
   public async findMany(
     payload: Prisma.ParticipantWhereInput
-  ): Promise<User[]> {
-    const participants = await this.prisma.participant.findMany({ where: payload, select: { user: true, } });
+  ): Promise<IUserWithUserRole[]> {
+    const participants = await this.prisma.participant.findMany({
+      where: payload,
+      select: { user: true, role: true },
+    });
 
-    return participants.map(({user}) => user)
+    return participants.map((participant) => ({
+      ...participant.user,
+      role: participant.role,
+    }))
   }
 }

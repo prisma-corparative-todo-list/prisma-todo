@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '../../model/constants';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS, SERVICE_URL } from '../../model/constants';
 import { TaskService } from '../services/task.service';
 import { Prisma } from 'prisma/prisma-client';
 import { ICreateTask } from 'interfaces';
@@ -9,11 +9,13 @@ export const useGetTasks = ({
   deadline,
   isPlanned,
   id,
+  isToday,
 }: {
   isImportant?: boolean;
   deadline?: Date;
   isPlanned?: boolean;
   id?: string;
+  isToday?: boolean;
 } = {}) => {
   const {
     data: tasks,
@@ -29,6 +31,7 @@ export const useGetTasks = ({
         isImportant,
         isPlanned,
         id,
+        isToday,
       });
       return response;
     },
@@ -44,15 +47,24 @@ export const useGetTasks = ({
 };
 
 export const useCreateTask = () => {
+  const queryClient = useQueryClient();
+
   const {
     mutate: createTask,
     isPending: createTaskIsLoading,
     isError: createTaskIsError,
     isSuccess: createTaskIsSuccess,
+    submittedAt: createTaskSubmittedAt,
+    variables: createTaskVariables,
   } = useMutation({
     mutationFn: async (dto: ICreateTask) => {
       const response = await TaskService.create(dto);
       return response;
+    },
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: [SERVICE_URL.TASK],
+      });
     },
   });
   return {
@@ -60,10 +72,14 @@ export const useCreateTask = () => {
     createTaskIsLoading,
     createTaskIsError,
     createTaskIsSuccess,
+    createTaskVariables,
+    createTaskSubmittedAt,
   };
 };
 
 export const useToggleImportantStatus = () => {
+  const queryClient = useQueryClient();
+
   const {
     mutate: toggleImportantStatus,
     isPending: toggleImportantStatusIsLoading,
@@ -73,6 +89,9 @@ export const useToggleImportantStatus = () => {
     mutationFn: async (id?: string) => {
       const response = await TaskService.toggleImportantStatus(id);
       return response;
+    },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries();
     },
   });
   return {

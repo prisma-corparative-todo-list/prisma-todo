@@ -1,19 +1,30 @@
 import { useParams } from 'react-router-dom';
-import { socket, useGetExistingMessages } from '../../../shared';
+import {
+  ICreateMessageDto,
+  socket,
+  useGetExistingMessages,
+} from '../../../shared';
 import { useEffect, useState } from 'react';
 import { IMessageAndUser } from 'interfaces';
 
-export const useGroup = () => {
+export const useGroup = (
+  postMessageIsError: boolean,
+  postMessageIsSuccess: boolean,
+  postMessageIsPending: boolean,
+  postMessageVariables: Omit<ICreateMessageDto, 'userId'> | undefined
+) => {
   const { groupId } = useParams();
 
-  const [messages, setMessages] = useState<IMessageAndUser[]>([]);
+  const [messages, setMessages] = useState<
+    IMessageAndUser[]
+  >([]);
 
   const {
     existingMessages,
     existingMessagesIsSuccess,
     fetchNextPage,
-    refetchExistingMessages,
-    hasNextPage
+    refetchExistingMessages, // TODO: add refetch if delete message
+    hasNextPage,
   } = useGetExistingMessages({ groupId, limit: 15 });
 
   useEffect(() => {
@@ -30,6 +41,20 @@ export const useGroup = () => {
     }
   }, [existingMessages, existingMessagesIsSuccess]);
 
+  // useEffect(() => {
+  //   if (
+  //     postMessageVariables &&
+  //     (postMessageIsSuccess || postMessageIsError || postMessageIsPending)
+  //   ) {
+  //     setMessages((existing) => [...existing]);
+  //   }
+  // }, [
+  //   postMessageVariables,
+  //   postMessageIsSuccess,
+  //   postMessageIsError,
+  //   postMessageIsPending,
+  // ]);
+
   useEffect(() => {
     socket.connect();
 
@@ -45,12 +70,14 @@ export const useGroup = () => {
     });
 
     socket.on('message', (message) => {
-      setMessages((existing) =>
-        [message, ...existing].sort(
-          (a, b) =>
-            new Date(a.createAt).getTime() - new Date(b.createAt).getTime()
-        )
-      );
+      if (!messages.includes(message)) {
+        setMessages((existing) =>
+          [message, ...existing].sort(
+            (a, b) =>
+              new Date(a.createAt).getTime() - new Date(b.createAt).getTime()
+          )
+        );
+      }
     });
 
     return () => {
@@ -68,6 +95,6 @@ export const useGroup = () => {
     existingMessagesIsSuccess,
     fetchNextPage,
     messages,
-    hasNextPage
+    hasNextPage,
   };
 };

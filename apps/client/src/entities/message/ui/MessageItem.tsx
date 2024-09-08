@@ -9,7 +9,7 @@ import { IMessageAndUser } from 'interfaces';
 import { FC } from 'react';
 
 interface IProps {
-  message: IMessageAndUser;
+  message: IMessageAndUser | IMessageAndUser;
 }
 
 export const MessageItem: FC<IProps> = ({ message }) => {
@@ -19,7 +19,7 @@ export const MessageItem: FC<IProps> = ({ message }) => {
 
   return (
     <li
-      className={`bg-[white] mb-5 p-2 rounded-lg max-w-[40%] flex justify-between h-[80px] ${
+      className={`bg-[white] break-all mb-5 p-2 rounded-lg w-[40%] flex justify-between min-h-[80px] ${
         message.userId === userId && 'ml-auto mr-5'
       }`}
     >
@@ -38,7 +38,7 @@ export const MessageItem: FC<IProps> = ({ message }) => {
           }`}
         >
           {message.userId !== userId && <p>{message.user.userName}</p>}
-          <p className="mt-auto">{message.text}</p>
+          <p className="mt-auto ">{message.text}</p>
         </div>
       </div>
       <p className={`${userId === message.userId ? 'text-right' : ''}`}>

@@ -7,6 +7,7 @@ interface IProps {
   idx: number;
   className?: string;
   label?: string;
+
 }
 
 export const ListItemLink: FC<IProps> = ({ list, idx, className, label }) => {

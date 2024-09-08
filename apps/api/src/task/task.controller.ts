@@ -8,9 +8,10 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
-import { Task, User } from 'prisma/prisma-client';
+import { Prisma, Task, User } from 'prisma/prisma-client';
 import { CurrentUser } from 'user/decorators/current-user.decorator';
 import { TaskService } from './task.service';
 import { AccessTokenGuard } from 'auth/guards/access-token.guard';
@@ -18,6 +19,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { ExtendedTask } from '../../../../interfaces';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { TasksQueryParamsDto } from './dto/tasks-query-params.dto';
 
 @UseGuards(AccessTokenGuard)
 @Controller('task')
@@ -29,15 +31,34 @@ export class TaskController {
   @Get()
   public async findMany(
     @CurrentUser() { id: userId }: User,
-    @Query('deadline') deadline: Date,
-    @Query('isImportant') isImportant?: string,
-    @Query('isPlanned') isPlanned?: string
+    @Query() queryParams: TasksQueryParamsDto,
+
   ): Promise<ExtendedTask[] | null> {
+    
+
     return await this.taskService.findMany({
       userId,
-      deadLine: deadline,
-      ...(isImportant && { isImportant: JSON.parse(isImportant) }),
-      ...(isPlanned && { deadLine: { not: null } }),
+      ...(queryParams.isImportant && {
+        isImportant: queryParams.isImportant,
+      }),
+      ...(queryParams.isToday && {
+        OR: [
+          {
+            isToday: true,
+            deadLine: {
+              not: null,
+            },
+          },
+          {
+            isToday: false,
+            deadLine: queryParams.deadline,
+          },
+          {
+            isToday: true,
+            
+          }
+        ],
+      }),
     });
   }
 
@@ -45,7 +66,6 @@ export class TaskController {
   public async findListTasks(
     @Param('listId') listId: string
   ): Promise<ExtendedTask[] | null> {
-  
     return await this.taskService.findMany({ listId });
   }
 
@@ -58,7 +78,6 @@ export class TaskController {
   public async create(
     @CurrentUser() { id: userId }: User,
     @Body() dto: CreateTaskDto
-
   ): Promise<Task> {
     return await this.taskService.create({
       title: dto.title,
@@ -66,6 +85,7 @@ export class TaskController {
       ...(dto.listId ? { list: { connect: { id: dto.listId } } } : {}),
       ...(dto.deadLine ? { deadLine: dto.deadLine } : {}),
       ...(dto.isImportant ? { isImportant: dto.isImportant } : {}),
+      ...(dto.isToday !== undefined ? { isToday: dto.isToday } : {}),
     });
   }
 
@@ -77,10 +97,10 @@ export class TaskController {
     return await this.taskService.updateOne(
       { id: taskId },
       {
-        title: dto.title,
-        description: dto.description,
-        id: taskId,
+        ...(dto.title ? { title: dto.title } : {}),
+        ...(dto.description ? { description: dto.description } : {}),
         ...(dto.listId ? { list: { connect: { id: dto.listId } } } : {}),
+        ...(dto.isToday !== undefined ? { isToday: dto.isToday } : {}),
       }
     );
   }

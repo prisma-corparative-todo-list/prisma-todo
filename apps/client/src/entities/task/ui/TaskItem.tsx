@@ -6,41 +6,41 @@ import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useGetSteps } from '../../../shared';
-import { ExtendedTask } from 'interfaces';
+import { ExtendedTask, ICreateTask } from 'interfaces';
 
 interface IProps {
-  task: ExtendedTask;
+  task: ExtendedTask | undefined;
   onOpenTaskSidebar: (e: any) => void;
   onToggleCompleteTask: (e: any) => void;
-  onToggleImportantStatus: (e: any) => void;
+  onToggleImportantStatus?: (e: any) => void;
+  createTaskIsError: boolean;
+  createTaskSubmittedAt: number;
+  createTaskVariables?: ICreateTask
 }
 
 export const TaskItem: FC<IProps> = ({
-  task: {
-    deadLine,
-    id: taskId,
-    isImportant,
-    isCompleted,
-    title,
-    list,
-    description,
-  },
+  task,
   onOpenTaskSidebar,
   onToggleCompleteTask,
   onToggleImportantStatus,
+  createTaskVariables,
+  createTaskSubmittedAt,
+  createTaskIsError
 }) => {
+
   const handleToggleImportant = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
-    onToggleImportantStatus(taskId);
+    if(onToggleImportantStatus)
+    onToggleImportantStatus(task?.id);
   };
 
   const handleToggleComplete = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
-    onToggleCompleteTask(taskId);
+    onToggleCompleteTask(task?.id);
   };
 
   const ToggleImportantButton = () => {
-    return isImportant ? (
+    return task?.isImportant ? (
       <button id="importantButton" onClick={handleToggleImportant}>
         <StarIcon fontSize="large" />
       </button>
@@ -51,38 +51,37 @@ export const TaskItem: FC<IProps> = ({
     );
   };
 
-  const { steps } = useGetSteps(taskId);
+  const { steps } = useGetSteps(task?.id);
 
   return (
     <li
-      id={taskId}
+      id={task?.id}
       className="border-2 border-black px-5 py-2 rounded-lg flex justify-between mb-2 cursor-pointer"
       onClick={onOpenTaskSidebar}
     >
       <div className="flex gap-5">
-        <Checkbox checked={isCompleted} onClick={handleToggleComplete} />
+        <Checkbox checked={task?.isCompleted} onClick={handleToggleComplete} />
         <div>
-          <p className="text-left">{title}</p>
+          <p className="text-left">{task?.title}</p>
           <div className="flex">
-            {list ? (
-              <span className="mr-2">{list.title}</span>
-            ) : (
-              <span
-                className={`${
-                  deadLine
-                    ? new Date(deadLine).getDate() < new Date().getDate()
-                      ? 'text-red-600 mr-2'
-                      : 'text-black-500 mr-2'
-                    : ''
-                }`}
-              >
-                {deadLine &&
-                new Date(deadLine).getDate() === new Date().getDate()
-                  ? 'My day'
-                  : deadLine && getWeedayMonthAndDay(new Date(deadLine))}
-              </span>
-            )}
-            {description && description.length >= 1 && (
+            <span
+              className={`${
+                task?.deadLine
+                  ? new Date(task?.deadLine).getDate() > new Date().getDate()
+                    ? 'text-red-600 mr-2'
+                    : 'text-black-500 mr-2'
+                  : ''
+              }`}
+            >
+              {task?.isToday
+                ? 'My day'
+                : task?.deadLine &&
+                  new Date(task?.deadLine).getDate() === new Date().getDate()
+                ? 'My day'
+                : task?.deadLine && getWeedayMonthAndDay(new Date(task?.deadLine))}
+            </span>
+            {task?.list && <span className="mx-2">{task?.list.title}</span>}
+            {task?.description && task?.description.length >= 1 && (
               <span className="mr-2">
                 <DescriptionIcon fontSize="small" />
               </span>
@@ -99,7 +98,7 @@ export const TaskItem: FC<IProps> = ({
           </div>
         </div>
       </div>
-      {!isCompleted && <ToggleImportantButton />}
+      {!task?.isCompleted && <ToggleImportantButton />}
     </li>
   );
 };

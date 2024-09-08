@@ -24,20 +24,21 @@ export const UserLists = () => {
   useEffect(() => {
     if (postListIsSuccess || deleteListIsSuccess || updateListIsSuccess)
       refetch();
-  }, [postListIsSuccess, deleteListIsSuccess, updateListIsSuccess]);
+  }, [postListIsSuccess, deleteListIsSuccess, updateListIsSuccess, refetch]);
 
   return (
-    <div className="h-[28%] relative py-2 ">
-      <ul className="h-[90%] overflow-auto border-[black] border-y-2 mb-5 pb-5">
+    <div className="h-[22%] relative py-2 ">
+      <ul className="h-[90%] overflow-auto border-[black] border-b-2 mb-5 pb-5">
         {listsIsSuccess &&
           lists
             ?.reverse()
             .map((list, idx) => (
               <ListItemLink
                 className="text-lg hover:bg-[#e2e3d1]"
-                list={list} 
+                list={list}
                 key={list.id}
                 idx={idx}
+                label={list?.title || ''}
               />
             ))}
       </ul>

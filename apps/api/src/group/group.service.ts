@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Group, Prisma } from 'prisma/prisma-client';
+import { Group, Participant, Prisma } from 'prisma/prisma-client';
 import { ParticipantService } from 'participant/participant.service';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { IGroupInfo } from '../../../../interfaces';
+import { IGroupWithUserRole } from '../../../../interfaces';
 
 @Injectable()
 export class GroupService {
@@ -16,16 +16,20 @@ export class GroupService {
     return await this.prisma.group.create({ data });
   }
 
-  public async findOne(payload: Prisma.GroupWhereInput): Promise<IGroupInfo> {
+  public async findOne(
+    payload: Prisma.GroupWhereInput,
+    userId: string
+  ): Promise<IGroupWithUserRole> {
     const group = await this.prisma.group.findFirst({ where: payload });
 
-    const participants = await this.participantService.findMany({
+    const participant = await this.participantService.findOne({
       groupId: group.id,
+      userId,
     });
 
     return {
       ...group,
-      participants,
+      role: participant?.role,
     };
   }
 
@@ -59,5 +63,41 @@ export class GroupService {
       data: payload,
       where: whereOptions,
     });
+  }
+  public async joinToGroup(
+    groupId: string,
+    userId: string
+  ): Promise<Participant | null> {
+    const candidate = await this.participantService.findOne({
+      groupId,
+      userId,
+    });
+
+    if (candidate) {
+      return null;
+    }
+
+    const role =
+      (await this.getOwnerId(groupId, userId)) === userId
+        ? 'ADMIN'
+        : 'PARTICIPANT';
+
+    const participant = await this.participantService.createOne({
+      group: { connect: { id: groupId } },
+      user: { connect: { id: userId } },
+      role,
+    });
+
+    return participant;
+  }
+
+  private async getOwnerId(groupId: string, userId: string) {
+    const group = await this.findOne(
+      {
+        id: groupId,
+      },
+      userId
+    );
+    return group.ownerId;
   }
 }

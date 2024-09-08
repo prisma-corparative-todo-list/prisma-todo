@@ -7,14 +7,24 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { IResponseMessageAndUser } from '../../../../interfaces';
+import { CreateMessageDto } from './dto/create-message.dto';
+import { ChatGateway } from '../chat/chat.gateway';
+import { CurrentUser } from 'user/decorators/current-user.decorator';
+import { User } from 'prisma/prisma-client';
+import { AccessTokenGuard } from 'auth/guards/access-token.guard';
 
+@UseGuards(AccessTokenGuard)
 @Controller('message')
 export class MessageController {
-  constructor(private readonly messageService: MessageService) {}
+  constructor(
+    private readonly messageService: MessageService,
+    private readonly chatGateway: ChatGateway
+  ) {}
 
   private logger = new Logger(MessageController.name);
 
@@ -27,11 +37,11 @@ export class MessageController {
     return await this.messageService.findMany({ groupId }, { cursor, limit });
   }
 
-  @Post(':groupId')
+  @Post()
   public async createOne(
-    @Param('groupId') groupId: string,
-    @Body() body: string
+    @Body() body: CreateMessageDto,
+    @CurrentUser() user: User
   ) {
-    return ""
+    this.chatGateway.onMessage({...body}, user);
   }
 }

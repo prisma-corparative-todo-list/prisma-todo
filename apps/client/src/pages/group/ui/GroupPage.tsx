@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   GroupHeader,
   GroupInviteModal,
   GroupSidebar,
 } from '../../../widgets/group';
-import { MessageList } from '../../../widgets/message';
-import { PostMessagePanel } from '../../../features/message';
-import { useGetGroup } from '../../../shared/';
+import { MessageList, PostMessageModal } from '../../../widgets/message';
+import { PostMessagePanel } from '../../../widgets/message';
+import {
+  useGetGroup,
+  useGetParticipants,
+  usePostMessage,
+} from '../../../shared/';
 import { useParams } from 'react-router-dom';
+import { useGroupStore } from '../../../shared';
 
 export const GroupPage = () => {
   const { groupId } = useParams();
 
-  const { group } = useGetGroup(groupId);
+  const { group, groupIsSuccess } = useGetGroup(groupId);
+
+  const { participants } = useGetParticipants(groupId);
+
+  const { role, setRole } = useGroupStore();
+
+  const {
+    postMessage,
+    postMessageIsSuccess,
+    postMessageIsError,
+    postMessageIsPending,
+    postMessageVariables,
+  } = usePostMessage();
 
   const [isGroupSidebarVisible, setIsGroupSidebarVisible] =
     useState<boolean>(false);
@@ -26,19 +43,32 @@ export const GroupPage = () => {
 
   const handelToggleGroupModalVisibility = () => {
     setIsGroupModalVisible((prev) => !prev);
-    handelToggleGroupSidebarVisibility()
+    handelToggleGroupSidebarVisibility();
   };
+
+  useEffect(() => {
+    if (groupIsSuccess && group) {
+      setRole(group.role);
+    }
+  }, [group, groupIsSuccess, setRole]);
 
   return (
     <div className="h-screen flex flex-col justify-around">
       <GroupHeader
         onToggleSidebarVisibility={handelToggleGroupSidebarVisibility}
-        group={group}
+        groupName={group?.name}
+        participants={participants}
       />
-      <MessageList />
-      <PostMessagePanel />
+      <MessageList
+        postMessageIsSuccess={false}
+        postMessageIsError={false}
+        postMessageIsPending={false}
+        postMessageVariables={postMessageVariables}
+      />
+      <PostMessagePanel postMessage={postMessage} />
       <GroupSidebar
         group={group}
+        participants={participants}
         isOpen={isGroupSidebarVisible}
         onClose={handelToggleGroupSidebarVisibility}
         onOpenModal={handelToggleGroupModalVisibility}
@@ -47,6 +77,7 @@ export const GroupPage = () => {
         isOpen={isGroupModalVisible}
         onClose={handelToggleGroupModalVisibility}
       />
+      <PostMessageModal/>
     </div>
   );
 };

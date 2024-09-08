@@ -8,4 +8,5 @@ export class CreateTaskDto {
     deadLine?: Date
     listId: string
     description?: string
+    isToday?: boolean
 }

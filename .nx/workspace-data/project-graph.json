@@ -15706,11 +15706,6 @@
       },
       {
         "source": "client",
-        "target": "npm:react-router",
-        "type": "static"
-      },
-      {
-        "source": "client",
         "target": "npm:yup",
         "type": "static"
       },
@@ -15767,6 +15762,11 @@
       {
         "source": "client",
         "target": "npm:@nx/vite",
+        "type": "static"
+      },
+      {
+        "source": "client",
+        "target": "npm:react-router",
         "type": "static"
       }
     ],
@@ -15859,6 +15859,11 @@
       {
         "source": "api",
         "target": "npm:uuid",
+        "type": "static"
+      },
+      {
+        "source": "api",
+        "target": "npm:class-transformer",
         "type": "static"
       },
       {

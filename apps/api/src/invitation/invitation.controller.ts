@@ -20,6 +20,7 @@ import { AccessTokenGuard } from 'auth/guards/access-token.guard';
 import { IResponseInvitation } from '../../../../interfaces';
 import { CurrentUser } from 'user/decorators/current-user.decorator';
 import { ParticipantService } from '../participant/participant.service';
+import { GroupService } from '../group/group.service';
 
 @UseGuards(AccessTokenGuard)
 @Controller('invitation')
@@ -27,7 +28,8 @@ export class InvitationController {
   constructor(
     private readonly invitationService: InvitationService,
     private readonly userService: UserService,
-    private readonly participantService: ParticipantService
+    private readonly participantService: ParticipantService,
+    private readonly groupService: GroupService
   ) {}
 
 
@@ -76,12 +78,10 @@ export class InvitationController {
     @Query('groupId') groupId: string,
     @Query('invitationId') invitationId: string
   ): Promise<Participant> {
-
-    this.logger.log(invitationId);
     
     await this.invitationService.deleteOne({ id: invitationId });
 
-    return await this.participantService.joinToGroup(groupId, user.id);
+    return await this.groupService.joinToGroup(groupId, user.id);
   }
 
   @Delete('reject/:invitationId')

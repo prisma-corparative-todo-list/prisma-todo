@@ -1,5 +1,5 @@
 import { TasksList, AddTaskPanel, TaskSidebar } from '../../../widgets/task';
-import { getWeedayMonthAndDay, PageLayout, useTask } from '../../../shared';
+import { PageLayout, useTask } from '../../../shared';
 import { useEffect, useState } from 'react';
 import { TasksHeader } from '../../../features/tasks-header';
 
@@ -19,6 +19,10 @@ export const TasksPage = () => {
     toggleCompleteTaskIsSuccess,
     createTask,
     createTaskIsSuccess,
+    createTaskIsError,
+    createTaskSubmittedAt,
+    createTaskVariables,
+    createTaskIsLoading
   } = useTask();
 
   const handleChangeDate = (e: any) => {
@@ -59,19 +63,29 @@ export const TasksPage = () => {
     if (toggleCompleteTaskIsSuccess || toggleImportantStatusIsSuccess) {
       refetchTasks();
     }
-  }, [refetchTasks, toggleCompleteTaskIsSuccess, toggleImportantStatusIsSuccess]);
+  }, [
+    refetchTasks,
+    toggleCompleteTaskIsSuccess,
+    toggleImportantStatusIsSuccess,
+  ]);
 
   return (
     <div className="flex">
-      <PageLayout>
-        <TasksHeader title="All Tasks" />
-        <TasksList
-          onToggleImportantStatus={handleToggleImportant}
-          onToggleComplete={handleToggleComplete}
-          onOpenTaskSidebar={handleOpenSidebar}
-          tasks={tasks || []}
-          date={dateWithoutTime}
-        />
+      <PageLayout className="flex flex-col justify-between">
+        <div className="h-[70%]">
+          <TasksHeader title="All Tasks" />
+          <TasksList
+            onToggleImportantStatus={handleToggleImportant}
+            onToggleComplete={handleToggleComplete}
+            onOpenTaskSidebar={handleOpenSidebar}
+            tasks={tasks || []}
+            date={dateWithoutTime}
+            createTaskIsError={createTaskIsError}
+            createTaskSubmittedAt={createTaskSubmittedAt}
+            createTaskVariables={createTaskVariables}
+            createTaskIsPending={createTaskIsLoading}
+          />
+        </div>
         <AddTaskPanel
           onChangeDate={handleChangeDate}
           date={date}

@@ -1,14 +1,18 @@
 import { Drawer } from '@mui/material';
-import { SidebarGroupHeader } from '../../../features/group';
+import { GroupLists, GroupHeaderSidebar } from '../../../features/group';
 import { FC } from 'react';
-import { IGroupInfo } from 'interfaces';
-import { Button } from '../../../shared';
+import { ParticipantsList } from '../../../features/participant';
+import { Group } from 'prisma/prisma-client';
+import { IUserWithUserRole } from 'interfaces';
+import { ParticipantsManagement } from '../../../features/participant';
+import DehazeIcon from '@mui/icons-material/Dehaze';
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenModal: () => void;
-  group: IGroupInfo | undefined;
+  group?: Group;
+  participants?: IUserWithUserRole[];
 }
 
 export const GroupSidebar: FC<IProps> = ({
@@ -16,13 +20,18 @@ export const GroupSidebar: FC<IProps> = ({
   onClose,
   group,
   onOpenModal,
+  participants,
 }) => {
   return (
     <Drawer anchor="right" open={isOpen} onClose={onClose}>
-      <SidebarGroupHeader group={group} />
-      <Button onClick={onOpenModal} type="button" className="w-[75%] mx-auto">
-        invite
-      </Button>
+      <div className="p-[25px] flex justify-between">
+        <GroupHeaderSidebar group={group} />
+        <ParticipantsManagement
+          onOpenModal={onOpenModal}
+        />
+      </div>
+      <ParticipantsList participants={participants} />
+      <GroupLists />
     </Drawer>
   );
 };

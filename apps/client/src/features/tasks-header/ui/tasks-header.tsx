@@ -8,9 +8,9 @@ interface IProps {
 export const TasksHeader: FC<IProps> = ({title}) => {
   const formattedDate = getWeedayMonthAndDay(new Date());
   return (
-    <>
+    <div>
       <h1 className="text-3xl mb-2">{title}</h1>
       <h3 className="pb-3">{formattedDate}</h3>
-    </>
+    </div>
   );
 };

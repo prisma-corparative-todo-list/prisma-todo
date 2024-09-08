@@ -1,9 +1,10 @@
 
 
 export class UpdateTaskDto {
-    title: string
+    title?: string
     isImportant?: boolean
     deadLine?: Date
-    listId: string
+    listId?: string
     description?: string
+    isToday: boolean
 }

@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'PARTICIPANT');
 
+-- CreateEnum
+CREATE TYPE "RequisitionStatus" AS ENUM ('ACCEPTED', 'REJECTED');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" UUID NOT NULL,
@@ -58,6 +61,7 @@ CREATE TABLE "Task" (
     "list_id" UUID,
     "is_important" BOOLEAN DEFAULT false,
     "is_completed" BOOLEAN NOT NULL DEFAULT false,
+    "is_today" BOOLEAN DEFAULT false,
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
 );
@@ -79,6 +83,44 @@ CREATE TABLE "List" (
     "user_id" UUID NOT NULL,
 
     CONSTRAINT "List_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Message" (
+    "id" UUID NOT NULL,
+    "text" TEXT NOT NULL,
+    "group_id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserTask" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "task_id" UUID NOT NULL,
+
+    CONSTRAINT "UserTask_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserStep" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "step_id" UUID NOT NULL,
+
+    CONSTRAINT "UserStep_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Invitation" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "group_id" UUID NOT NULL,
+
+    CONSTRAINT "Invitation_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -116,3 +158,27 @@ ALTER TABLE "Step" ADD CONSTRAINT "Step_task_id_fkey" FOREIGN KEY ("task_id") RE
 
 -- AddForeignKey
 ALTER TABLE "List" ADD CONSTRAINT "List_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Message" ADD CONSTRAINT "Message_group_id_fkey" FOREIGN KEY ("group_id") REFERENCES "Group"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Message" ADD CONSTRAINT "Message_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserTask" ADD CONSTRAINT "UserTask_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserTask" ADD CONSTRAINT "UserTask_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "Task"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserStep" ADD CONSTRAINT "UserStep_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserStep" ADD CONSTRAINT "UserStep_step_id_fkey" FOREIGN KEY ("step_id") REFERENCES "Step"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_group_id_fkey" FOREIGN KEY ("group_id") REFERENCES "Group"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

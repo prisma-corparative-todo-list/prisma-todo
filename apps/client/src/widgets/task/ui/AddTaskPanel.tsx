@@ -1,19 +1,18 @@
 import AddIcon from '@mui/icons-material/Add';
-import { useCreateTask, useTaskStore } from '../../../shared';
+import { useListStore, useTaskStore } from '../../../shared';
 import { DatePicker } from '../../../features/date-picker';
 import { SelectLists } from '../../../features/lists';
-import { List } from 'prisma/prisma-client';
 import React, { FC, useEffect, useState } from 'react';
 
 interface IProps {
   refreshTasks: () => void;
-  listId?: string;
   date: Date | null;
   onAddTask: (payload: {
     title: string;
     listId?: string;
     deadLine: Date | null;
-    isImportant?: boolean
+    isImportant?: boolean;
+    isToday?: boolean;
   }) => void;
   createTaskIsSuccess?: boolean;
   onChangeDate: (e: any) => void;
@@ -21,13 +20,14 @@ interface IProps {
 
 export const AddTaskPanel: FC<IProps> = ({
   refreshTasks,
-  listId,
   onAddTask,
   date,
   createTaskIsSuccess,
   onChangeDate,
 }) => {
-  const { isTaskInputVisible, hideTaskInput, showTaskInput } = useTaskStore();
+  const { isTaskInputVisible, showTaskInput } = useTaskStore();
+
+  const { listId } = useListStore();
 
   const [task, setTask] = useState<string>('');
 
@@ -38,6 +38,7 @@ export const AddTaskPanel: FC<IProps> = ({
   const handleCreateTask = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
+
     if (task.length < 1) return;
     if (event.key === 'Enter') {
       onAddTask({
@@ -48,6 +49,7 @@ export const AddTaskPanel: FC<IProps> = ({
       setTask('');
     }
   };
+
 
   useEffect(() => {
     if (createTaskIsSuccess) {

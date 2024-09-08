@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ParticipantService } from './participant.service';
-import { User } from 'prisma/prisma-client';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { IUserWithUserRole } from '../../../../interfaces';
 
 @Controller('participant')
 export class ParticipantController {
@@ -10,7 +11,7 @@ export class ParticipantController {
     ) {}
 
     @Get(":groupId")
-    async findMany(@Param("groupId") groupId: string): Promise<User[]> {
+    async findMany(@Param("groupId") groupId: string): Promise<IUserWithUserRole[]> {
         return await this.participantService.findMany({ groupId });
     }
 

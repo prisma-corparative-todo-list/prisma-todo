@@ -29,7 +29,7 @@ export const UserProfileButton = () => {
           />
           <div>
             <p>{user.userName}</p>
-            <p>{user.email}</p>
+            <p>{"example@gmail.com"}</p>
           </div>
         </button>
         <ProfileMenu

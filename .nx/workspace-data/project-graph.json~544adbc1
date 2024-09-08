@@ -15863,6 +15863,11 @@
       },
       {
         "source": "api",
+        "target": "npm:class-transformer",
+        "type": "static"
+      },
+      {
+        "source": "api",
         "target": "npm:@nx/webpack",
         "type": "static"
       }

@@ -1,6 +1,12 @@
 import { QUERY_KEYS } from '../../model/constants';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { MessageService } from '../services/message.service';
+import { ICreateMessageDto } from '../../model/types/message.types';
 
 export const useGetExistingMessages = ({
   groupId,
@@ -31,7 +37,6 @@ export const useGetExistingMessages = ({
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       return lastPage.nextCursor;
     },
-    
   });
 
   return {
@@ -41,6 +46,37 @@ export const useGetExistingMessages = ({
     existingMessagesIsPending,
     refetchExistingMessages,
     fetchNextPage,
-    hasNextPage
+    hasNextPage,
+  };
+};
+
+export const usePostMessage = () => {
+  const queryClient = useQueryClient();
+
+  const {
+    mutate: postMessage,
+    isSuccess: postMessageIsSuccess,
+    isError: postMessageIsError,
+    isPending: postMessageIsPending,
+    variables: postMessageVariables,
+  } = useMutation({
+    mutationKey: [QUERY_KEYS.MESSAGE],
+    mutationFn: async (data: Omit<ICreateMessageDto, 'userId'>) => {
+      const response = await MessageService.createOne(data);
+      return response;
+    },
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.MESSAGE],
+      });
+    },
+  });
+
+  return {
+    postMessage,
+    postMessageIsSuccess,
+    postMessageIsError,
+    postMessageIsPending,
+    postMessageVariables,
   };
 };

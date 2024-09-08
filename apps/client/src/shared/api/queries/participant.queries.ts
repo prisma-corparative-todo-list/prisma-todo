@@ -5,17 +5,17 @@ import { ParticipantService } from '../services/participant.service';
 
 
 
-export const useGetParticipants = () => {
+export const useGetParticipants = (id?: string) => {
     const {
         data: participants,
-        isSuccess: getParticipantsIsSuccess,
-        isError: getParticipantsIsError,
-        isPending: getParticipantsIsPending,
+        isSuccess: participantsIsSuccess,
+        isError: participantsIsError,
+        isPending: participantsIsPending,
         refetch: refetchParticipants
     } = useQuery({
         queryKey: [QUERY_KEYS.PARTICIPANT],
         queryFn: async () => {
-            const response = await ParticipantService.findMany();
+            const response = await ParticipantService.findMany(id);
             return response;
         },
         
@@ -23,9 +23,9 @@ export const useGetParticipants = () => {
 
     return {
         participants,
-        getParticipantsIsSuccess,
-        getParticipantsIsError,
-        getParticipantsIsPending,
+        participantsIsSuccess,
+        participantsIsError,
+        participantsIsPending,
         refetchParticipants
     }
 }

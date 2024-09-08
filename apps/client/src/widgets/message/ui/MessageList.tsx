@@ -1,18 +1,35 @@
 import { MessageItem } from '../../../entities/message';
-import { useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useGroup } from '../../../shared';
+import { ICreateMessageDto, useGroup } from '../../../shared';
 import { debounce } from '@mui/material';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
-export const MessageList = () => {
+interface IProps {
+  postMessageIsSuccess: boolean;
+  postMessageIsError: boolean;
+  postMessageIsPending: boolean;
+  postMessageVariables: Omit<ICreateMessageDto, 'userId'> | undefined;
+}
+
+export const MessageList: FC<IProps> = ({
+  postMessageIsError,
+  postMessageIsSuccess,
+  postMessageIsPending,
+  postMessageVariables,
+}) => {
   const { ref, inView } = useInView();
 
   const liRef = useRef<HTMLLIElement>(null);
 
   const ulRef = useRef<HTMLUListElement>(null);
 
-  const { messages, fetchNextPage, hasNextPage } = useGroup();
+  const { messages, fetchNextPage, hasNextPage } = useGroup(
+    postMessageIsError,
+    postMessageIsSuccess,
+    postMessageIsPending,
+    postMessageVariables
+  );
 
   const [prevScrollHeight, setPrevScrollHeight] = useState(0);
 
@@ -55,8 +72,13 @@ export const MessageList = () => {
     }
   }, [messages]);
 
-  const handleScroll = debounce(() => {
+  const handleScroll = () => {
     if (ulRef.current) {
+      // console.log({
+      //   scrollHeight: ulRef.current.scrollHeight,
+      //   scrollTop: ulRef.current.scrollTop,
+      //   clientHeight: ulRef.current.clientHeight,
+      // });
       setIsButtonVisible(
         ulRef.current.scrollHeight -
           ulRef.current.scrollTop -
@@ -64,7 +86,7 @@ export const MessageList = () => {
           125
       );
     }
-  }, 100);
+  };
 
   return (
     <div className="h-[72%]">

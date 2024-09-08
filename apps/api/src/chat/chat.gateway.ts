@@ -8,21 +8,19 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { JoinSessionDto } from './dto/join-session.dto';
-import { ParticipantService } from '../participant/participant.service';
 import { MessageService } from '../message/message.service';
 import { CreateMessageDto } from '../message/dto/create-message.dto';
 import { WsCurrentUser } from '../user/decorators/ws-current-user.decorator';
 import { Logger } from '@nestjs/common';
 import { User } from 'prisma/prisma-client';
+import { GroupService } from '../group/group.service';
 
 @WebSocketGateway({ cors: { origin: '*' }, credentials: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
-    private readonly participantService: ParticipantService,
+    private readonly groupService: GroupService,
     private readonly messageService: MessageService
   ) {}
-
-  private logger = new Logger(ChatGateway.name);
 
   @WebSocketServer()
   server: Server = new Server();
@@ -60,9 +58,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() payload: JoinSessionDto,
     @WsCurrentUser() user: User
   ) {
-    this.logger.log(user, 'join to session');
+  
     if (payload.socketId) {
-      await this.participantService.joinToGroup(payload.groupId, user.id);
+      await this.groupService.joinToGroup(payload.groupId, user.id);
 
       this.server.in(payload.socketId).socketsJoin(payload.groupId);
     }

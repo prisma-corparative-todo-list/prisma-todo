@@ -1,3 +1,5 @@
 export { GroupManagementButtons } from './ui/GroupManagementButtons';
 
-export { SidebarGroupHeader } from "./ui/SidebarGroupHeader"
+export { GroupHeaderSidebar } from "./ui/GroupHeaderSidebar"
+
+export { GroupLists } from "./ui/GroupLists"

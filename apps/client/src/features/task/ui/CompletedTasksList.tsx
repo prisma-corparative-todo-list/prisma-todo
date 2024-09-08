@@ -1,11 +1,11 @@
 import { AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
-import { Task } from 'prisma/prisma-client';
 import { FC } from 'react';
 import { TaskItem } from '../../../entities/task';
+import { ExtendedTask } from 'interfaces';
 
 interface IProps {
-  tasks: Task[];
+  tasks: ExtendedTask[];
   onToggleComplete: (e: any) => void;
   onOpenTaskSidebar: (e: any) =>  void
   count: number

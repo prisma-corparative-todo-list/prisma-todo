@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getWeedayMonthAndDay, useGetTasks, useTask } from '../../../shared';
+import {
+  getWeedayMonthAndDay,
+  PageLayout,
+  useGetTasks,
+  useTask,
+} from '../../../shared';
 import { AddTaskPanel, TasksList, TaskSidebar } from '../../../widgets/task';
 import {
   useCreateTask,
@@ -11,7 +16,9 @@ import { TasksHeader } from '../../../features/tasks-header';
 export const MyDayPage = () => {
   const formattedDate = getWeedayMonthAndDay(new Date());
 
-  const [date, setDate] = useState(() => new Date(new Date().toDateString()));
+  const [date, setDate] = useState(
+    new Date(new Date().setUTCHours(0, 0, 0, 0))
+  );
 
   const {
     tasks,
@@ -19,7 +26,10 @@ export const MyDayPage = () => {
     tasksIsError,
     tasksIsPending,
     refetch: refetchTasks,
-  } = useGetTasks({ deadline: date });
+  } = useGetTasks({
+    isToday: true,
+    deadline: new Date(new Date().setUTCHours(0, 0, 0, 0)),
+  });
 
   const {
     toggleCompleteTask,
@@ -42,7 +52,14 @@ export const MyDayPage = () => {
 
   const handleChangeDate = (e: any) => {
     setDate(
-      new Date(new Date(e.target?.closest('button').id || e?.$d).toDateString())
+      new Date(
+        new Date(e.target?.closest('button').id || e?.$d).setUTCHours(
+          0,
+          0,
+          0,
+          0
+        )
+      )
     );
   };
 
@@ -68,8 +85,9 @@ export const MyDayPage = () => {
     list?: string;
     deadLine: Date | null;
     listId?: string;
+    isToday?: boolean;
   }) => {
-    createTask(payload);
+    createTask({ ...payload, isToday: true });
   };
 
   useEffect(() => {
@@ -84,15 +102,17 @@ export const MyDayPage = () => {
 
   return (
     <div className="flex">
-      <div className="p-5 h-screen basis-full">
-        <TasksHeader title="My Day" />
-        <TasksList
-          onToggleImportantStatus={handleToggleImportant}
-          onToggleComplete={handleToggleComplete}
-          onOpenTaskSidebar={handleOpenSidebar}
-          tasks={tasks || []}
-          date={date}
-        />
+      <PageLayout className="flex flex-col justify-between">
+        <div className="h-[70%]">
+          <TasksHeader title="My Day" />
+          <TasksList
+            onToggleImportantStatus={handleToggleImportant}
+            onToggleComplete={handleToggleComplete}
+            onOpenTaskSidebar={handleOpenSidebar}
+            tasks={tasks || []}
+            date={date}
+          />
+        </div>
         <AddTaskPanel
           onChangeDate={handleChangeDate}
           date={date}
@@ -100,7 +120,7 @@ export const MyDayPage = () => {
           onAddTask={handleCreateTask}
           refreshTasks={refetchTasks}
         />
-      </div>
+      </PageLayout>
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
         completeTaskIsSuccess={toggleCompleteTaskIsSuccess}

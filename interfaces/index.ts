@@ -17,10 +17,6 @@ export interface IUser extends Omit<User, 'id'> {}
 
 export interface ITask extends Omit<Task, 'id' | 'userId'> {}
 
-export interface IGroupInfo extends Group {
-  participants: User[];
-}
-
 export interface ITokensAndUser {
   tokens: {
     refreshToken: string;
@@ -41,6 +37,7 @@ export interface ICreateTask {
   listId?: string;
   deadLine: Date | null;
   isImportant?: boolean;
+  isToday?: boolean;
 }
 
 export interface ICreateGroup {
@@ -83,5 +80,15 @@ export interface ICreateInvitation {
 }
 
 export interface ExtendedTask extends Omit<Task, 'listId'> {
-  list: List;
+  list: List | null;
+}
+
+export type Roles = "ADMIN" | "PARTICIPANT";
+
+export interface IGroupWithUserRole extends Group {
+  role: Roles;
+}
+
+export interface IUserWithUserRole extends User {
+  role: Roles;
 }

@@ -44,6 +44,7 @@ export class TaskService {
         createdAt: true,
         groupId: true,
         userId: true,
+        isToday: true,
       },
     });
 

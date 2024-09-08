@@ -1,7 +1,7 @@
 import { Prisma, Step, Task } from 'prisma/prisma-client';
 import { instance } from '../api.instance';
 import { QUERY_KEYS, SERVICE_URL } from '../../model/constants';
-import { ICreateTask, ITask, WorkFlow } from 'interfaces';
+import { ExtendedTask, ICreateTask, ITask, WorkFlow } from 'interfaces';
 import { AxiosResponse } from 'axios';
 
 export const TaskService = {
@@ -12,12 +12,14 @@ export const TaskService = {
     isImportant,
     isPlanned,
     id,
+    isToday
   }: {
     deadline?: Date;
     isImportant?: boolean;
     isPlanned?: boolean;
     id?: string;
-  } = {}): Promise<Task[]> {
+    isToday?: boolean
+  } = {}): Promise<ExtendedTask[]> {
     
     return (
       await this.axios.get(`${SERVICE_URL.TASK}${id ? `/${id}` : ''}`, {
@@ -25,6 +27,7 @@ export const TaskService = {
           deadline,
           isImportant,
           isPlanned,
+          isToday
         },
       })
     ).data;
@@ -64,7 +67,7 @@ export const TaskService = {
     await this.axios.delete(`/${SERVICE_URL.TASK}/${id}`);
   },
 
-  async findUserListTasks(listId?: string): Promise<Task[]> {
+  async findUserListTasks(listId?: string): Promise<ExtendedTask[]> {
     return (
       await this.axios.get(`${SERVICE_URL.TASK}/${QUERY_KEYS.LIST}/${listId}`)
     ).data;

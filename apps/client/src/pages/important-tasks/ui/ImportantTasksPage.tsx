@@ -78,19 +78,25 @@ export const ImportantTasksPage = () => {
     if (toggleCompleteTaskIsSuccess || toggleImportantStatusIsSuccess) {
       refetchTasks();
     }
-  }, [toggleCompleteTaskIsSuccess, toggleImportantStatusIsSuccess]);
+  }, [
+    refetchTasks,
+    toggleCompleteTaskIsSuccess,
+    toggleImportantStatusIsSuccess,
+  ]);
 
   return (
     <div className="flex">
-      <PageLayout>
-      <TasksHeader title='Important tasks'/>
-        <TasksList
-          onToggleImportantStatus={handleToggleImportant}
-          onToggleComplete={handleToggleComplete}
-          onOpenTaskSidebar={handleOpenSidebar}
-          tasks={tasks || []}
-          date={dateWithoutTime}
-        />
+      <PageLayout className="flex flex-col justify-between">
+        <div className="h-[70%]">
+          <TasksHeader title="Important tasks" />
+          <TasksList
+            onToggleImportantStatus={handleToggleImportant}
+            onToggleComplete={handleToggleComplete}
+            onOpenTaskSidebar={handleOpenSidebar}
+            tasks={tasks || []}
+            date={dateWithoutTime}
+          />
+        </div>
         <AddTaskPanel
           onChangeDate={handleChangeDate}
           date={date}
@@ -101,7 +107,7 @@ export const ImportantTasksPage = () => {
       </PageLayout>
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
-        toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}
+        completeTaskIsSuccess={toggleCompleteTaskIsSuccess}
         onClose={handleCloseSidebar}
         isOpen={isTaskSidebarVisible}
         taskId={taskId}

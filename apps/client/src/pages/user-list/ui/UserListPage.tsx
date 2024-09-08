@@ -11,6 +11,7 @@ import {
   useToggleCompleteTask,
   useToggleImportantStatus,
   useTaskStore,
+  PageLayout,
 } from '../../../shared';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { UserListTitle } from '../../../features/user-list-title';
@@ -19,7 +20,9 @@ import { PAGE_URLS } from '../../../shared';
 export const UserListPage = () => {
   const formattedDate = getWeedayMonthAndDay(new Date());
 
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<Date | null>(
+    new Date(new Date().setUTCHours(0, 0, 0, 0))
+  );
 
   const params = useParams();
 
@@ -27,9 +30,7 @@ export const UserListPage = () => {
 
   const { tasks, refetch: refetchTasks } = useGetUserListTasks(params?.listId);
 
-  const { list, listIsSuccess, refetchList } = useGetList(
-    params?.listId
-  );
+  const { list, listIsSuccess, refetchList } = useGetList(params?.listId);
 
   const { createTask, createTaskIsSuccess } = useCreateTask();
 
@@ -39,7 +40,12 @@ export const UserListPage = () => {
   const { toggleImportantStatus, toggleImportantStatusIsSuccess } =
     useToggleImportantStatus();
 
-  const { defineDeleteListIsSuccess, updateListIsSuccess, listId, changeListId } = useListStore();
+  const {
+    defineDeleteListIsSuccess,
+    updateListIsSuccess,
+    listId,
+    changeListId,
+  } = useListStore();
 
   const [isTaskSidebarVisible, setIsTaskSidebarVisible] = useState(false);
 
@@ -66,7 +72,14 @@ export const UserListPage = () => {
 
   const handleChangeDate = (e: any) => {
     setDate(
-      new Date(new Date(e.target?.closest('button').id || e?.$d).toDateString())
+      new Date(
+        new Date(e.target?.closest('button').id || e?.$d).setUTCHours(
+          0,
+          0,
+          0,
+          0
+        )
+      )
     );
   };
 
@@ -75,7 +88,7 @@ export const UserListPage = () => {
     listId?: string;
     deadLine: Date | null;
   }) => {
-    createTask({...payload});
+    createTask({ ...payload });
   };
 
   const handleDeleteList = () => {
@@ -85,10 +98,10 @@ export const UserListPage = () => {
   };
 
   useEffect(() => {
-      if(params.listId){
-        changeListId(params.listId)
-      }
-  },[params.listId])
+    if (params.listId) {
+      changeListId(params.listId);
+    }
+  }, [changeListId, params.listId]);
 
   useEffect(() => {
     if (toggleCompleteTaskIsSuccess || toggleImportantStatusIsSuccess) {
@@ -117,8 +130,8 @@ export const UserListPage = () => {
   ]);
 
   return (
-    <div className="flex">
-      <div className="p-5 h-screen basis-full">
+    <PageLayout className="flex flex-col justify-between">
+      <div>
         <div className="flex justify-between items-center">
           {params.listId && listIsSuccess ? (
             <UserListTitle list={list} />
@@ -135,25 +148,26 @@ export const UserListPage = () => {
           onToggleComplete={handleToggleComplete}
           onOpenTaskSidebar={handleOpenSidebar}
           tasks={tasks || []}
+          
           date={date}
-        />
-        <AddTaskPanel
-          listId={listId}
-          onAddTask={handleCreateTask}
-          createTaskIsSuccess={createTaskIsSuccess}
-          refreshTasks={refetchTasks}
-          date={date}
-          onChangeDate={handleChangeDate}
         />
       </div>
+      <AddTaskPanel
+        onAddTask={handleCreateTask}
+        createTaskIsSuccess={createTaskIsSuccess}
+        refreshTasks={refetchTasks}
+        date={date}
+        onChangeDate={handleChangeDate}
+      />
+
       <TaskSidebar
         onToggleComplete={handleToggleComplete}
-        toggleCompleteTaskIsSuccess={toggleCompleteTaskIsSuccess}
+        completeTaskIsSuccess={toggleCompleteTaskIsSuccess}
         onClose={handleCloseSidebar}
         isOpen={isTaskSidebarVisible}
         taskId={taskId}
         refetch={refetchTasks}
       />
-    </div>
+    </PageLayout>
   );
 };

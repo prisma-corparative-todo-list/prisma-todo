@@ -3,6 +3,6 @@
 
 export interface ICreateMessageDto {
     text: string;
-    userId?: string;
+    userId: string;
     groupId: string;
 }

@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 
 interface IProps {
   onChangeDate: (e: any) => void;
-  date: Date | null
+  date: Date | null;
 
   className: string;
 }
@@ -38,6 +38,7 @@ export const DatePicker: FC<IProps> = ({
   };
 
   const handleChangeDate = (e: any) => {
+    console.log(e)
     onChangeDate(e);
     setIsCalendarVisibel(false);
     setIsSelectVisible(false);
@@ -63,8 +64,12 @@ export const DatePicker: FC<IProps> = ({
               id={today.toDateString()}
               className="flex justify-between items-center w-full"
             >
-              <span id={tomorrow.toDateString()} className="text-base">Today</span>
-              <span id={tomorrow.toDateString()} className="text-base">{getWeekday(today)}</span>
+              <span id={tomorrow.toDateString()} className="text-base">
+                Today
+              </span>
+              <span id={tomorrow.toDateString()} className="text-base">
+                {getWeekday(today)}
+              </span>
             </button>
           </li>
           <li className="py-3 hover:bg-slate-100 w-full px-5">
@@ -73,7 +78,7 @@ export const DatePicker: FC<IProps> = ({
               id={tomorrow.toDateString()}
               className="flex justify-between items-center w-full"
             >
-              <span className="text-base">Tommorow</span>
+              <span className="text-base">Tomorrow</span>
               <span className="text-base">{getWeekday(tomorrow)}</span>
             </button>
           </li>
@@ -83,8 +88,12 @@ export const DatePicker: FC<IProps> = ({
               id={inAWeek.toDateString()}
               className="flex justify-between items-center w-full"
             >
-              <span id={tomorrow.toDateString()} className="text-base">In a week</span>
-              <span id={tomorrow.toDateString()} className="text-base">{getWeedayMonthAndDay(inAWeek)}</span>
+              <span id={tomorrow.toDateString()} className="text-base">
+                In a week
+              </span>
+              <span id={tomorrow.toDateString()} className="text-base">
+                {getWeedayMonthAndDay(inAWeek)}
+              </span>
             </button>
           </li>
           {date && (

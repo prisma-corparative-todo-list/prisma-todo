@@ -27,7 +27,7 @@ export const useTask = () => {
     refetch: refetchTasks,
   } = useGetTasks();
 
-  const { createTask, createTaskIsSuccess } = useCreateTask();
+  const { createTask, createTaskIsSuccess, createTaskIsError, createTaskVariables, createTaskSubmittedAt, createTaskIsLoading } = useCreateTask();
 
   return {
     tasks,
@@ -43,6 +43,10 @@ export const useTask = () => {
     toggleImportantStatusIsLoading,
     toggleImportantStatusIsSuccess,
     createTask,
-    createTaskIsSuccess
+    createTaskIsSuccess,
+    createTaskIsError,
+    createTaskVariables,
+    createTaskSubmittedAt,
+    createTaskIsLoading
   };
 };
