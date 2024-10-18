@@ -148,8 +148,10 @@ export const UserListPage = () => {
           onToggleComplete={handleToggleComplete}
           onOpenTaskSidebar={handleOpenSidebar}
           tasks={tasks || []}
-          
           date={date}
+          createTaskIsError={false}
+          createTaskSubmittedAt={0}
+          createTaskIsPending={false}
         />
       </div>
       <AddTaskPanel

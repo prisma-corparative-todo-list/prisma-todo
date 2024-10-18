@@ -8470,6 +8470,15 @@
         "hash": "sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ=="
       }
     },
+    "npm:emoji-picker-react": {
+      "type": "npm",
+      "name": "npm:emoji-picker-react",
+      "data": {
+        "version": "4.12.0",
+        "packageName": "emoji-picker-react",
+        "hash": "sha512-q2c8UcZH0eRIMj41bj0k1akTjk69tsu+E7EzkW7giN66iltF6H9LQvQvw6ugscsxdC+1lmt3WZpQkkY65J95tg=="
+      }
+    },
     "npm:emojis-list": {
       "type": "npm",
       "name": "npm:emojis-list",
@@ -9332,6 +9341,15 @@
         "version": "4.0.0",
         "packageName": "fixpack",
         "hash": "sha512-5SM1+H2CcuJ3gGEwTiVo/+nd/hYpNj9Ch3iMDOQ58ndY+VGQ2QdvaUTkd3otjZvYnd/8LF/HkJ5cx7PBq0orCQ=="
+      }
+    },
+    "npm:flairup": {
+      "type": "npm",
+      "name": "npm:flairup",
+      "data": {
+        "version": "1.0.0",
+        "packageName": "flairup",
+        "hash": "sha512-IKlE+pNvL2R+kVL1kEhUYqRxVqeFnjiIvHWDMLFXNaqyUdFXQM2wte44EfMYJNHkW16X991t2Zg8apKkhv7OBA=="
       }
     },
     "npm:flat": {
@@ -15691,12 +15709,12 @@
       },
       {
         "source": "client",
-        "target": "npm:@mui/material",
+        "target": "npm:@mui/icons-material",
         "type": "static"
       },
       {
         "source": "client",
-        "target": "npm:@mui/icons-material",
+        "target": "npm:@mui/material",
         "type": "static"
       },
       {
@@ -15717,6 +15735,11 @@
       {
         "source": "client",
         "target": "npm:@hookform/resolvers",
+        "type": "static"
+      },
+      {
+        "source": "client",
+        "target": "npm:emoji-picker-react",
         "type": "static"
       },
       {
@@ -15746,6 +15769,11 @@
       },
       {
         "source": "client",
+        "target": "npm:react-router",
+        "type": "static"
+      },
+      {
+        "source": "client",
         "target": "npm:@nx/react",
         "type": "static"
       },
@@ -15762,11 +15790,6 @@
       {
         "source": "client",
         "target": "npm:@nx/vite",
-        "type": "static"
-      },
-      {
-        "source": "client",
-        "target": "npm:react-router",
         "type": "static"
       }
     ],
@@ -26280,6 +26303,18 @@
       {
         "source": "npm:ejs",
         "target": "npm:jake",
+        "type": "static"
+      }
+    ],
+    "npm:emoji-picker-react": [
+      {
+        "source": "npm:emoji-picker-react",
+        "target": "npm:react",
+        "type": "static"
+      },
+      {
+        "source": "npm:emoji-picker-react",
+        "target": "npm:flairup",
         "type": "static"
       }
     ],

@@ -9,7 +9,7 @@ import { IMessageAndUser } from 'interfaces';
 import { FC } from 'react';
 
 interface IProps {
-  message: IMessageAndUser | IMessageAndUser;
+  message: IMessageAndUser;
 }
 
 export const MessageItem: FC<IProps> = ({ message }) => {

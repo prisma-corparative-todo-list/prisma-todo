@@ -7,13 +7,21 @@ import { ExtendedTask } from 'interfaces';
 interface IProps {
   tasks: ExtendedTask[];
   onToggleComplete: (e: any) => void;
-  onOpenTaskSidebar: (e: any) =>  void
-  count: number
+  onOpenTaskSidebar: (e: any) => void;
+  count: number;
 }
 
-export const CompletedTasksList: FC<IProps> = ({ tasks, onToggleComplete,onOpenTaskSidebar,count }) => {
+export const CompletedTasksList: FC<IProps> = ({
+  tasks,
+  onToggleComplete,
+  onOpenTaskSidebar,
+  count,
+}) => {
   return (
-    <Accordion sx={{ backgroundColor: 'transparent' }}>
+    <Accordion
+      sx={{ backgroundColor: 'transparent' }}
+      disabled={tasks?.length === 0}
+    >
       <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
         <Typography
           sx={{
@@ -23,7 +31,7 @@ export const CompletedTasksList: FC<IProps> = ({ tasks, onToggleComplete,onOpenT
             borderRadius: '10px',
           }}
         >
-          Completed Tasks |  {count}
+          Completed Tasks | {count}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>

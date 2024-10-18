@@ -41,6 +41,7 @@ export const AddTaskPanel: FC<IProps> = ({
 
     if (task.length < 1) return;
     if (event.key === 'Enter') {
+      console.log("Enter")
       onAddTask({
         title: task,
         deadLine: date,

@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.11",
     "ejs": "^3.1.10",
+    "emoji-picker-react": "^4.12.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "nodemailer": "^6.9.14",
@@ -144,68 +145,68 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".prettierrc",
-        "hash": "16267754514737964994"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "3907073417804430290"
-      },
-      {
-        "file": "README.md",
-        "hash": "4353142399798978899"
-      },
-      {
-        "file": "package.json",
-        "hash": "17639220864141138978"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
       },
       {
         "file": ".editorconfig",
         "hash": "5443105041930014821"
       },
       {
-        "file": "interfaces/index.ts",
-        "hash": "10126763326979036056"
+        "file": "package.json",
+        "hash": "5220606288928750095"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
       },
       {
         "file": "jest.preset.js",
         "hash": "9430166341120122740"
       },
       {
+        "file": "jest.config.ts",
+        "hash": "3494843969422251966"
+      },
+      {
+        "file": "interfaces/index.ts",
+        "hash": "12698040497468858613"
+      },
+      {
+        "file": "README.md",
+        "hash": "4353142399798978899"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
+      },
+      {
         "file": "tsconfig.base.json",
         "hash": "16936441711144470533"
       },
       {
-        "file": "nx.json",
-        "hash": "10375793336502971330"
+        "file": "package-lock.json",
+        "hash": "494249671653902768"
       },
       {
         "file": ".gitignore",
         "hash": "16877376182141465221"
       },
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
-      },
-      {
-        "file": ".vscode/extensions.json",
-        "hash": "4934098906304722861"
-      },
-      {
         "file": ".eslintrc.json",
         "hash": "18315524891129148814"
+      },
+      {
+        "file": "nx.json",
+        "hash": "10375793336502971330"
       },
       {
         "file": "migrations.json",
         "hash": "10391131165700003340"
       },
       {
-        "file": "jest.config.ts",
-        "hash": "3494843969422251966"
-      },
-      {
-        "file": ".prettierignore",
-        "hash": "16448050467312557263"
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
       }
     ],
     "projectFileMap": {
@@ -327,7 +328,7 @@
         },
         {
           "file": "apps/client/src/entities/list/ui/SystemListItemLink.tsx",
-          "hash": "8806802739866367379",
+          "hash": "17471351839286777734",
           "deps": [
             "npm:react",
             "npm:react-router-dom"
@@ -335,13 +336,21 @@
         },
         {
           "file": "apps/client/src/entities/message/index.ts",
-          "hash": "7640477875486436842"
+          "hash": "5439100478102941303"
         },
         {
           "file": "apps/client/src/entities/message/ui/MessageItem.tsx",
-          "hash": "10922475683018708079",
+          "hash": "7142779773816805436",
           "deps": [
             "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/entities/message/ui/OptimisticMessageItem.tsx",
+          "hash": "7627643294376809567",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material"
           ]
         },
         {
@@ -375,14 +384,14 @@
         },
         {
           "file": "apps/client/src/entities/task/ui/OptimisticTaskItem.tsx",
-          "hash": "7852184065918477724",
+          "hash": "15026841080579911059",
           "deps": [
             "npm:react"
           ]
         },
         {
           "file": "apps/client/src/entities/task/ui/TaskItem.tsx",
-          "hash": "8294995008477626943",
+          "hash": "14413813285768889832",
           "deps": [
             "npm:react",
             "npm:prisma",
@@ -402,6 +411,19 @@
             "npm:react",
             "npm:@mui/x-date-pickers",
             "npm:dayjs"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/file-picker/index.ts",
+          "hash": "337923462337953583"
+        },
+        {
+          "file": "apps/client/src/features/file-picker/ui/FilesPickerButton.tsx",
+          "hash": "4843699743323826203",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:@mui/material"
           ]
         },
         {
@@ -475,10 +497,6 @@
             "npm:react",
             "npm:@mui/icons-material"
           ]
-        },
-        {
-          "file": "apps/client/src/features/message/index.ts",
-          "hash": "8277556597007559982"
         },
         {
           "file": "apps/client/src/features/participant/index.ts",
@@ -586,18 +604,18 @@
         },
         {
           "file": "apps/client/src/features/system-links/ui/SystemLinks.tsx",
-          "hash": "11788517456905134223",
+          "hash": "11399768802127253535",
           "deps": [
             "npm:@mui/icons-material"
           ]
         },
         {
           "file": "apps/client/src/features/task/index.ts",
-          "hash": "15150938600676423757"
+          "hash": "9931671117338958939"
         },
         {
           "file": "apps/client/src/features/task/ui/CompletedTasksList.tsx",
-          "hash": "837467039078609640",
+          "hash": "15806550408399238397",
           "deps": [
             "npm:@mui/material",
             "npm:react"
@@ -609,6 +627,13 @@
           "deps": [
             "npm:@mui/icons-material",
             "npm:react"
+          ]
+        },
+        {
+          "file": "apps/client/src/features/task/ui/OptimisticTasks.tsx",
+          "hash": "1691937571485925838",
+          "deps": [
+            "npm:@tanstack/react-query"
           ]
         },
         {
@@ -648,10 +673,11 @@
         },
         {
           "file": "apps/client/src/features/user-list-title/ui/UserListTitle.tsx",
-          "hash": "8246347486067353563",
+          "hash": "4512280600357188285",
           "deps": [
             "npm:prisma",
-            "npm:react"
+            "npm:react",
+            "npm:emoji-picker-react"
           ]
         },
         {
@@ -676,7 +702,7 @@
         },
         {
           "file": "apps/client/src/pages/group/ui/GroupPage.tsx",
-          "hash": "15255744511312702744",
+          "hash": "5306022376836706826",
           "deps": [
             "npm:react",
             "npm:react-router-dom"
@@ -752,9 +778,10 @@
         },
         {
           "file": "apps/client/src/pages/tasks/ui/TasksPage.tsx",
-          "hash": "12681374659284257116",
+          "hash": "2866904731628233593",
           "deps": [
-            "npm:react"
+            "npm:react",
+            "npm:@tanstack/react-query"
           ]
         },
         {
@@ -763,7 +790,7 @@
         },
         {
           "file": "apps/client/src/pages/user-list/ui/UserListPage.tsx",
-          "hash": "16996514247559060485",
+          "hash": "14051760039995280431",
           "deps": [
             "npm:react",
             "npm:react-router-dom",
@@ -834,7 +861,7 @@
         },
         {
           "file": "apps/client/src/shared/api/queries/task.queries.ts",
-          "hash": "16264566161052263839",
+          "hash": "12809387171713881075",
           "deps": [
             "npm:@tanstack/react-query",
             "npm:prisma"
@@ -911,7 +938,7 @@
         },
         {
           "file": "apps/client/src/shared/index.ts",
-          "hash": "7038663643879823057"
+          "hash": "69541842868625337"
         },
         {
           "file": "apps/client/src/shared/model/constants.ts",
@@ -923,7 +950,7 @@
         },
         {
           "file": "apps/client/src/shared/model/hooks/useGroup.ts",
-          "hash": "7332352704993603670",
+          "hash": "8605496619645213169",
           "deps": [
             "npm:react-router-dom",
             "npm:react"
@@ -931,7 +958,7 @@
         },
         {
           "file": "apps/client/src/shared/model/hooks/useTask.ts",
-          "hash": "8802575579530579524"
+          "hash": "955619151728926764"
         },
         {
           "file": "apps/client/src/shared/model/isAuth.tsx",
@@ -1031,7 +1058,7 @@
         },
         {
           "file": "apps/client/src/shared/ui/ListItemContent.tsx",
-          "hash": "716451493091315372",
+          "hash": "14396786153567114392",
           "deps": [
             "npm:react"
           ]
@@ -1220,11 +1247,11 @@
         },
         {
           "file": "apps/client/src/widgets/message/index.ts",
-          "hash": "10298124307298313883"
+          "hash": "6941480486883036354"
         },
         {
           "file": "apps/client/src/widgets/message/ui/MessageList.tsx",
-          "hash": "13242016904104073618",
+          "hash": "17317155893764724707",
           "deps": [
             "npm:react",
             "npm:react-intersection-observer",
@@ -1233,12 +1260,28 @@
           ]
         },
         {
+          "file": "apps/client/src/widgets/message/ui/PostMessageModal.tsx",
+          "hash": "8718093625940760516",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/client/src/widgets/message/ui/PostMessagePanel.tsx",
+          "hash": "5414011709713151005",
+          "deps": [
+            "npm:@tanstack/react-query",
+            "npm:react",
+            "npm:react-router"
+          ]
+        },
+        {
           "file": "apps/client/src/widgets/task/index.ts",
           "hash": "15162670200227281148"
         },
         {
           "file": "apps/client/src/widgets/task/ui/AddTaskPanel.tsx",
-          "hash": "2115337407294832479",
+          "hash": "3094375781420138171",
           "deps": [
             "npm:@mui/icons-material",
             "npm:react"
@@ -1254,9 +1297,10 @@
         },
         {
           "file": "apps/client/src/widgets/task/ui/TasksList.tsx",
-          "hash": "9562612193521883566",
+          "hash": "8602227245980326257",
           "deps": [
-            "npm:react"
+            "npm:react",
+            "npm:@tanstack/react-query"
           ]
         },
         {
@@ -1297,15 +1341,6 @@
             "npm:@vitejs/plugin-react",
             "npm:@nx/vite"
           ]
-        },
-        {
-          "file": "apps/client/src/widgets/message/ui/PostMessagePanel.tsx",
-          "hash": "11998133822473731986",
-          "deps": [
-            "npm:@tanstack/react-query",
-            "npm:react",
-            "npm:react-router"
-          ]
         }
       ],
       "api": [
@@ -1330,12 +1365,16 @@
           "hash": "8017038186354747924"
         },
         {
+          "file": "apps/api/prisma/migrations/20240923183744_/migration.sql",
+          "hash": "2575470912270954784"
+        },
+        {
           "file": "apps/api/prisma/migrations/migration_lock.toml",
           "hash": "11493296588214560035"
         },
         {
           "file": "apps/api/prisma/schema.prisma",
-          "hash": "1500361656716845617"
+          "hash": "13296839544181812986"
         },
         {
           "file": "apps/api/project.json",
@@ -1434,7 +1473,7 @@
         },
         {
           "file": "apps/api/src/auth/strategies/access-token.strategy.ts",
-          "hash": "15483279018540680302",
+          "hash": "12772027872811006559",
           "deps": [
             "npm:@nestjs/common",
             "npm:@nestjs/passport",
@@ -1578,7 +1617,7 @@
         },
         {
           "file": "apps/api/src/list/list.service.ts",
-          "hash": "11071748028655175686",
+          "hash": "4469033767613295752",
           "deps": [
             "npm:@nestjs/common",
             "npm:prisma"

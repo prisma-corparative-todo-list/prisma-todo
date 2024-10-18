@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS, SERVICE_URL } from '../../model/constants';
 import { TaskService } from '../services/task.service';
-import { Prisma } from 'prisma/prisma-client';
+import { Prisma, Task } from 'prisma/prisma-client';
 import { ICreateTask } from 'interfaces';
 
 export const useGetTasks = ({
@@ -57,23 +57,20 @@ export const useCreateTask = () => {
     submittedAt: createTaskSubmittedAt,
     variables: createTaskVariables,
   } = useMutation({
+    mutationKey: [SERVICE_URL.TASK],
     mutationFn: async (dto: ICreateTask) => {
+      console.log('post: ', dto);
       const response = await TaskService.create(dto);
       return response;
     },
-    onSettled: async () => {
-      return await queryClient.invalidateQueries({
-        queryKey: [SERVICE_URL.TASK],
-      });
-    },
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: [SERVICE_URL.TASK] }),
   });
   return {
     createTask,
     createTaskIsLoading,
     createTaskIsError,
     createTaskIsSuccess,
-    createTaskVariables,
-    createTaskSubmittedAt,
   };
 };
 

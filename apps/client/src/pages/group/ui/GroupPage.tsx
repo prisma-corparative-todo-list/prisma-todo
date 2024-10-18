@@ -60,9 +60,9 @@ export const GroupPage = () => {
         participants={participants}
       />
       <MessageList
-        postMessageIsSuccess={false}
-        postMessageIsError={false}
-        postMessageIsPending={false}
+        postMessageIsSuccess={postMessageIsSuccess}
+        postMessageIsError={postMessageIsError}
+        postMessageIsPending={postMessageIsPending}
         postMessageVariables={postMessageVariables}
       />
       <PostMessagePanel postMessage={postMessage} />

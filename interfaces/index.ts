@@ -79,8 +79,9 @@ export interface ICreateInvitation {
   groupId?: string;
 }
 
-export interface ExtendedTask extends Omit<Task, 'listId'> {
+export interface ExtendedTask extends Omit<Task, 'listId' | "groupId"> {
   list: List | null;
+
 }
 
 export type Roles = "ADMIN" | "PARTICIPANT";

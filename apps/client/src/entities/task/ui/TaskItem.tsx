@@ -9,13 +9,10 @@ import { useGetSteps } from '../../../shared';
 import { ExtendedTask, ICreateTask } from 'interfaces';
 
 interface IProps {
-  task: ExtendedTask | undefined;
-  onOpenTaskSidebar: (e: any) => void;
-  onToggleCompleteTask: (e: any) => void;
+  task?: ExtendedTask;
+  onOpenTaskSidebar?: (e: any) => void;
+  onToggleCompleteTask?: (e: any) => void;
   onToggleImportantStatus?: (e: any) => void;
-  createTaskIsError: boolean;
-  createTaskSubmittedAt: number;
-  createTaskVariables?: ICreateTask
 }
 
 export const TaskItem: FC<IProps> = ({
@@ -23,20 +20,15 @@ export const TaskItem: FC<IProps> = ({
   onOpenTaskSidebar,
   onToggleCompleteTask,
   onToggleImportantStatus,
-  createTaskVariables,
-  createTaskSubmittedAt,
-  createTaskIsError
 }) => {
-
   const handleToggleImportant = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
-    if(onToggleImportantStatus)
-    onToggleImportantStatus(task?.id);
+    if (onToggleImportantStatus) onToggleImportantStatus(task?.id);
   };
 
   const handleToggleComplete = (e: IEventClick<HTMLButtonElement>) => {
     e.stopPropagation();
-    onToggleCompleteTask(task?.id);
+    if (onToggleCompleteTask) onToggleCompleteTask(task?.id);
   };
 
   const ToggleImportantButton = () => {
@@ -60,7 +52,11 @@ export const TaskItem: FC<IProps> = ({
       onClick={onOpenTaskSidebar}
     >
       <div className="flex gap-5">
-        <Checkbox checked={task?.isCompleted} onClick={handleToggleComplete} />
+        <Checkbox
+          // disabled={onToggleCompleteTask ? false : true}
+          checked={task?.isCompleted}
+          onClick={handleToggleComplete}
+        />
         <div>
           <p className="text-left">{task?.title}</p>
           <div className="flex">
@@ -78,7 +74,8 @@ export const TaskItem: FC<IProps> = ({
                 : task?.deadLine &&
                   new Date(task?.deadLine).getDate() === new Date().getDate()
                 ? 'My day'
-                : task?.deadLine && getWeedayMonthAndDay(new Date(task?.deadLine))}
+                : task?.deadLine &&
+                  getWeedayMonthAndDay(new Date(task?.deadLine))}
             </span>
             {task?.list && <span className="mx-2">{task?.list.title}</span>}
             {task?.description && task?.description.length >= 1 && (

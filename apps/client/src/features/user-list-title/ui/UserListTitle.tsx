@@ -1,6 +1,7 @@
 import { List } from 'prisma/prisma-client';
 import { useUpdateList, useListStore } from '../../../shared/';
 import { FC, useEffect, useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
 interface IProps {
   list?: List;
@@ -31,6 +32,10 @@ export const UserListTitle: FC<IProps> = ({ list }) => {
     setInputValue('');
   };
 
+  const handleChangeEmoji = (e: any) => {
+    console.log(e);
+  };
+
   useEffect(() => {
     if (updateListIsSuccess) {
       defineUpdateListIsSuccess(true);
@@ -41,11 +46,13 @@ export const UserListTitle: FC<IProps> = ({ list }) => {
     if (list) {
       setInputValue(list.title || '');
     }
-  }, [updateListIsSuccess, list?.title]);
+  }, [updateListIsSuccess, list, defineUpdateListIsSuccess]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
+    <div className="flex gap-5 items-center">
+      <span aria-label="emoji" role="img" className="text-3xl">
+        🤬
+      </span>
       {isInputVisible ? (
         <input
           className="text-3xl outline-none mb-2 bg-transparent border-b-2 border-black"
@@ -62,6 +69,6 @@ export const UserListTitle: FC<IProps> = ({ list }) => {
           {list?.title === '' ? 'Untitled' : list?.title}
         </button>
       )}
-    </>
+    </div>
   );
 };

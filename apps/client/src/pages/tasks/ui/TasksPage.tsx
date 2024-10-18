@@ -2,6 +2,8 @@ import { TasksList, AddTaskPanel, TaskSidebar } from '../../../widgets/task';
 import { PageLayout, useTask } from '../../../shared';
 import { useEffect, useState } from 'react';
 import { TasksHeader } from '../../../features/tasks-header';
+import { useQueryClient } from '@tanstack/react-query';
+import { SERVICE_URL } from '../../../shared/model/constants';
 
 export const TasksPage = () => {
   const [taskId, setTaskId] = useState('');
@@ -9,6 +11,8 @@ export const TasksPage = () => {
   const [date, setDate] = useState<Date | null>(null);
 
   const [isTaskSidebarVisible, setIsTaskSidebarVisible] = useState(false);
+
+ 
 
   const {
     tasks,
@@ -20,9 +24,7 @@ export const TasksPage = () => {
     createTask,
     createTaskIsSuccess,
     createTaskIsError,
-    createTaskSubmittedAt,
-    createTaskVariables,
-    createTaskIsLoading
+    createTaskIsLoading,
   } = useTask();
 
   const handleChangeDate = (e: any) => {
@@ -81,8 +83,7 @@ export const TasksPage = () => {
             tasks={tasks || []}
             date={dateWithoutTime}
             createTaskIsError={createTaskIsError}
-            createTaskSubmittedAt={createTaskSubmittedAt}
-            createTaskVariables={createTaskVariables}
+   
             createTaskIsPending={createTaskIsLoading}
           />
         </div>

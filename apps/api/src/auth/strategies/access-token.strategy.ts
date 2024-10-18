@@ -4,12 +4,13 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from 'user/user.service';
 import { User } from 'prisma/prisma-client';
-
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(
   Strategy,
   'AccessTokenStrategy',
 ) {
+
+  private readonly logger = new Logger(AccessTokenStrategy.name);
 
   constructor(
     private readonly configService: ConfigService,
@@ -30,8 +31,11 @@ export class AccessTokenStrategy extends PassportStrategy(
     });
   }
 
-  async validate(payload: any): Promise<User> {
-    const user = await this.userService.findOne({email:payload});
+  async validate(payload: string): Promise<User> {
+
+    this.logger.log(payload)
+
+    const user = await this.userService.findOne({ email:payload });
 
     return user
   }

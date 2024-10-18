@@ -103,3 +103,5 @@ export { BurgerButton } from "./ui/BurgerButton"
 export { usePostMessage } from "./api/queries/message.queries"
 
 export type { ICreateMessageDto } from "./model/types/message.types"
+
+export { SERVICE_URL } from "./model/constants"

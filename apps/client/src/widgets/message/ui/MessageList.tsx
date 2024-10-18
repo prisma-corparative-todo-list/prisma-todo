@@ -1,4 +1,4 @@
-import { MessageItem } from '../../../entities/message';
+import { MessageItem, OptimisticMesssageItem } from '../../../entities/message';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { ICreateMessageDto, useGroup } from '../../../shared';
@@ -24,12 +24,7 @@ export const MessageList: FC<IProps> = ({
 
   const ulRef = useRef<HTMLUListElement>(null);
 
-  const { messages, fetchNextPage, hasNextPage } = useGroup(
-    postMessageIsError,
-    postMessageIsSuccess,
-    postMessageIsPending,
-    postMessageVariables
-  );
+  const { messages, fetchNextPage, hasNextPage } = useGroup();
 
   const [prevScrollHeight, setPrevScrollHeight] = useState(0);
 
@@ -72,6 +67,10 @@ export const MessageList: FC<IProps> = ({
     }
   }, [messages]);
 
+  useEffect(() => {
+    console.log(postMessageVariables);
+  }, [postMessageVariables]);
+
   const handleScroll = () => {
     if (ulRef.current) {
       // console.log({
@@ -100,6 +99,14 @@ export const MessageList: FC<IProps> = ({
           <MessageItem message={message} key={idx} />
         ))}
         <li ref={liRef} />
+        {/* {postMessageIsPending && (
+          <OptimisticMesssageItem
+            postMessageIsError={postMessageIsError}
+            postMessageIsPending={postMessageIsPending}
+            postMessageIsSuccess={postMessageIsSuccess}
+            postMessageVariables={postMessageVariables}
+          />
+        )} */}
       </ul>
       {isButtonVisible && (
         <button

@@ -5,5 +5,5 @@ interface ListItemContentProps {
 }
 
 export const ListItemContent: FC<ListItemContentProps> = ({ children }) => {
-  return <span className="text-2xl">{children}</span>;
+  return <span className="text-xl">{children}</span>;
 };

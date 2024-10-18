@@ -1,8 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useTaskStore } from '../../../shared';
-import { OptimisticTaskItem, TaskItem } from '../../../entities/task';
-import { CompletedTasksList } from '../../../features/task';
+import { TaskItem } from '../../../entities/task';
+import { CompletedTasksList, OptimisticTasks } from '../../../features/task';
 import { ExtendedTask, ICreateTask } from 'interfaces';
+import { useMutationState, useQueryClient } from '@tanstack/react-query';
+import { SERVICE_URL } from '../../../shared/model/constants';
 
 interface IProps {
   date: Date | null;
@@ -11,8 +13,6 @@ interface IProps {
   onToggleComplete: (e: any) => void;
   onToggleImportantStatus: (e: any) => void;
   createTaskIsError: boolean;
-  createTaskSubmittedAt: number;
-  createTaskVariables?: ICreateTask;
   createTaskIsPending: boolean;
 }
 
@@ -22,8 +22,6 @@ export const TasksList: FC<IProps> = ({
   onToggleComplete,
   onToggleImportantStatus,
   createTaskIsError,
-  createTaskSubmittedAt,
-  createTaskVariables,
   createTaskIsPending,
 }) => {
   const { hideTaskInput } = useTaskStore();
@@ -31,12 +29,16 @@ export const TasksList: FC<IProps> = ({
   return (
     <div
       onClick={hideTaskInput}
-      className="overflow-auto h-[70%] rounded-2xl px-5 py-5"
+      className="overflow-auto rounded-2xl px-5 py-5 h-[75vh]"
     >
-      <h3 className="">
-        Count : {tasks.filter((el) => el.isCompleted === false)?.length}
-      </h3>
-      <ul className="pb-2 pt-5 relative">
+      {
+        tasks?.length !== 0 && (
+          <h3 className="">
+          Count : {tasks.filter((el) => el.isCompleted === false)?.length}
+        </h3>
+        )
+      }
+      <ul className="pb-2 pt-5 relative h-[75% ">
         {tasks
           .filter((el) => el.isCompleted === false)
           .map((task) => (
@@ -46,18 +48,11 @@ export const TasksList: FC<IProps> = ({
               onOpenTaskSidebar={onOpenTaskSidebar}
               key={task.id}
               task={task}
-              createTaskIsError={createTaskIsError}
-              createTaskSubmittedAt={createTaskSubmittedAt}
-              createTaskVariables={createTaskVariables}
+        
             />
           ))}
-        {createTaskIsPending && (
-          <OptimisticTaskItem
-            createTaskIsError={createTaskIsError}
-            createTaskSubmittedAt={createTaskSubmittedAt}
-            createTaskVariables={createTaskVariables}
-          />
-        )}
+
+          <OptimisticTasks/>
       </ul>
       <CompletedTasksList
         count={tasks?.filter((el) => el.isCompleted === true).length}

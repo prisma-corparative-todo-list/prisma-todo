@@ -7,12 +7,7 @@ import {
 import { useEffect, useState } from 'react';
 import { IMessageAndUser } from 'interfaces';
 
-export const useGroup = (
-  postMessageIsError: boolean,
-  postMessageIsSuccess: boolean,
-  postMessageIsPending: boolean,
-  postMessageVariables: Omit<ICreateMessageDto, 'userId'> | undefined
-) => {
+export const useGroup = () => {
   const { groupId } = useParams();
 
   const [messages, setMessages] = useState<
@@ -41,20 +36,7 @@ export const useGroup = (
     }
   }, [existingMessages, existingMessagesIsSuccess]);
 
-  // useEffect(() => {
-  //   if (
-  //     postMessageVariables &&
-  //     (postMessageIsSuccess || postMessageIsError || postMessageIsPending)
-  //   ) {
-  //     setMessages((existing) => [...existing]);
-  //   }
-  // }, [
-  //   postMessageVariables,
-  //   postMessageIsSuccess,
-  //   postMessageIsError,
-  //   postMessageIsPending,
-  // ]);
-
+;
   useEffect(() => {
     socket.connect();
 

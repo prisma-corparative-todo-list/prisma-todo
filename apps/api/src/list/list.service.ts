@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { List, Prisma, Task } from 'prisma/prisma-client';
-import { WorkFlow } from '../../../../interfaces';
+
 
 @Injectable()
 export class ListService {
