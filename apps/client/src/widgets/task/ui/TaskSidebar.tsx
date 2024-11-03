@@ -51,7 +51,6 @@ export const TaskSidebar: FC<IProps> = ({
         isToday={task?.isToday}
       />
       <StepsList taskId={taskId} refetchTasks={refetchTasks} />
-   
       <DeleteTaskButton
         className="absolute bottom-10 right-10"
         fontSize="large"

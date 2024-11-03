@@ -105,3 +105,11 @@ export { usePostMessage } from "./api/queries/message.queries"
 export type { ICreateMessageDto } from "./model/types/message.types"
 
 export { SERVICE_URL } from "./model/constants"
+
+export { CreateTaskSchema } from  "./model/types/task.types"
+
+export type { ICreateTaskDto } from "./model/types/task.types"
+
+export { QUERY_KEYS } from "./model/constants"
+
+export type { IOptimisticStep } from "./model/types/steps.types"

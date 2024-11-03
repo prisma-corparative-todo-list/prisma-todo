@@ -1,8 +1,8 @@
 import { Prisma, Step, Task } from 'prisma/prisma-client';
 import { instance } from '../api.instance';
 import { QUERY_KEYS, SERVICE_URL } from '../../model/constants';
-import { ExtendedTask, ICreateTask, ITask, WorkFlow } from 'interfaces';
-import { AxiosResponse } from 'axios';
+import { ExtendedTask } from 'interfaces';
+import { ICreateTaskDto } from "../../../shared";
 
 export const TaskService = {
   axios: instance,
@@ -33,7 +33,7 @@ export const TaskService = {
     ).data;
   },
 
-  async create(dto: ICreateTask): Promise<Task> {
+  async create(dto: ICreateTaskDto): Promise<Task> {
     return (await this.axios.post(`${SERVICE_URL.TASK}`, dto)).data;
   },
 

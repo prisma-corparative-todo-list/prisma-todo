@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../../model/constants';
 import { StepService } from '../services/step.service';
 import { ICreateStep } from 'interfaces';
@@ -20,8 +20,11 @@ export const useGetSteps = (taskId?: string) => {
 };
 
 export const usePostStep = () => {
+  const queryClient = useQueryClient();
+  
   const { mutate: postStep, isSuccess: postStepIsSuccess } = useMutation({
     mutationKey: [QUERY_KEYS.STEP],
+    onSettled: () => queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.STEP] }),
     mutationFn: async (data: ICreateStep) => {
       const response = await StepService.create(data);
       return response;

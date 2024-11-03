@@ -71,6 +71,7 @@ export const AddTaskPanel: FC<IProps> = ({
               value={task}
               onKeyUp={handleCreateTask}
               onChange={handleChangeTaskValue}
+              autoFocus={true}
               className="w-full outline-none bg-[#faf9f0] border-b border-[black]"
             />
           </div>

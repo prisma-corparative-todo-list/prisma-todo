@@ -70,7 +70,7 @@ export const StepItem: FC<IProps> = ({ step, refetchTasks, refetchSteps }) => {
   }, [step]);
 
   return (
-    <li key={step.id} className="border-2 mb-3 p-2 rounded-md flex">
+    <li className="border-2 mb-3 p-2 rounded-md flex">
       <Checkbox onClick={handleToggleCompleteStep} checked={step.isCompleted} />
       {!isInputVisible ? (
         <button

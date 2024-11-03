@@ -1,7 +1,9 @@
-import { Step } from 'prisma/prisma-client';
-import { StepItem } from '../../../entities/step';
+import { OptimisticStepItem, StepItem } from '../../../entities/step';
 import { FC, useEffect, useState } from 'react';
 import { useGetSteps, usePostStep } from '../../../shared';
+import { useMutationState } from '@tanstack/react-query';
+import { QUERY_KEYS } from '../../../shared';
+import type { IOptimisticStep } from '../../../shared';
 
 interface IProps {
   refetchTasks: () => void;
@@ -14,6 +16,15 @@ export const StepsList: FC<IProps> = ({ refetchTasks, taskId }) => {
   const { postStep, postStepIsSuccess } = usePostStep();
 
   const [stepValue, setStepValue] = useState('');
+
+  const pendingSteps = useMutationState<IOptimisticStep>({
+    filters: {
+      mutationKey: [`${QUERY_KEYS.STEP}`],
+      status: 'pending',
+    },
+    
+    select: (mutation) => mutation.state.variables as IOptimisticStep,
+  });
 
   const handlePostStep = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -29,11 +40,11 @@ export const StepsList: FC<IProps> = ({ refetchTasks, taskId }) => {
   };
 
   useEffect(() => {
-    if(postStepIsSuccess){
+    if (postStepIsSuccess) {
       refetchSteps();
       setStepValue('');
     }
-  },[postStepIsSuccess, refetchSteps])
+  }, [postStepIsSuccess, refetchSteps]);
 
   return (
     <div className="mx-2 border-2 p-2 rounded-lg">
@@ -51,14 +62,18 @@ export const StepsList: FC<IProps> = ({ refetchTasks, taskId }) => {
         } `}
       >
         {steps &&
-          steps.map((step) => (
+          steps.map((step, idx) => (
             <StepItem
               refetchSteps={refetchSteps}
               refetchTasks={refetchTasks}
-              key={step.id}
+              key={idx}
               step={step}
             />
           ))}
+
+        {pendingSteps.map((step, idx) => (
+          <OptimisticStepItem key={idx} step={step} />
+        ))}
       </ul>
     </div>
   );

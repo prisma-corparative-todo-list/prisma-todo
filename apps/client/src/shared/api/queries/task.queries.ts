@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS, SERVICE_URL } from '../../model/constants';
 import { TaskService } from '../services/task.service';
 import { Prisma, Task } from 'prisma/prisma-client';
-import { ICreateTask } from 'interfaces';
+import { ICreateTaskDto } from "../../../shared/"
 
 export const useGetTasks = ({
   isImportant,
@@ -26,14 +26,13 @@ export const useGetTasks = ({
   } = useQuery({
     queryKey: [QUERY_KEYS.TASK, id, { deadline, isImportant, isPlanned }],
     queryFn: async () => {
-      const response = await TaskService.findMany({
+      return await TaskService.findMany({
         deadline,
         isImportant,
         isPlanned,
         id,
         isToday,
       });
-      return response;
     },
   });
 
@@ -54,12 +53,9 @@ export const useCreateTask = () => {
     isPending: createTaskIsLoading,
     isError: createTaskIsError,
     isSuccess: createTaskIsSuccess,
-    submittedAt: createTaskSubmittedAt,
-    variables: createTaskVariables,
   } = useMutation({
     mutationKey: [SERVICE_URL.TASK],
-    mutationFn: async (dto: ICreateTask) => {
-      console.log('post: ', dto);
+    mutationFn: async (dto: ICreateTaskDto) => {
       const response = await TaskService.create(dto);
       return response;
     },
