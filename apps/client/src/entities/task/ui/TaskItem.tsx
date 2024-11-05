@@ -60,6 +60,7 @@ export const TaskItem: FC<IProps> = ({
         <div>
           <p className="text-left">{task?.title}</p>
           <div className="flex gap-3">
+            {task?.isToday && <span>My day</span>}
             <span
               className={`${
                 task?.deadLine
@@ -69,13 +70,7 @@ export const TaskItem: FC<IProps> = ({
                   : ''
               }`}
             >
-              {task?.isToday
-                ? 'My day'
-                : task?.deadLine &&
-                  new Date(task?.deadLine).getDate() === new Date().getDate()
-                ? 'My day'
-                : task?.deadLine &&
-                  getWeedayMonthAndDay(new Date(task?.deadLine))}
+              {task?.deadLine && getWeedayMonthAndDay(new Date(task?.deadLine))}
             </span>
             {task?.list && <span className="">{task?.list.title}</span>}
             {task?.description && task?.description.length >= 1 && (

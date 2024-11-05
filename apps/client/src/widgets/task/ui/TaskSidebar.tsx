@@ -43,7 +43,12 @@ export const TaskSidebar: FC<IProps> = ({
         refetchTask={refetchTask}
         isCompleted={task?.isCompleted || false}
       />
-      <SidebarDatePicker refetchTasks={refetchTasks} taskId={taskId} />
+      <SidebarDatePicker
+        date={task?.deadLine}
+        refetchTasks={refetchTasks}
+        refetchTask={refetchTask}
+        taskId={taskId}
+      />
       <ToggleTodayTask
         refetchTask={refetchTask}
         taskId={taskId}

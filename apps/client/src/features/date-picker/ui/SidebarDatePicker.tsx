@@ -1,27 +1,57 @@
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useUpdateTask } from '../../../shared';
 import dayjs, { Dayjs } from 'dayjs';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 interface IProps {
   taskId: string;
   refetchTasks: () => void;
+  refetchTask: () => void;
+  date?: Date | null;
 }
 
-export const SidebarDatePicker: FC<IProps> = ({ taskId, refetchTasks }) => {
+export const SidebarDatePicker: FC<IProps> = ({
+  taskId,
+  refetchTasks,
+  date,
+  refetchTask,
+}) => {
+  const [isDatePickerVisible, setIsDatePickerVisible] =
+    useState<boolean>(false);
+
   const { updateTask, updateTaskIsSuccess } = useUpdateTask(taskId);
   const handleChangeDate = (e: Dayjs) => {
     updateTask({ deadLine: e.toDate() });
   };
 
+  const toggleDatePicker = () => {
+    setIsDatePickerVisible((prevState) => !prevState);
+  };
+
   useEffect(() => {
-    if(updateTaskIsSuccess)
-    refetchTasks()
-  },[refetchTasks, updateTaskIsSuccess])
+    if (updateTaskIsSuccess) {
+      refetchTasks();
+      refetchTask()
+    }
+  }, [refetchTasks, updateTaskIsSuccess]);
 
   return (
-    <div className="mx-auto my-2">
-      <DateCalendar onChange={handleChangeDate} minDate={dayjs(new Date())} />
-    </div>
+    <>
+      <button
+        className='border-2 mx-2 rounded-lg p-2 mb-2"'
+        onClick={toggleDatePicker}
+      >
+        {date ? 'Edit date' : 'Set date'}
+      </button>
+      <DateCalendar
+        className="border-2 rounded-xl block"
+        sx={{
+          margin: '5px 5px',
+        }}
+        onChange={handleChangeDate}
+        minDate={dayjs(new Date())}
+        value={dayjs(date)}
+      />
+    </>
   );
 };

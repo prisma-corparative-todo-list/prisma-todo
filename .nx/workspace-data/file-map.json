@@ -145,26 +145,6 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "jest.config.ts",
-        "hash": "3494843969422251966"
-      },
-      {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "16936441711144470533"
-      },
-      {
-        "file": "migrations.json",
-        "hash": "10391131165700003340"
-      },
-      {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
-      },
-      {
         "file": ".gitignore",
         "hash": "16877376182141465221"
       },
@@ -173,40 +153,60 @@
         "hash": "494249671653902768"
       },
       {
+        "file": "interfaces/index.ts",
+        "hash": "4124161015873961862"
+      },
+      {
         "file": "README.md",
         "hash": "4353142399798978899"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
       },
       {
         "file": "package.json",
         "hash": "5220606288928750095"
       },
       {
-        "file": ".vscode/extensions.json",
-        "hash": "4934098906304722861"
+        "file": "jest.config.ts",
+        "hash": "3494843969422251966"
       },
       {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
+        "file": "tsconfig.base.json",
+        "hash": "16936441711144470533"
       },
       {
         "file": ".prettierignore",
         "hash": "16448050467312557263"
       },
       {
-        "file": "interfaces/index.ts",
-        "hash": "4124161015873961862"
+        "file": "migrations.json",
+        "hash": "10391131165700003340"
       },
       {
-        "file": ".prettierrc",
-        "hash": "16267754514737964994"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
       },
       {
         "file": ".eslintrc.json",
         "hash": "18315524891129148814"
       },
       {
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
+      },
+      {
         "file": "nx.json",
         "hash": "10375793336502971330"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
       }
     ],
     "projectFileMap": {
@@ -398,7 +398,7 @@
         },
         {
           "file": "apps/client/src/entities/task/ui/TaskItem.tsx",
-          "hash": "13221419426901885746",
+          "hash": "8316555539436797998",
           "deps": [
             "npm:react",
             "npm:prisma",
@@ -422,7 +422,7 @@
         },
         {
           "file": "apps/client/src/features/date-picker/ui/SidebarDatePicker.tsx",
-          "hash": "13052904056830340919",
+          "hash": "872503817828260159",
           "deps": [
             "npm:@mui/x-date-pickers",
             "npm:dayjs",
@@ -1318,7 +1318,7 @@
         },
         {
           "file": "apps/client/src/widgets/task/ui/TaskSidebar.tsx",
-          "hash": "10044120324771675498",
+          "hash": "6955451877220633350",
           "deps": [
             "npm:@mui/material",
             "npm:react"
