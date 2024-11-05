@@ -145,68 +145,68 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".gitignore",
-        "hash": "16877376182141465221"
-      },
-      {
         "file": "package-lock.json",
         "hash": "494249671653902768"
-      },
-      {
-        "file": "interfaces/index.ts",
-        "hash": "4124161015873961862"
-      },
-      {
-        "file": "README.md",
-        "hash": "4353142399798978899"
-      },
-      {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
-      },
-      {
-        "file": "package.json",
-        "hash": "5220606288928750095"
       },
       {
         "file": "jest.config.ts",
         "hash": "3494843969422251966"
       },
       {
+        "file": "interfaces/index.ts",
+        "hash": "4124161015873961862"
+      },
+      {
         "file": "tsconfig.base.json",
         "hash": "16936441711144470533"
       },
       {
-        "file": ".prettierignore",
-        "hash": "16448050467312557263"
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
       },
       {
-        "file": "migrations.json",
-        "hash": "10391131165700003340"
-      },
-      {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
+        "file": "README.md",
+        "hash": "4353142399798978899"
       },
       {
         "file": ".eslintrc.json",
         "hash": "18315524891129148814"
       },
       {
+        "file": "package.json",
+        "hash": "5220606288928750095"
+      },
+      {
         "file": ".vscode/extensions.json",
         "hash": "4934098906304722861"
       },
       {
-        "file": "nx.json",
-        "hash": "10375793336502971330"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "10391131165700003340"
       },
       {
         "file": "jest.preset.js",
         "hash": "9430166341120122740"
       },
       {
-        "file": ".prettierrc",
-        "hash": "16267754514737964994"
+        "file": ".gitignore",
+        "hash": "16877376182141465221"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
+      },
+      {
+        "file": "nx.json",
+        "hash": "10375793336502971330"
       }
     ],
     "projectFileMap": {
@@ -422,7 +422,7 @@
         },
         {
           "file": "apps/client/src/features/date-picker/ui/SidebarDatePicker.tsx",
-          "hash": "872503817828260159",
+          "hash": "5638554323065498621",
           "deps": [
             "npm:@mui/x-date-pickers",
             "npm:dayjs",

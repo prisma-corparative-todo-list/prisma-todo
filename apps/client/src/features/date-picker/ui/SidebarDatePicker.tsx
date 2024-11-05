@@ -21,6 +21,7 @@ export const SidebarDatePicker: FC<IProps> = ({
 
   const { updateTask, updateTaskIsSuccess } = useUpdateTask(taskId);
   const handleChangeDate = (e: Dayjs) => {
+    console.log(e);
     updateTask({ deadLine: e.toDate() });
   };
 
@@ -31,26 +32,26 @@ export const SidebarDatePicker: FC<IProps> = ({
   useEffect(() => {
     if (updateTaskIsSuccess) {
       refetchTasks();
-      refetchTask()
+      refetchTask();
     }
-  }, [refetchTasks, updateTaskIsSuccess]);
+  }, [refetchTask, refetchTasks, updateTaskIsSuccess]);
 
   return (
     <>
-      <button
-        className='border-2 mx-2 rounded-lg p-2 mb-2"'
+      {/* <button
+        className='border-2 mx-2 rounded-lg p-2 mb-2 block"'
         onClick={toggleDatePicker}
       >
         {date ? 'Edit date' : 'Set date'}
-      </button>
+      </button> */}
       <DateCalendar
-        className="border-2 rounded-xl block"
+        className="border-2 rounded-xl block bg-slate-50 right-10"
         sx={{
           margin: '5px 5px',
         }}
         onChange={handleChangeDate}
         minDate={dayjs(new Date())}
-        value={dayjs(date)}
+        value={date ? dayjs(new Date(date)) : null}
       />
     </>
   );
