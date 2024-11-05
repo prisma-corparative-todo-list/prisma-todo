@@ -101,6 +101,7 @@ export class TaskController {
         ...(dto.description ? { description: dto.description } : {}),
         ...(dto.listId ? { list: { connect: { id: dto.listId } } } : {}),
         ...(dto.isToday !== undefined ? { isToday: dto.isToday } : {}),
+        ...(dto.deadLine ? { deadLine: dto.deadLine } : {}),
       }
     );
   }

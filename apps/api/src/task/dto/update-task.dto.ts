@@ -6,5 +6,5 @@ export class UpdateTaskDto {
     deadLine?: Date
     listId?: string
     description?: string
-    isToday: boolean
+    isToday?: boolean
 }

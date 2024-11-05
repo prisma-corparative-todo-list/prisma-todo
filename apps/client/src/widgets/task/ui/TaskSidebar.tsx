@@ -4,6 +4,7 @@ import { DeleteTaskButton, TaskDetails } from '../../../features/task/';
 import { StepsList } from '../../../features/step';
 import { ToggleTodayTask } from '../../../features/toggle-today-task';
 import { useGetTask, useGroupStore } from '../../../shared';
+import { SidebarDatePicker } from '../../../features/date-picker';
 
 interface IProps {
   isOpen: boolean;
@@ -24,8 +25,6 @@ export const TaskSidebar: FC<IProps> = ({
 }) => {
   const { task, taskIsSuccess, refetch: refetchTask } = useGetTask(taskId);
 
-
-
   return (
     <Drawer
       open={isOpen}
@@ -44,6 +43,7 @@ export const TaskSidebar: FC<IProps> = ({
         refetchTask={refetchTask}
         isCompleted={task?.isCompleted || false}
       />
+      <SidebarDatePicker refetchTasks={refetchTasks} taskId={taskId} />
       <ToggleTodayTask
         refetchTask={refetchTask}
         taskId={taskId}

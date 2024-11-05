@@ -63,7 +63,7 @@ export const TaskItem: FC<IProps> = ({
             <span
               className={`${
                 task?.deadLine
-                  ? new Date(task?.deadLine).getDate() > new Date().getDate()
+                  ? new Date(task?.deadLine).getDate() < new Date().getDate()
                     ? 'text-red-600'
                     : 'text-black-500'
                   : ''
